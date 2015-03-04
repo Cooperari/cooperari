@@ -1,0 +1,40 @@
+package org.cooperari;
+
+/**
+ * Cooperari version information.
+ *
+ * @since 0.2
+ */
+public class CVersion {
+  
+  /**
+   * Cooperari version.
+   */
+  public static final String ID = "@cooperari.version@";
+  
+  /**
+   * Java version used for building current version.
+   */
+  public static final String JAVA_BUILD_VERSION = "@build.java.version@";
+  
+  /**
+   * Java VM name used for building current version.
+   */
+  public static final String JAVA_VM_BUILD_VERSION = "@build.java.vm@";
+  
+  /**
+   * Maven version used for building current version.
+   */
+  public static final String MAVEN_BUILD_VERSION = "@build.maven.version@";
+  
+  /**
+   * Operating system for building current version.
+   */
+  public static final String OS_BUILD_VERSION = "@build.os@";
+  
+  /**
+   * Private constructor to avoid instantiation.
+   */
+  private CVersion() { }
+   
+}

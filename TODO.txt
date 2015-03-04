@@ -1,0 +1,28 @@
+== 0.2.1. final ==
+- Pretty print for cjunit 
+- Reports races on trace file
+- Windows scripts
+- CSystem.runPreemptively()
+- improve wait/notify tests + check tests being ignored
+- Get rid of Scheduler.wakeup() interaction
+- Merge CRuntime / CSession ?
+- Revise Coverage code
+- Configure Jenkins server on cooperari.org
+- CLog per runtime / CLogOptions
+- Document
+ -- Javadoc (examples)
+ -- Structure of documentation
+- more unit tests
+- Examples project
+- resource deadlocks / wait release step
+- CBlockingOperationResult used more often (sleep, join, ..., also)
+- Inline yield points - refactoring
+- feature package names ?
+- serial ids for exception classes
+
+== 0.3 ==
+- Cyclic Barrier, phaser, etc
+- CScheduler more efficient
+- java.io ? 
+- java.net ? 
+-- Noise randomized testing

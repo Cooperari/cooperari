@@ -1,0 +1,10 @@
+#! /bin/sh
+
+COOPERARI_VERSION=$($(dirname $0)/cversion)
+COOPERARI_HOME=$(cd $(dirname $0)/.. && pwd)
+COOPERARI_JAR=$COOPERARI_HOME/lib/cooperari-$COOPERARI_VERSION.jar
+
+java -cp "$COOPERARI_JAR" org.cooperari.tools.cinfo.Main $*
+
+
+
