@@ -8,7 +8,6 @@
 - Get rid of Scheduler.wakeup() interaction
 - Merge CRuntime / CSession ?
 - Revise Coverage code
-- Configure Jenkins server on cooperari.org
 - CLog per runtime / CLogOptions
 - Document
  -- Javadoc (examples)
