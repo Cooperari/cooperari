@@ -10,20 +10,6 @@
 	<name>Cooperari</name>
 	<description>Cooperari is a cooperative testing tool for multithreaded Java code.</description>
 	<url>http://cooperari.org</url>
-
-<!-- 	<repositories> -->
-<!-- 		<repository> -->
-<!-- 			<id>maven-central</id> -->
-<!-- 			<name>Maven Central</name> -->
-<!-- 			<url>http://maven.org</url> -->
-<!-- 		</repository> -->
-<!-- 		<repository> -->
-<!-- 			<id>alternate-repository</id> -->
-<!-- 			<name>MVN repository</name> -->
-<!-- 			<url>http://mvnrepository.com</url> -->
-<!-- 		</repository> -->
-<!-- 	</repositories> -->
-
 	<properties>
 		<required.maven>3.2</required.maven>
 		<required.java>1.8</required.java>
