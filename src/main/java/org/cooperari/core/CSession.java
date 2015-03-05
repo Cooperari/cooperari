@@ -10,6 +10,7 @@ import org.cooperari.CCoverage;
 import org.cooperari.CHotspotError;
 import org.cooperari.CInternalError;
 import org.cooperari.CMaxTrials;
+import org.cooperari.CTimeLimit;
 import org.cooperari.feature.hotspots.HotspotHandler;
 
 /**
@@ -75,13 +76,18 @@ public final class CSession {
     } catch (Exception e) {
       throw new CInternalError(e);
     }
+    
     CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class);
     int runs = 0;
     Throwable error = null;
-    long time = System.currentTimeMillis();
+    long timeLimit = runtime.getConfiguration(CTimeLimit.class).value() * 1000L;
     CTrace trace = null;
     HotspotHandler hHandler = new HotspotHandler(runtime);
     runtime.register(hHandler);
+    
+    // Main loop
+    long startTime = System.currentTimeMillis();
+    boolean done = false;
     
     do {
       runs++;
@@ -107,7 +113,12 @@ public final class CSession {
           error = e;
         }
       }
-    } while (error == null && !cHandler.done() && runs < maxTrials.value());
+      done = error != null 
+          || cHandler.done() 
+          || runs >= maxTrials.value()
+          || ( timeLimit > 0 
+          && System.currentTimeMillis() - startTime >= timeLimit);   
+    } while (!done);
 
     if (error != null) {
       dumpTrace((Method) config, trace);
@@ -118,16 +129,13 @@ public final class CSession {
         error = e;
       }
     }
-    
-    
 
-
-    time = System.currentTimeMillis() - time;
+    long timeElapsed = System.currentTimeMillis() - startTime;
 
     assert CWorkspace.debug("== TERMINATED %s ==", config.toString());
 
     CWorkspace.log("%s: executed %d times in %d ms [%s]", 
-        config.toString(), runs, time, error == null ? "passed" : "failed : " + error.getClass().getCanonicalName());
+        config.toString(), runs, timeElapsed, error == null ? "passed" : "failed : " + error.getClass().getCanonicalName());
     
     if (error != null) {
       throw error;

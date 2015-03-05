@@ -14,6 +14,7 @@ package org.cooperari;
 @CNever({}) 
 @CSometimes({})
 @CTraceOptions()
+@CTimeLimit()
 public final class CBaseConfiguration {
   
   /**
