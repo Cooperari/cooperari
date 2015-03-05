@@ -1,11 +1,15 @@
 package org.cooperari.junit;
 
 
+import org.cooperari.CCheckedExceptionError;
 import org.cooperari.CConfigurationError;
 import org.cooperari.CInternalError;
+import org.cooperari.CTest;
+import org.cooperari.CTestResult;
 import org.cooperari.core.CSession;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.Test.None;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
@@ -99,29 +103,14 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       return;
     }
 
-    final Class<?> expectedException = fm.getAnnotation(Test.class).expected();
-    final Statement statement = createJUnitStatement(fm, false);
-
-    Runnable runMethod = new MethodRunner(fm, statement); 
-    CSession.ExecutionHandler executionHandler = new CSession.ExecutionHandler() {
-      @Override
-      public void onNormalCompletion() throws Throwable {
-        if (expectedException != Test.None.class) {
-          throw new AssertionError("Expected exception " + expectedException.getCanonicalName());
-        }
-      }
-      @Override
-      public boolean ignoreException(Throwable e)  {
-        return e.getClass() == expectedException;
-      }
-    };
-
-    try {
-      CSession.execute(fm.getMethod(), runMethod, executionHandler);
+    CTest ctest = new MethodRunner(fm); 
+    CTestResult result = CSession.executeTest(ctest);
+    if (result.failed()) {
+      notifier.fireTestFailure(new Failure(desc, result.getFailure()));
+    } else {
       notifier.fireTestFinished(desc);
-    } catch (Throwable e) {
-      notifier.fireTestFailure(new Failure(desc, e));
     }
+
   }
 
   /**
@@ -141,28 +130,53 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       statement = super.withAfters(fm, test, statement);
       return statement;
     } catch(Throwable e) {
-      throw new CInternalError(e);
+      throw new CInternalError("Error defining JUnit statement", e);
     }
   }
-  
+
   /**
    * Method runner thread.
    * @since 0.2 
    */
-  public class MethodRunner extends Thread {
+  public class MethodRunner extends Thread implements CTest {
     /** 
      * JUnit statement 
      */
     private final Statement _statement;
 
     /**
+     * Expected exception.
+     */
+    private Class<?> _expectedException;
+
+    /**
      * Constructs a new method runner.
      * @param fm Method handle.
      * @param statement JUnit statement to run the method.
      */
-    public MethodRunner(FrameworkMethod fm, Statement statement) {
+    public MethodRunner(FrameworkMethod fm) {
       setName(fm.getName());
-      _statement = statement;
+      _statement = createJUnitStatement(fm, false);
+      _expectedException = fm.getAnnotation(Test.class).expected();
+    }
+
+    /**
+     * Normal completion hook.
+     * @see CTest#onNormalCompletion()
+     */
+    @Override
+    public void onNormalCompletion() throws Throwable {
+      if (_expectedException != Test.None.class) {
+        throw new AssertionError("Expected exception " + _expectedException.getCanonicalName());
+      }
+    }
+    /**
+     * Ignore-exception hook.
+     * @see CTest#ignoreException(Throwable)
+     */
+    @Override
+    public boolean ignoreException(Throwable e)  {
+      return e.getClass() == _expectedException;
     }
 
     /** 
@@ -175,10 +189,9 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       } catch(RuntimeException|Error e) {
         throw e;
       } catch(Throwable e) {
-        throw new CInternalError(e);
+        throw new CCheckedExceptionError(e);
       }
     }
   }
 
- 
 }

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
-import org.cooperari.CInternalError;
+import org.cooperari.CCheckedExceptionError;
 import org.cooperari.CMultipleExceptionsError;
 import org.cooperari.core.CUncaughtExceptionHandler;
 import org.junit.Before;
@@ -46,7 +46,7 @@ public class CUncaughtExceptionHandlerTest {
   
   @Test
   public void testWithCheckedExceptionInstance() {
-    testThrow(CInternalError.class, new InterruptedException());
+    testThrow(InterruptedException.class, new InterruptedException());
   }
   
   
@@ -65,7 +65,11 @@ public class CUncaughtExceptionHandlerTest {
       fail("Expected exception " + expected);
     }
     catch (Throwable e) {
+      if (e instanceof CCheckedExceptionError) {
+        e = e.getCause();
+      }
       assertSame("exception class", expected, e.getClass());
+      
     }
   }
 }

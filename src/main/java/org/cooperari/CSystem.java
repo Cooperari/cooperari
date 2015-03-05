@@ -2,6 +2,7 @@ package org.cooperari;
 
 import static org.cooperari.core.CRuntime.getRuntime;
 
+import org.cooperari.core.CSession;
 import org.cooperari.feature.hotspots.HotspotHandler;
 
 /**
@@ -12,6 +13,15 @@ import org.cooperari.feature.hotspots.HotspotHandler;
  */
 public final class CSystem {
 
+  /**
+   * Execute a cooperative test session. 
+   * @param test Test to execute.
+   * @return An instance of {@link CTestResult}. 
+   */
+  public CTestResult cExecuteTest(CTest test) {
+    return CSession.executeTest(test);
+  }
+  
   /**
    * Start some threads and wait until they are finished.
    * 

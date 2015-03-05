@@ -4,6 +4,7 @@ package org.cooperari.core;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 
+import org.cooperari.CCheckedExceptionError;
 import org.cooperari.CInternalError;
 import org.cooperari.CMultipleExceptionsError;
 
@@ -78,7 +79,7 @@ public final class CUncaughtExceptionHandler implements UncaughtExceptionHandler
    * </ul>
    * </p>
    */
-  public void rethrowExceptionsIfAny() {
+  public void rethrowExceptionsIfAny()  {
     synchronized (_exceptions) {
       if (_exceptions.isEmpty()) {
         return;
@@ -93,7 +94,7 @@ public final class CUncaughtExceptionHandler implements UncaughtExceptionHandler
         if (e instanceof Error) {
           throw (Error) e;
         }
-        throw new CInternalError(e);
+        throw new CCheckedExceptionError(e);
       } 
       // More than one exception ...
       ArrayList<Throwable> copy = new ArrayList<>(_exceptions);
