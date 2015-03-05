@@ -50,7 +50,7 @@ public class Main {
    *         non-zero in the case of errors.
    */
   public static int execute(String[] args, PrintStream out) {
-    try {
+    try {      
       if (! AgentFacade.INSTANCE.isActive()) {
         out.println("The AspectJ load-time weaver does not seem to be active!");
         return 2;
@@ -64,17 +64,19 @@ public class Main {
       for (int i = 0; i < args.length; i++) {
         classes[i] = Class.forName(args[i]);
       }
+      
       JUnitCore juc = new JUnitCore();
       juc.addListener(new TextListener(out));
       Result r = juc.run(classes);
-      out.printf("Yield points covered: %d out of %d\n", AgentFacade.INSTANCE.getWeavePointsCovered(), AgentFacade.INSTANCE.getWeavePointCount());
+      
+      CWorkspace.log("Yield points covered: %d out of %d\n", AgentFacade.INSTANCE.getWeavePointsCovered(), AgentFacade.INSTANCE.getWeavePointCount());
       
       AgentFacade.INSTANCE.produceCoverageReport();
       
       return r.getFailureCount() == 0 ? 0 : 1;
     } catch (Throwable e) {
       e.printStackTrace(out);
-      return 2;
+      return 3;
     }
   }
 }
