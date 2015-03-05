@@ -88,6 +88,9 @@ public final class WeavingConfiguration {
     _rootElem.appendChild(_aspectsElem);
     _rootElem.appendChild(_weaverElem);
     _xmlDoc.appendChild(_rootElem);
+    addWeaverOption("-verbose");
+    addWeaverOption("-showWeaveInfo");
+    addWeaverOption("-debug");
   }
 
   @SuppressWarnings("javadoc")
