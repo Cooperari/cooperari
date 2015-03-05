@@ -2,6 +2,8 @@ package org.cooperari.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.EnumSet;
 
 import org.aspectj.lang.JoinPoint;
 import org.cooperari.CConfigurationError;
@@ -24,6 +26,17 @@ public enum CWorkspace {
    */
   INSTANCE;
 
+  /**
+   * Workspace options.
+   * 
+   * @since 0.2
+   */
+  public enum Option {
+    /**
+     * Log output to <code>System.out</code>
+     */
+    LOG_TO_STDOUT
+  }
   /**
    * Root directory for workspace.
    */
@@ -81,10 +94,11 @@ public enum CWorkspace {
    * This method should be called once to initialize the workspace.
    * 
    * @param root Root directory.
+   * @param options Workspace options.
    * @throws IOException If an I/O error occurs.
    * @throws CConfigurationError If the workspace has already been initialized or some other error occurs.
    */
-  public void initialize(File root) throws IOException, CConfigurationError {
+  public void initialize(File root, Option... options) throws IOException, CConfigurationError {
     if (isInitialized()) {
       throw new CConfigurationError("Workspace already initialized.");
     }
@@ -97,7 +111,15 @@ public enum CWorkspace {
     if (assertionsEnabled) {
       _debugLog = new CLog(new File(root, DEBUG_LOG_ID + LOG_SUFFIX), CLog.Option.WALLTIME_TIMESTAMPS);
     }
-    _mainLog = new CLog(new File(root, MAIN_LOG_ID + LOG_SUFFIX), CLog.SYSTEM_OUT, CLog.Option.OMMIT_THREAD_INFO);
+    EnumSet<Option> optionSet = 
+      (options != null && options.length > 0) ?
+         EnumSet.copyOf(Arrays.asList(options)) :
+         EnumSet.noneOf(Option.class);     
+    CLog parentLog = null;
+    if (optionSet.contains(Option.LOG_TO_STDOUT)) {
+      parentLog = CLog.SYSTEM_OUT;
+    } 
+    _mainLog = new CLog(new File(root, MAIN_LOG_ID + LOG_SUFFIX), parentLog, CLog.Option.OMMIT_THREAD_INFO);
     _root = root;
   }
 
