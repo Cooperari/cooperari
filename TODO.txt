@@ -1,28 +1,34 @@
 == 0.2.1. final ==
 
+Features left to implement:
 - Pretty print for cjunit 
 - cjunit / csetup chaining ... load agent programatically?
-- Windows scripts
-- CSystem.runPreemptively()
-- improve wait/notify tests + check tests being ignored
-- Get rid of Scheduler.wakeup() interaction
-- Merge CRuntime / CSession ?
+- cjunit -p switch / ensure CJUnitRunner runs preemptively as well
 - Revise Coverage code
-- CLog per runtime / CLogOptions
-- Document
- -- Javadoc (examples)
- -- Structure of documentation
-- more unit tests
+- CSystem.runPreemptively()
+- Windows scripts
+
+
+Misc. implementation details
+ -- Merge CRuntime / CSession ?
+ -- Get rid of Scheduler.wakeup() interaction
+ -- operation arguments
+ -- resource deadlocks / wait release step ?
+ -- improve wait/notify tests + check tests being ignored
+ -- CBlockingOperationResult used more often (sleep, join, ..., also)
+ -- Inline yield points - refactoring
+ -- feature package names ?
+ -- serial ids for exception classes
+
+Future workloads:
 - Examples project
-- resource deadlocks / wait release step ?
-- CBlockingOperationResult used more often (sleep, join, ..., also)
-- Inline yield points - refactoring
-- feature package names ?
-- serial ids for exception classes
+- Site organization.
 
 == 0.3 ==
-- Cyclic Barrier, phaser, etc
+
+Features:
+- java.util.concurrent (Cyclic Barrier, phaser, etc)
 - CScheduler more efficient
 - java.io ? 
 - java.net ? 
--- Noise randomized testing
+- randomized testing plugin
