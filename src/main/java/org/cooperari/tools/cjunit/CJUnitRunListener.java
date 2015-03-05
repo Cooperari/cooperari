@@ -46,6 +46,7 @@ class CJUnitRunListener extends TextListener {
     _currentClassName = "";
   }
   
+  
   @Override
   public void testRunFinished(Result result) {
       if (result.getFailureCount() > 0) {
@@ -59,7 +60,6 @@ class CJUnitRunListener extends TextListener {
           result.getFailureCount(),
           result.getRunTime());
     
-
   }
 
   @Override
