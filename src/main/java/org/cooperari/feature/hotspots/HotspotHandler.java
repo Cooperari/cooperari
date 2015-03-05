@@ -67,7 +67,7 @@ public final class HotspotHandler {
   public void onHotspotReached(String id) {
     assert CWorkspace.debug("hotspot '%s' reached", id);
     if (_nHotspots.contains(id)) {
-      assert CWorkspace.debug("CNever hotspot '%s' has been reached!", id);
+      assert CWorkspace.debug("@CNever hotspot '%s' has been reached!", id);
       throw new CHotspotError(CNever.class, id);
     }
     _aHotspotsTrial.remove(id);

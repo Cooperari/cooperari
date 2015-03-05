@@ -1,6 +1,9 @@
 package org.cooperari.junit;
 
 
+import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
+
 import org.cooperari.CCheckedExceptionError;
 import org.cooperari.CConfigurationError;
 import org.cooperari.CInternalError;
@@ -9,7 +12,6 @@ import org.cooperari.CTestResult;
 import org.cooperari.core.CSession;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.Test.None;
 import org.junit.runner.Description;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunNotifier;
@@ -103,7 +105,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       return;
     }
 
-    CTest ctest = new MethodRunner(fm); 
+    CTest ctest = new MethodRunner(fm, createJUnitStatement(fm, false)); 
     CTestResult result = CSession.executeTest(ctest);
     if (result.failed()) {
       notifier.fireTestFailure(new Failure(desc, result.getFailure()));
@@ -145,6 +147,11 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
     private final Statement _statement;
 
     /**
+     * Method.
+     */
+    private final Method _method;
+    
+    /**
      * Expected exception.
      */
     private Class<?> _expectedException;
@@ -154,12 +161,21 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
      * @param fm Method handle.
      * @param statement JUnit statement to run the method.
      */
-    public MethodRunner(FrameworkMethod fm) {
+    public MethodRunner(FrameworkMethod fm, Statement statement) {
       setName(fm.getName());
-      _statement = createJUnitStatement(fm, false);
+      _statement = statement;
+      _method = fm.getMethod();
       _expectedException = fm.getAnnotation(Test.class).expected();
     }
 
+    /**
+     * Configuration hook.
+     * @return The JUnit method at stake as configuration source.
+     */
+    @Override
+    public AnnotatedElement getConfiguration() {
+      return _method;
+    }
     /**
      * Normal completion hook.
      * @see CTest#onNormalCompletion()

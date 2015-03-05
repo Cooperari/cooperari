@@ -57,7 +57,7 @@ public class HotspotSanityTest {
   
   @Test(expected=CHotspotError.class)  
   @CNever("x")
-  public void test5() {
+  public void test6() {
     REACH = true;
     CSystem.cRun(rReach);
   }

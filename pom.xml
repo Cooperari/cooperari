@@ -192,7 +192,7 @@
 <!-- 						    <outputFile>${project.build.directory}/test-execution/test-output.txt</outputFile> -->
 						    <workingDirectory>${project.build.directory}/test-execution</workingDirectory>
 							<classpathScope>test</classpathScope>
-							<commandlineArgs>-classpath ${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.sanity.AllCooperativeTests</commandlineArgs>
+							<commandlineArgs>-classpath ${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.sanity.feature.AllCooperativeTests</commandlineArgs>
 						</configuration>
 					</execution>
 				</executions>
