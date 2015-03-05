@@ -168,7 +168,7 @@
 							<executable>java</executable>
 							<classpathScope>test</classpathScope>
 							<workingDirectory>${project.build.directory}/test-execution</workingDirectory>
-							<outputFile>csetup-output.txt</outputFile>
+							<outputFile>${project.build.directory}/test-execution/csetup-output.txt</outputFile>
 							<arguments>
 								<argument>-classpath</argument>
 								<classpath/>
