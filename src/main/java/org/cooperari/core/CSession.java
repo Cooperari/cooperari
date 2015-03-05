@@ -6,6 +6,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
+import org.cooperari.CConfigurationError;
 import org.cooperari.CCoverage;
 import org.cooperari.CHotspotError;
 import org.cooperari.CInternalError;
@@ -77,8 +78,13 @@ public final class CSession {
       throw new CInternalError(e);
     }
     
-    CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class);
-    int runs = 0;
+    CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class); 
+    
+    if (maxTrials.value() < 0) {
+      throw new CConfigurationError("Invalid @CMaxTrials configuration: " + maxTrials.value());
+    }
+    
+    int trials = 0;
     Throwable error = null;
     long timeLimit = runtime.getConfiguration(CTimeLimit.class).value() * 1000L;
     CTrace trace = null;
@@ -90,7 +96,7 @@ public final class CSession {
     boolean done = false;
     
     do {
-      runs++;
+      trials++;
       hHandler.startTestTrial();
       cHandler.onTestStarted();
       CScheduler s = new CScheduler(runtime, cHandler, entryPoint);
@@ -115,7 +121,7 @@ public final class CSession {
       }
       done = error != null 
           || cHandler.done() 
-          || runs >= maxTrials.value()
+          || trials >= maxTrials.value()
           || ( timeLimit > 0 
           && System.currentTimeMillis() - startTime >= timeLimit);   
     } while (!done);
@@ -134,8 +140,8 @@ public final class CSession {
 
     assert CWorkspace.debug("== TERMINATED %s ==", config.toString());
 
-    CWorkspace.log("%s: executed %d times in %d ms [%s]", 
-        config.toString(), runs, timeElapsed, error == null ? "passed" : "failed : " + error.getClass().getCanonicalName());
+    CWorkspace.log("%s: executed %d trials in %d ms [%s]", 
+        config.toString(), trials, timeElapsed, error == null ? "passed" : "failed : " + error.getClass().getCanonicalName());
     
     if (error != null) {
       throw error;
