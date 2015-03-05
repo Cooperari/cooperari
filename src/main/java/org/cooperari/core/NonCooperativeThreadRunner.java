@@ -9,7 +9,6 @@ import java.util.concurrent.CyclicBarrier;
 
 import org.cooperari.CDeadlockError;
 import org.cooperari.CInternalError;
-import org.cooperari.feature.monitor.CResourceDeadlockError;
 
 /**
  * Helper class to run a set of threads in non-cooperative manner.
