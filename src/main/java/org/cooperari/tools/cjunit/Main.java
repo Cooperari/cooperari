@@ -5,7 +5,6 @@ import java.io.PrintStream;
 
 import org.cooperari.core.CWorkspace;
 import org.cooperari.core.aspectj.AgentFacade;
-import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 

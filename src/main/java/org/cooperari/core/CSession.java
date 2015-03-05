@@ -1,9 +1,7 @@
 package org.cooperari.core;
 
 import java.io.File;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
