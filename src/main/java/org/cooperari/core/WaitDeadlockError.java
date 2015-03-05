@@ -5,6 +5,13 @@ import java.util.Collection;
 import org.cooperari.CDeadlockError;
 
 
+/**
+ * Error thrown when all threads in a cooperative session
+ * are blocked.
+ * 
+ * @since 0.2
+ *
+ */
 @SuppressWarnings("serial")
 public class WaitDeadlockError extends CDeadlockError {
 
@@ -12,7 +19,7 @@ public class WaitDeadlockError extends CDeadlockError {
    * Constructs an error.
    * @param threads Deadlock threads.
    */
-  public WaitDeadlockError(Collection<CThread> threads) {
+  WaitDeadlockError(Collection<CThread> threads) {
     super(formatMessage(threads));
   }
   
