@@ -115,7 +115,7 @@ public enum AgentFacade {
     if (CWorkspace.INSTANCE.isInitialized()) {
       if (_agentLog == null) {
         try {
-          _agentLog = CWorkspace.INSTANCE.createLog(LOG_ID, CLog.Options.OMMIT_THREAD_INFO);
+          _agentLog = CWorkspace.INSTANCE.createLog(LOG_ID, CLog.Option.OMMIT_THREAD_INFO);
         }
         catch (Throwable e) {
           _agentLog = CLog.SYSTEM_OUT;

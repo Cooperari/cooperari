@@ -20,7 +20,7 @@ public final class CLog {
    * @since 0.2
    *
    */
-  public enum Options { 
+  public enum Option { 
     /**
      * Write plain messages to a log, without any other information (date, or thread info for example).
      * (implies {@link #OMMIT_THREAD_INFO}).
@@ -40,12 +40,12 @@ public final class CLog {
   /**
    * Predefined log instance uses {@link System#out} for output.
    */
-  public static final CLog SYSTEM_OUT = new CLog(System.out, Options.PLAIN_FORMAT);
+  public static final CLog SYSTEM_OUT = new CLog(System.out, Option.PLAIN_FORMAT);
 
   /**
    * Predefined log instance that uses {@link System#err} for output.
    */
-  public static final CLog SYSTEM_ERR = new CLog(System.out, Options.PLAIN_FORMAT);
+  public static final CLog SYSTEM_ERR = new CLog(System.out, Option.PLAIN_FORMAT);
 
   /**
    * Print lock to enable non-garbled output.
@@ -85,24 +85,24 @@ public final class CLog {
   /**
    * Constructs a new log using the supplied print stream for output.
    * 
-   * @see #CLog(PrintStream, CLog, Options...)
+   * @see #CLog(PrintStream, CLog, Option...)
    * @param out Output stream.
    * @param options Log options.
    */
-  public CLog(PrintStream out, Options... options) {
+  public CLog(PrintStream out, Option... options) {
     this(out, null, options);
   }
 
   /**
    * Constructs a new log redirecting output to given file.
    * 
-   * @see #CLog(PrintStream, CLog, Options...)
+   * @see #CLog(PrintStream, CLog, Option...)
    * @param outputFile Output file.
    * @param options Log options.
    * @throws FileNotFoundException If the output file cannot be created or
    *         written to.
    */
-  public CLog(File outputFile, Options... options) throws FileNotFoundException {
+  public CLog(File outputFile, Option... options) throws FileNotFoundException {
     this(new PrintStream(outputFile), null, options);
   }
 
@@ -110,14 +110,14 @@ public final class CLog {
    * Constructs a new log redirecting output to given file and with an
    * associated parent log.
    * 
-   * @see #CLog(PrintStream, CLog, Options...)
+   * @see #CLog(PrintStream, CLog, Option...)
    * @param outputFile Output file.
    * @param parent Parent log.
    * @param options Log options.
    * @throws FileNotFoundException If the output file cannot be created or
    *         written to.
    */
-  public CLog(File outputFile, CLog parent, Options... options) throws FileNotFoundException {
+  public CLog(File outputFile, CLog parent, Option... options) throws FileNotFoundException {
     this(new PrintStream(outputFile), parent, options);
   }
 
@@ -137,12 +137,12 @@ public final class CLog {
    * @param parent Parent log.
    * @param options Log options.
    */
-  public CLog(PrintStream out, CLog parent, Options... options) {
+  public CLog(PrintStream out, CLog parent, Option... options) {
     _out = out;
     _parent = parent;
     _creationTime = System.currentTimeMillis();
     if (options != null && options.length > 0) {
-      for (Options o : options) {
+      for (Option o : options) {
         switch(o) {
           case PLAIN_FORMAT:
             _plainFormat = true;

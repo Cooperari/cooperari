@@ -95,9 +95,9 @@ public enum CWorkspace {
     boolean assertionsEnabled = false;
     assert assertionsEnabled = true;
     if (assertionsEnabled) {
-      _debugLog = new CLog(new File(root, DEBUG_LOG_ID + LOG_SUFFIX), CLog.Options.WALLTIME_TIMESTAMPS);
+      _debugLog = new CLog(new File(root, DEBUG_LOG_ID + LOG_SUFFIX), CLog.Option.WALLTIME_TIMESTAMPS);
     }
-    _mainLog = new CLog(new File(root, MAIN_LOG_ID + LOG_SUFFIX), CLog.SYSTEM_OUT, CLog.Options.OMMIT_THREAD_INFO);
+    _mainLog = new CLog(new File(root, MAIN_LOG_ID + LOG_SUFFIX), CLog.SYSTEM_OUT, CLog.Option.OMMIT_THREAD_INFO);
     _root = root;
   }
 
@@ -143,7 +143,7 @@ public enum CWorkspace {
    * @throws IOException If an I/O error occurs.
    * @throws CConfigurationError if the workspace is not initialized. 
    */
-  public CLog createLog(String logName, CLog.Options... options) throws CConfigurationError, IOException {
+  public CLog createLog(String logName, CLog.Option... options) throws CConfigurationError, IOException {
     checkForInitialization();
     return new CLog(createFile(logName.concat(LOG_SUFFIX)), options); 
   }
