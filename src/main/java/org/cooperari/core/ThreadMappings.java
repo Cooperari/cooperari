@@ -2,7 +2,7 @@ package org.cooperari.core;
 
 import java.util.IdentityHashMap;
 
-import org.cooperari.CInternalError;
+import org.cooperari.errors.CInternalError;
 
 /**
  * Provides mapping from {@link Thread} objects to {@link CThread objects}.

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-import org.cooperari.CInternalError;
-import org.cooperari.CTraceOptions;
+import org.cooperari.config.CTraceOptions;
+import org.cooperari.errors.CInternalError;
 
 
 /**

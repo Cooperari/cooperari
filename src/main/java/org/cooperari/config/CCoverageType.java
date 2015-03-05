@@ -1,4 +1,4 @@
-package org.cooperari;
+package org.cooperari.config;
 
 import org.cooperari.core.CoveragePolicy;
 import org.cooperari.core.coverage.HistoryDependentCoverage;

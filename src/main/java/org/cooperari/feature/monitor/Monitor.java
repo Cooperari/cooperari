@@ -5,9 +5,9 @@ import static org.cooperari.core.util.UnsafeVMOperations.UNSAFE;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import org.cooperari.CInternalError;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CWorkspace;
+import org.cooperari.errors.CInternalError;
 
 /**
  * Representation of a monitor.

@@ -2,8 +2,8 @@ package org.cooperari.sanity.misc;
 
 import static org.junit.Assert.assertEquals;
 
-import org.cooperari.CBaseConfiguration;
-import org.cooperari.CMaxTrials;
+import org.cooperari.config.CBaseConfiguration;
+import org.cooperari.config.CMaxTrials;
 import org.cooperari.core.CConfiguration;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

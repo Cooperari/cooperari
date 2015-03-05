@@ -4,12 +4,12 @@ package org.cooperari.junit;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
-import org.cooperari.CCheckedExceptionError;
-import org.cooperari.CConfigurationError;
-import org.cooperari.CInternalError;
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
 import org.cooperari.core.CSession;
+import org.cooperari.errors.CCheckedExceptionError;
+import org.cooperari.errors.CConfigurationError;
+import org.cooperari.errors.CInternalError;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;

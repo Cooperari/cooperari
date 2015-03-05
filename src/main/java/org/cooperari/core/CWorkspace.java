@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.EnumSet;
 
 import org.aspectj.lang.JoinPoint;
-import org.cooperari.CConfigurationError;
 import org.cooperari.core.util.CLog;
 import org.cooperari.core.util.CReport;
+import org.cooperari.errors.CConfigurationError;
 
 
 /**

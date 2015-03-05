@@ -2,6 +2,8 @@ package org.cooperari;
 
 import java.lang.reflect.AnnotatedElement;
 
+import org.cooperari.config.CBaseConfiguration;
+
 /**
  * Cooperative test.
  * 

@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-import org.cooperari.CBaseConfiguration;
-import org.cooperari.CInstrument;
+import org.cooperari.config.CBaseConfiguration;
+import org.cooperari.config.CInstrument;
 import org.cooperari.core.aspectj.Compiler;
 import org.cooperari.core.aspectj.WeavingConfiguration;
 

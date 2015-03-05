@@ -2,7 +2,7 @@ package org.cooperari.sanity.junit;
 
 import static org.junit.Assert.assertEquals;
 
-import org.cooperari.CMaxTrials;
+import org.cooperari.config.CMaxTrials;
 import org.cooperari.junit.CIgnore;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.After;

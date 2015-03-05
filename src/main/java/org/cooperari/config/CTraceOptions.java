@@ -1,4 +1,4 @@
-package org.cooperari;
+package org.cooperari.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,15 +6,17 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation for the desired type of test coverage.
+ * Configure options for execution trace files.
  * 
  * @since 0.2
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
-public @interface CCoverage {
+public @interface CTraceOptions {
+  
   /**
-   * @return Desired type of coverage. The default value is {@link CCoverageType#HDC}.
+   * @return The limit for the size of the trace (unbounded trace if lower or equal than 0).
    */
-  CCoverageType value() default CCoverageType.HDC;
+  int limit() default 0;
+  
 }

@@ -4,8 +4,8 @@ package org.cooperari.core;
 import java.lang.annotation.Annotation;
 import java.util.IdentityHashMap;
 
-import org.cooperari.CConfigurationError;
 import org.cooperari.core.util.CLog;
+import org.cooperari.errors.CConfigurationError;
 
 // TODO document configuration scheme
 /**

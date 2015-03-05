@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Date;
 
-import org.cooperari.CInternalError;
+import org.cooperari.errors.CInternalError;
 
 /**
  * Message log.

@@ -7,7 +7,7 @@ import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cooperari.CTraceOptions;
+import org.cooperari.config.CTraceOptions;
 import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.core.util.CReport;
 

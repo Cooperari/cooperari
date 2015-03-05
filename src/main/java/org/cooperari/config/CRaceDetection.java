@@ -1,9 +1,11 @@
-package org.cooperari;
+package org.cooperari.config;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import org.cooperari.errors.CRaceError;
 
 /**
  * Annotation to enable race detection.

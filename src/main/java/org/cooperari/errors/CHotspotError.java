@@ -1,7 +1,11 @@
-package org.cooperari;
+package org.cooperari.errors;
 
 import java.util.Arrays;
 import java.util.Collection;
+
+import org.cooperari.CAlways;
+import org.cooperari.CNever;
+import org.cooperari.CSometimes;
 
 /**
  * Exception thrown due to hotspot reachability errors.

@@ -3,9 +3,9 @@ package org.cooperari.feature.monitor;
 import java.util.Iterator;
 import java.util.List;
 
-import org.cooperari.CDeadlockError;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CYieldPoint;
+import org.cooperari.errors.CDeadlockError;
 
 /**
  * Exception thrown due to a deadlock error.

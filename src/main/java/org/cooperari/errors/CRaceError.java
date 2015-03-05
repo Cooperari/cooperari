@@ -1,17 +1,18 @@
-package org.cooperari;
+package org.cooperari.errors;
+
 
 /**
- * Error thrown due to deadlock errors.
+ * Error thrown due to data races.
  * 
  * @since 0.2
  */
 @SuppressWarnings("serial")
-public class CDeadlockError extends CError {
+public final class CRaceError extends CError {
   /**
    * Constructs a new race error.
    * @param message Error message.
    */
-  public CDeadlockError(String message) {
+  public CRaceError(String message) {
     super(message);
   }
 }

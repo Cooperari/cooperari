@@ -26,14 +26,14 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.cooperari.CInstrument;
-import org.cooperari.CInternalError;
 import org.cooperari.CVersion;
+import org.cooperari.config.CInstrument;
 import org.cooperari.core.ACustomYieldPoint;
 import org.cooperari.core.CustomYieldPoint;
 import org.cooperari.core.FeatureHandler;
 import org.cooperari.core.Features;
 import org.cooperari.core.util.IO;
+import org.cooperari.errors.CInternalError;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

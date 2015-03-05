@@ -1,4 +1,8 @@
-package org.cooperari;
+package org.cooperari.config;
+
+import org.cooperari.CAlways;
+import org.cooperari.CNever;
+import org.cooperari.CSometimes;
 
 /**
  * Default configuration for test execution.

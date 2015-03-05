@@ -3,6 +3,8 @@ package org.cooperari;
 import static org.cooperari.core.CRuntime.getRuntime;
 
 import org.cooperari.core.CSession;
+import org.cooperari.errors.CHotspotError;
+import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;
 
 /**

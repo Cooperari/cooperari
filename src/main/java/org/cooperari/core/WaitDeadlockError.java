@@ -2,7 +2,7 @@ package org.cooperari.core;
 
 import java.util.Collection;
 
-import org.cooperari.CDeadlockError;
+import org.cooperari.errors.CDeadlockError;
 
 
 /**

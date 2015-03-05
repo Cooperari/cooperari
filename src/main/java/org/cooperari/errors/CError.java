@@ -1,19 +1,19 @@
-package org.cooperari;
+package org.cooperari.errors;
 
 /**
- * Internal Cooperari error, related to unexpected events that occur during execution.
+ * Base class for Cooperari exceptions.
  * 
- * @since 0.2
+ * @since 0.1
  *
  */
 @SuppressWarnings("serial")
-public class CInternalError extends CError {
+public class CError extends Error {
 
   /**
    * Constructs an error with no arguments.
    * @see Error#Error()
    */
-  public CInternalError() {
+  public CError() {
 
   }
 
@@ -21,7 +21,7 @@ public class CInternalError extends CError {
    * Constructs error with an associated error message.
    * @see Error#Error(String)
    */
-  public CInternalError(String message) {
+  public CError(String message) {
     super(message);
   }
 
@@ -30,7 +30,7 @@ public class CInternalError extends CError {
    * @param cause Cause for the error.
    * @see Error#Error(Throwable)
    */
-  public CInternalError(Throwable cause) {
+  public CError(Throwable cause) {
     super(cause);
   }
 
@@ -40,7 +40,7 @@ public class CInternalError extends CError {
    * @param cause Cause for the error.
    * @see Error#Error(String,Throwable)
    */
-  public CInternalError(String message, Throwable cause) {
+  public CError(String message, Throwable cause) {
     super(message, cause);
   }
 }

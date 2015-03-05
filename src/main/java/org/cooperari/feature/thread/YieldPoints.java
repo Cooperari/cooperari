@@ -3,10 +3,10 @@ package org.cooperari.feature.thread;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.cooperari.CInternalError;
 import org.cooperari.CSystem;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CWorkspace;
+import org.cooperari.errors.CInternalError;
 
 /**
  * {@link java.lang.Thread} yield points.

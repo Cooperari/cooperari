@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
-import org.cooperari.CCheckedExceptionError;
-import org.cooperari.CMultipleExceptionsError;
 import org.cooperari.core.CUncaughtExceptionHandler;
+import org.cooperari.errors.CCheckedExceptionError;
+import org.cooperari.errors.CMultipleExceptionsError;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;

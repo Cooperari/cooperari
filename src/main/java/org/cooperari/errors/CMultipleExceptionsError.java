@@ -1,4 +1,4 @@
-package org.cooperari;
+package org.cooperari.errors;
 
 import java.util.Collections;
 import java.util.List;

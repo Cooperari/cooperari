@@ -2,9 +2,9 @@ package org.cooperari.sanity.misc;
 
 import static org.junit.Assert.fail;
 
-import org.cooperari.CCoverage;
-import org.cooperari.CCoverageType;
 import org.cooperari.CSystem;
+import org.cooperari.config.CCoverage;
+import org.cooperari.config.CCoverageType;
 import org.cooperari.core.WaitDeadlockError;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.FixMethodOrder;

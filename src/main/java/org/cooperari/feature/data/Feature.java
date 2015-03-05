@@ -1,6 +1,6 @@
 package org.cooperari.feature.data;
 
-import org.cooperari.CRaceDetection;
+import org.cooperari.config.CRaceDetection;
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.FeatureHandler;
 

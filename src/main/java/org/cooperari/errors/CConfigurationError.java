@@ -1,4 +1,5 @@
-package org.cooperari;
+package org.cooperari.errors;
+
 
 /**
  * Configuration error.

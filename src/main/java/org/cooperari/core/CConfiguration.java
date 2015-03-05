@@ -5,8 +5,8 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import org.cooperari.CBaseConfiguration;
-import org.cooperari.CConfigurationError;
+import org.cooperari.config.CBaseConfiguration;
+import org.cooperari.errors.CConfigurationError;
 
 /**
  * Configuration object defined by annotations.

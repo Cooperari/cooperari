@@ -3,10 +3,10 @@ package org.cooperari.sanity.feature.data;
 
 import static org.cooperari.CSystem.cHotspot;
 
-import org.cooperari.CRaceDetection;
-import org.cooperari.CRaceError;
 import org.cooperari.CSometimes;
 import org.cooperari.CSystem;
+import org.cooperari.config.CRaceDetection;
+import org.cooperari.errors.CRaceError;
 import org.cooperari.junit.CJUnitRunner;
 import org.cooperari.sanity.feature.Data;
 import org.junit.FixMethodOrder;

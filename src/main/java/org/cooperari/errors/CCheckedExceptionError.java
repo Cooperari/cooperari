@@ -1,4 +1,5 @@
-package org.cooperari;
+package org.cooperari.errors;
+
 
 /**
  * Error class used to wrap a checked exceptions, that is an exceptions

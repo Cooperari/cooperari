@@ -3,13 +3,13 @@ package org.cooperari.feature.data;
 
 import java.util.HashMap;
 
-import org.cooperari.CInternalError;
-import org.cooperari.CRaceDetection;
-import org.cooperari.CRaceError;
+import org.cooperari.config.CRaceDetection;
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CTrace;
 import org.cooperari.core.CWorkspace;
+import org.cooperari.errors.CInternalError;
+import org.cooperari.errors.CRaceError;
 
 
 /**

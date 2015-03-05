@@ -4,7 +4,7 @@ import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.cooperari.CDetectResourceDeadlocks;
+import org.cooperari.config.CDetectResourceDeadlocks;
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CTrace;

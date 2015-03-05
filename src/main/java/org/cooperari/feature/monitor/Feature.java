@@ -1,6 +1,6 @@
 package org.cooperari.feature.monitor;
 
-import org.cooperari.CDetectResourceDeadlocks;
+import org.cooperari.config.CDetectResourceDeadlocks;
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.FeatureHandler;
 

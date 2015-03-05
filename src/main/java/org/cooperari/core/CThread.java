@@ -12,7 +12,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.locks.LockSupport;
 
 import org.aspectj.lang.JoinPoint;
-import org.cooperari.CInternalError;
+import org.cooperari.errors.CInternalError;
 
 /**
  * Cooperative thread.

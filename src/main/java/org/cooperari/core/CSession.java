@@ -5,15 +5,15 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import org.cooperari.CCheckedExceptionError;
-import org.cooperari.CConfigurationError;
-import org.cooperari.CCoverage;
-import org.cooperari.CHotspotError;
-import org.cooperari.CInternalError;
-import org.cooperari.CMaxTrials;
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
-import org.cooperari.CTimeLimit;
+import org.cooperari.config.CCoverage;
+import org.cooperari.config.CMaxTrials;
+import org.cooperari.config.CTimeLimit;
+import org.cooperari.errors.CCheckedExceptionError;
+import org.cooperari.errors.CConfigurationError;
+import org.cooperari.errors.CHotspotError;
+import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;
 
 /**
