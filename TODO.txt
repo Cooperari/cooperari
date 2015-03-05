@@ -11,7 +11,7 @@ Features left to implement:
 
 
 Misc. implementation details
- -- Merge CRuntime / CSession ?
+ -- Merge CRuntime / CSession ? Feature life-cycle revision.
  -- Get rid of Scheduler.wakeup() interaction
  -- operation arguments
  -- resource deadlocks / wait release step ?
