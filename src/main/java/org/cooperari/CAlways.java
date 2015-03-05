@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Configure hotspots that should always be reached by a trial in a test session.
+ * Specify hotspots that should always be reached by a trial in a test session.
  * 
  * @see CNever
  * @see CSometimes
