@@ -12,13 +12,15 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface CRaceDetection {
   /**
-   * @return Boolean value enabling race detection.
+   * @return Boolean value enabling race detection. Races will be logged
+   * to execution trace reports.
+   *
    */
   boolean value() default false;
   
   /**
    * @return Boolean value indicating if {@link CRaceError} should be thrown when a race is detected.
-   * If disabled (the default) races are merely logged.
+   * If disabled (the default) races are merely .
    */
   boolean throwErrors() default false;
 }

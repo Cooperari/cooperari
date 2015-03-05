@@ -2,15 +2,16 @@ package org.cooperari.core;
 
 import java.util.Collection;
 
-import org.cooperari.CError;
+import org.cooperari.CDeadlockError;
 
 
 @SuppressWarnings("serial")
-public class WaitDeadlockError extends CError {
+public class WaitDeadlockError extends CDeadlockError {
 
-  public WaitDeadlockError() {
-    
-  }
+  /**
+   * Constructs an error.
+   * @param threads Deadlock threads.
+   */
   public WaitDeadlockError(Collection<CThread> threads) {
     super(formatMessage(threads));
   }

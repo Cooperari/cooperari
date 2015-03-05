@@ -6,7 +6,9 @@ import java.util.HashMap;
 import org.cooperari.CInternalError;
 import org.cooperari.CRaceDetection;
 import org.cooperari.CRaceError;
+import org.cooperari.core.CRuntime;
 import org.cooperari.core.CThread;
+import org.cooperari.core.CTrace;
 import org.cooperari.core.CWorkspace;
 
 
@@ -132,16 +134,17 @@ public class RaceDetector {
   @SuppressWarnings("javadoc")
   private void reportRace(Data d) {
     CThread t = (CThread) Thread.currentThread();
-    String msg = 
-        String.format
-        ("Race: %s at %s:%d over %s.%s", 
-            t.getName(), 
-            t.getYieldPoint().getSourceFile(),
-            t.getYieldPoint().getSourceLine(),
-            d._object.getClass().getCanonicalName(), 
-            d._key);
-    CWorkspace.log(msg);
+    CTrace trace = CRuntime.getRuntime().get(CTrace.class);
+    trace.record(t, CTrace.EventType.RACE);
     if (_throwRaceErrors) {
+      String msg = 
+          String.format
+          ("Race: %s at %s:%d over %s.%s", 
+              t.getName(), 
+              t.getYieldPoint().getSourceFile(),
+              t.getYieldPoint().getSourceLine(),
+              d._object.getClass().getCanonicalName(), 
+              d._key);
       throw new CRaceError(msg);
     }
   }

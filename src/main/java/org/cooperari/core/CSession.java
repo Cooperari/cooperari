@@ -89,6 +89,7 @@ public final class CSession {
       cHandler.onTestStarted();
       CScheduler s = new CScheduler(runtime, cHandler, entryPoint);
       trace = s.getTrace();
+      runtime.register(trace);
       s.start();
       s.join();
       cHandler.onTestFinished();

@@ -18,6 +18,43 @@ import org.cooperari.core.util.CReport;
  *
  */
 public final class CTrace {
+  
+  /**
+   * Event types.
+   *
+   */
+  public enum EventType {
+    /**
+     * Race condition.
+     */
+    RACE('R'),
+    /**
+     * Deadlock
+     */
+    DEADLOCK('D');
+    
+    /**
+     * Event marker in trace file.
+     */
+    private final char _marker;
+    
+    /**
+     * Constructor.
+     * @param marker Event marker for trace file.
+     */
+    private EventType(char marker) {
+      _marker = marker;  
+    }
+    
+    /**
+     * Get event marker character.
+     * @return Character mark in trace files for this event type.
+     */
+    public char getTraceMarker() {
+      return _marker;
+    }
+  };
+
   /**
    * Size limit.
    */
@@ -61,7 +98,16 @@ public final class CTrace {
    */
   public void recordStep(CThread t) {
     AgentFacade.INSTANCE.markAsCovered(t.getYieldPoint());
-    _steps.addLast(new Step(t));
+    record(t, null);
+  }
+  
+  /**
+   * Record an event for one thread.
+   * @param t The thread at stake.
+   * @param type event type
+   */
+  public void record(CThread t, EventType type) {
+    _steps.addLast(new Step(t, type));
     if (_sizeLimit > 0 && _steps.size() == _sizeLimit) {
       _steps.removeFirst();
     }
@@ -97,6 +143,7 @@ public final class CTrace {
                         "#", 
                         "TID", 
                         "STEP", 
+                        "EVENT",
                         "SOURCE FILE", 
                         "LINE", 
                         "YIELD POINT", 
@@ -107,6 +154,7 @@ public final class CTrace {
       report.writeEntry(stepId, 
                         step.getThreadId(), 
                         step.getThreadStep(), 
+                        step.getEventMarker(),
                         yp.getSourceFile(), 
                         yp.getSourceLine(), 
                         yp.getSignature(), 
@@ -176,18 +224,24 @@ public final class CTrace {
     private final int _threadStep;
 
     /**
+     * Type.
+     */
+    private final char _eventMarker;
+    
+    /**
      * Yield point for thread.
      */
     private final CYieldPoint _yieldPoint;
 
-
     /**
      * Constructs a new trace element.
      * @param t Thread.
+     * @param type Type of element.
      */
-    Step (CThread t) {
+    Step(CThread t, EventType type)  {
       this._threadId = t.getCID();
       this._threadStep = t.getStep();
+      this._eventMarker = type != null ? type.getTraceMarker() : '-';
       this._yieldPoint = t.getYieldPoint();
     }
     
@@ -207,6 +261,13 @@ public final class CTrace {
       return _threadStep;
     }
     
+    /**
+     * Get event type.
+     * @return Type of event.
+     */
+    char getEventMarker() {
+      return _eventMarker;
+    }
     /**
      * Get yield point.
      * @return The thread step counter for this step.

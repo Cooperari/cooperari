@@ -7,8 +7,9 @@ import java.util.Iterator;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+import org.cooperari.CDeadlockError;
 import org.cooperari.CInternalError;
-import org.cooperari.feature.monitor.ResourceDeadlockError;
+import org.cooperari.feature.monitor.CResourceDeadlockError;
 
 /**
  * Helper class to run a set of threads in non-cooperative manner.
@@ -83,13 +84,9 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
         if (blockedThreads + waitingThreads == aliveThreads) {
           ThreadMXBean bean = ManagementFactory.getThreadMXBean();
           long[] threadIds = bean.findDeadlockedThreads(); 
-          if (threadIds != null) {
-            throw new ResourceDeadlockError();
-          }
           ldCtr++;
-          if (ldCtr == 100) {
-            assert CWorkspace.debug("dealock");
-            throw new WaitDeadlockError();
+          if (threadIds == null || ldCtr == 100) {
+            throw new CDeadlockError("All threads deadlocked.");
           }
           try { Thread.sleep(1); } catch(Throwable e) { }
         } else {

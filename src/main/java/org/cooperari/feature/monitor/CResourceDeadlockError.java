@@ -3,6 +3,7 @@ package org.cooperari.feature.monitor;
 import java.util.Iterator;
 import java.util.List;
 
+import org.cooperari.CDeadlockError;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CYieldPoint;
 
@@ -11,21 +12,16 @@ import org.cooperari.core.CYieldPoint;
  *
  */
 @SuppressWarnings("serial")
-public class ResourceDeadlockError extends Error {
+public class CResourceDeadlockError extends CDeadlockError {
 
   /**
-   * Constructor with no arguments.
-   */
-  public ResourceDeadlockError() {
-    
-  }
-  /**
    * Constructor.
+   * 
    * @param t Thread where deadlock is detected.
-   * @param deadlock Monitor cycle due to the deadlock.
+   * @param cycle Monitor cycle due to the deadlock.
    */
-  public ResourceDeadlockError(CThread t, List<Monitor> deadlock) {
-    super(formatMessage(t,deadlock));
+  public CResourceDeadlockError(CThread t, List<Monitor> cycle) {
+    super(formatMessage(t, cycle));
   }
 
   @SuppressWarnings("javadoc")
@@ -38,20 +34,16 @@ public class ResourceDeadlockError extends Error {
       sb.append(' ').append('>').append(' ');
       m = itr.next();
       format(m.getOwner(), m, sb);
-    } 
+    }
     return sb.toString();
   }
-  
+
   @SuppressWarnings("javadoc")
   private static void format(CThread t, Monitor m, StringBuilder sb) {
     CYieldPoint pc = t.getYieldPoint();
-    sb.append('L')
-      .append(m.getId())
-      .append('/')
-      .append(t.getName()).append('/')
-      .append(pc.getSourceFile())
-      .append(':')
-      .append(pc.getSourceLine()); 
+    sb.append('L').append(m.getId()).append('/').append(t.getName())
+        .append('/').append(pc.getSourceFile()).append(':')
+        .append(pc.getSourceLine());
   }
 
 }

@@ -5,14 +5,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.cooperari.CDetectResourceDeadlocks;
+import org.cooperari.core.CRuntime;
 import org.cooperari.core.CThread;
+import org.cooperari.core.CTrace;
 import org.cooperari.core.util.Graph;
 
 
 /**
  * Monitor acquisition deadlock detector.
  * 
- * @since 0.1
+ * @since 0.2
  */
 public class DeadlockDetector {
 
@@ -52,9 +54,10 @@ public class DeadlockDetector {
       List<Monitor> deadlock = _graph.findCycle(m);
       if (!deadlock.isEmpty()) {
         _graph.removeEdge(from, m);
-        ResourceDeadlockError error = new ResourceDeadlockError(t, deadlock);
+        CResourceDeadlockError error = new CResourceDeadlockError(t, deadlock);
         for (Monitor m2 : deadlock) {
           CThread t2 = m2.getOwner();
+          CRuntime.getRuntime().get(CTrace.class).record(t2, CTrace.EventType.DEADLOCK);
           if (t2 != t) {
             t2.cStop(error);
           }

@@ -188,7 +188,6 @@ public class CScheduler extends Thread {
     CThread running = null, lastRunning = null;
 
     while (_threads.size() > 0) {
-
       synchronized (_wakeupLock) {
         try {
           _wakeupLock.wait(1);
@@ -233,6 +232,7 @@ public class CScheduler extends Thread {
           for (CThread t : _threads.values()) {
             if (t.isWaiting() || t.isBlocked()) {
               assert CWorkspace.debug("Stopping "+ t.getName());
+              _trace.record(t, CTrace.EventType.DEADLOCK);
               t.cStop(e); 
             }
           }

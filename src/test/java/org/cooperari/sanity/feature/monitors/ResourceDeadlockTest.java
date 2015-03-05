@@ -4,7 +4,7 @@ import static org.cooperari.CSystem.cHotspot;
 
 import org.cooperari.CSometimes;
 import org.cooperari.CSystem;
-import org.cooperari.feature.monitor.ResourceDeadlockError;
+import org.cooperari.feature.monitor.CResourceDeadlockError;
 import org.cooperari.junit.CJUnitRunner;
 import org.cooperari.sanity.feature.Data;
 import org.junit.FixMethodOrder;
@@ -27,7 +27,7 @@ public class ResourceDeadlockTest {
         synchronized (A) {
           try {
             synchronized (B) { }
-          } catch(ResourceDeadlockError e) {
+          } catch(CResourceDeadlockError e) {
             cHotspot("deadlock");
           }
         }
@@ -38,7 +38,7 @@ public class ResourceDeadlockTest {
         synchronized (B) {
           try {
             synchronized (A) { }
-          } catch(ResourceDeadlockError e) {
+          } catch(CResourceDeadlockError e) {
             cHotspot("deadlock");
           }
         }
@@ -59,7 +59,7 @@ public class ResourceDeadlockTest {
           while (A.x == 0) { }
           try {
             synchronized (B) { B.x = 1; }
-          } catch (ResourceDeadlockError e) {
+          } catch (CResourceDeadlockError e) {
             cHotspot("deadlock1");
           }
         }
@@ -71,7 +71,7 @@ public class ResourceDeadlockTest {
           A.x = 1;
           try {
             synchronized (A) { }
-          } catch (ResourceDeadlockError e) {
+          } catch (CResourceDeadlockError e) {
             cHotspot("deadlock2");
           }
         }
