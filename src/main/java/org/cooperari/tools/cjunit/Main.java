@@ -66,7 +66,8 @@ public class Main {
       }
       
       JUnitCore juc = new JUnitCore();
-      juc.addListener(new TextListener(out));
+
+      juc.addListener(new CJUnitRunListener(System.out));
       Result r = juc.run(classes);
       
       CWorkspace.log("Yield points covered: %d out of %d\n", AgentFacade.INSTANCE.getWeavePointsCovered(), AgentFacade.INSTANCE.getWeavePointCount());
