@@ -63,7 +63,7 @@ public final class CTrace {
   /**
    * Trace steps.
    */
-  private final ArrayDeque<Step> _steps = new ArrayDeque<>();
+  private final ArrayDeque<TraceItem> _traceElements = new ArrayDeque<>();
 
   /**
    * Map of thread ids to names.
@@ -107,9 +107,9 @@ public final class CTrace {
    * @param type event type
    */
   public void record(CThread t, EventType type) {
-    _steps.addLast(new Step(t, type));
-    if (_sizeLimit > 0 && _steps.size() == _sizeLimit) {
-      _steps.removeFirst();
+    _traceElements.addLast(new TraceItem(t, type));
+    if (_sizeLimit > 0 && _traceElements.size() == _sizeLimit) {
+      _traceElements.removeFirst();
     }
     _stepCounter++;
   }
@@ -138,7 +138,7 @@ public final class CTrace {
       report.writeEntry(entry.getKey(), ti.getName(), ti.getClassName());
     }
     // Write step info
-    int stepId = _stepCounter - _steps.size();  
+    int stepId = _stepCounter - _traceElements.size();  
     report.beginSection("STEPS", 
                         "#", 
                         "TID", 
@@ -149,12 +149,12 @@ public final class CTrace {
                         "YIELD POINT", 
                         "STAGE"); 
     
-    for (Step step : _steps) {
-      CYieldPoint yp = step.getYieldPoint();
+    for (TraceItem traceItem : _traceElements) {
+      CYieldPoint yp = traceItem.getYieldPoint();
       report.writeEntry(stepId, 
-                        step.getThreadId(), 
-                        step.getThreadStep(), 
-                        step.getEventMarker(),
+                        traceItem.getThreadId(), 
+                        traceItem.getThreadStep(), 
+                        traceItem.getEventMarker(),
                         yp.getSourceFile(), 
                         yp.getSourceLine(), 
                         yp.getSignature(), 
@@ -167,7 +167,7 @@ public final class CTrace {
    * Clear the trace.
    */
   public void clear() {
-    _steps.clear();
+    _traceElements.clear();
   }
 
   /**
@@ -210,9 +210,9 @@ public final class CTrace {
     }
   }
   /**
-   * Inner class representing a step of the trace.
+   * Inner class representing an item of a trace.
    */
-  private static final class Step {
+  private static final class TraceItem {
     /**
      * Thread id.
      */
@@ -238,7 +238,7 @@ public final class CTrace {
      * @param t Thread.
      * @param type Type of element.
      */
-    Step(CThread t, EventType type)  {
+    TraceItem(CThread t, EventType type)  {
       this._threadId = t.getCID();
       this._threadStep = t.getStep();
       this._eventMarker = type != null ? type.getTraceMarker() : '-';
