@@ -3,7 +3,6 @@
 Features left to implement:
 - Pretty print for cjunit 
 - cjava utility
-- @CTimeLimit to setup a time bound for executing test trials
 - cjunit -p switch / ensure CJUnitRunner runs preemptively as well
 - Revise Coverage code
 - CSystem.runPreemptively() 
