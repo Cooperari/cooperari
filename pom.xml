@@ -167,8 +167,8 @@
 						<configuration>
 							<executable>java</executable>
 							<classpathScope>test</classpathScope>
-							<workingDirectory>${project.build.directory}/.cooperari</workingDirectory>
-							<outputFile>${project.build.directory}/.cooperari/prepare-test-setup.txt</outputFile>
+							<workingDirectory>${project.build.directory}/test-execution</workingDirectory>
+							<outputFile>csetup-output.txt</outputFile>
 							<arguments>
 								<argument>-classpath</argument>
 								<classpath/>
@@ -176,9 +176,8 @@
 								<argument>-v</argument>
 								<argument>-d</argument>
 								<argument>.</argument>
-								<argument>-Xd</argument>
-								<argument>-Xk</argument>
-								<argument>org.cooperari.sanity.feature.Data</argument>
+								<argument>-k</argument>
+								<argument>org.cooperari.sanity.feature.TestSetup</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -190,10 +189,10 @@
 						</goals>
 						<configuration>
 						    <executable>java</executable>
-<!-- 						    <outputFile>${project.build.directory}/test-execution/output.txt</outputFile> -->
+<!-- 						    <outputFile>${project.build.directory}/test-execution/test-output.txt</outputFile> -->
 						    <workingDirectory>${project.build.directory}/test-execution</workingDirectory>
 							<classpathScope>test</classpathScope>
-							<commandlineArgs>-classpath ${project.build.directory}/.cooperari/org.cooperari.sanity.feature.Data-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/.cooperari/org.cooperari.sanity.feature.Data-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.sanity.AllCooperativeTests</commandlineArgs>
+							<commandlineArgs>-classpath ${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.sanity.AllCooperativeTests</commandlineArgs>
 						</configuration>
 					</execution>
 				</executions>
