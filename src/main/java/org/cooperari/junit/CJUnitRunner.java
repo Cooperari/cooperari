@@ -1,6 +1,7 @@
 package org.cooperari.junit;
 
 
+import org.cooperari.CConfigurationError;
 import org.cooperari.CInternalError;
 import org.cooperari.core.CSession;
 import org.junit.Ignore;
@@ -94,7 +95,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
 
     if (fm.getAnnotation(Test.class).timeout() > 0) {
       // timeout attribute not honored for now
-      notifier.fireTestFailure(new Failure(desc, new CInternalError("'timeout' attribute is not honored for @Test. Sorry :(")));
+      notifier.fireTestFailure(new Failure(desc, new CConfigurationError("'timeout' attribute is not honored for @Test. Sorry :(")));
       return;
     }
 
