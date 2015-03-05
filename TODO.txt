@@ -20,6 +20,7 @@ Misc. implementation details
  -- Inline yield points - refactoring
  -- feature package names ?
  -- serial ids for exception classes
+ -- org.cooperari.error package
 
 Future workloads:
 - Examples project
