@@ -49,7 +49,7 @@ public final class Main {
     boolean quiet = false;
     boolean verbose = false;
     boolean keepTempFiles = false;
-    boolean forceDump = false;
+
     File outDir = new File(System.getProperty("user.home") + "/.cooperari");
     int index = 0;
     if (args.length == 0) {
@@ -79,6 +79,10 @@ public final class Main {
         case "dryrun":
           dryRun = true;
           break;
+        case "k":
+        case "keeptemp":
+          keepTempFiles = true;
+          break;
         case "q":
         case "quiet":
           quiet = true;
@@ -89,12 +93,7 @@ public final class Main {
           quiet = false;
           verbose = true;
           break;
-        case "Xd":
-          forceDump = true;
-          break;
-        case "Xk":
-          keepTempFiles = true;
-          break;
+
         default:
           out.printf("Invalid argument '%s'.\n", arg);
           return 1;
@@ -127,12 +126,6 @@ public final class Main {
         WeavingConfiguration wc = WeavingConfiguration.create(config, clazz);
         if (verbose) {
           out.println("Created weaving configuration ...");
-        }
-        if (forceDump) {
-          wc.enableDumpForAllClasses();
-          wc.addWeaverOption("-verbose");
-          wc.addWeaverOption("-showWeaveInfo");
-          wc.addWeaverOption("-debug");
         }
         try {
           if (dryRun || verbose) {
@@ -205,11 +198,10 @@ public final class Main {
     out.println("Program options:\n"
         + "  -d <dir> | -dir <dir> : set output directory\n"
         + "  -h | -help            : display this message and exit\n"
+        + "  -k | -keeptmp         : keep intermediate temporary files\n"
         + "  -n | -dryrun          : dry run (just dump XML for weaving configurations)\n"
         + "  -q | -quiet           : run silent (no output)\n"
         + "  -v | -verbose         : be verbose (extra output)\n"
-        + "  -Xd                   : force class dump during load-time weaving\n"
-        + "  -Xk                   : keep intermediate temporary files\n"
         );
 
   }
