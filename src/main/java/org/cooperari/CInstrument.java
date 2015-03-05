@@ -48,7 +48,7 @@ public @interface CInstrument {
   boolean ltwDump() default false;
   
   /**
-   * @return Load-time weaving options (used for debugging).
+   * @return Extra load-time weaving options (used for debugging).
    */
   String ltwOptions() default "";
 }
