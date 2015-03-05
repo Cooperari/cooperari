@@ -1,4 +1,4 @@
-package org.cooperari.coverage;
+package org.cooperari.core.coverage;
 
 
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package org.cooperari.core;
+package org.cooperari.attic;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
@@ -9,6 +9,7 @@ import java.util.concurrent.CyclicBarrier;
 
 import org.cooperari.CDeadlockError;
 import org.cooperari.CInternalError;
+import org.cooperari.core.CWorkspace;
 
 /**
  * Helper class to run a set of threads in non-cooperative manner.

@@ -1,4 +1,4 @@
-package org.cooperari.coverage;
+package org.cooperari.attic;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

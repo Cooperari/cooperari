@@ -8,7 +8,7 @@ Features left to implement:
 - CSystem.runPreemptively() 
 - CSystem.executeSession()
 - Windows scripts
-
+- javadoc / source / deploy maven targets
 
 Misc. implementation details
  -- Merge CRuntime / CSession ? Feature life-cycle revision.
@@ -20,7 +20,6 @@ Misc. implementation details
  -- Inline yield points - refactoring
  -- feature package names ?
  -- serial ids for exception classes
- -- Move Noise, NonCooperativeThreadRunner etc to attic package
 
 Future workloads:
 - Examples project

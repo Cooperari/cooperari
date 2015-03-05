@@ -1,4 +1,4 @@
-package org.cooperari.coverage;
+package org.cooperari.core.coverage;
 
 import org.cooperari.core.CThread;
 
