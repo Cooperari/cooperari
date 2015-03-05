@@ -3,12 +3,10 @@ package org.cooperari.tools.cjunit;
 import java.io.PrintStream;
 
 import org.cooperari.CVersion;
-import org.cooperari.core.CWorkspace;
+import org.junit.internal.TextListener;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
-import org.junit.internal.TextListener;
 
 /**
  * Custom JUnit run listener for <code>cjunit</code>.
@@ -37,7 +35,8 @@ class CJUnitRunListener extends TextListener {
   }
   
   /**
-   * {@inheritDoc}
+   * JUnit test-run hook.
+   * @param description Test description.
    */
   @Override
   public void testRunStarted(Description description) throws Exception {
@@ -47,6 +46,10 @@ class CJUnitRunListener extends TextListener {
   }
   
   
+  /**
+   * JUnit test-run finished hook.
+   * @param result Test result.
+   */
   @Override
   public void testRunFinished(Result result) {
       if (result.getFailureCount() > 0) {
@@ -62,6 +65,11 @@ class CJUnitRunListener extends TextListener {
     
   }
 
+  
+  /**
+   * JUnit atomic test start hook.
+   * @param description Test description.
+   */
   @Override
   public void testStarted(Description description) {
     if (!description.getClassName().equals(_currentClassName)) {
@@ -71,17 +79,29 @@ class CJUnitRunListener extends TextListener {
     _out.printf("  %-50s ", description.getMethodName());
   }
   
+  /**
+   * JUnit atomic test finish hook.
+   * @param description Test description.
+   */
   @Override
   public void testFinished(Description description) {
      _out.println("[passed]");
   }
 
+  /**
+   * JUnit atomic test finish hook.
+   * @param failure Failure.
+   */
   @Override
   public void testFailure(Failure failure) {
     _out.printf("[failed : %s ]", failure.getException().getClass().getCanonicalName());
     _out.println();
   }
 
+  /**
+   * JUnit atomic test skip hook.
+   * @param description Test description.
+   */
   @Override
   public void testIgnored(Description description) {
     _out.printf("  %-50s [ignored]", description.getMethodName());
