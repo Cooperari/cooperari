@@ -2,7 +2,8 @@
 
 Features left to implement:
 - Pretty print for cjunit 
-- cjunit / csetup chaining ... load agent programatically?
+- cjava utility
+- @CTimeLimit to setup a time bound for executing test trials
 - cjunit -p switch / ensure CJUnitRunner runs preemptively as well
 - Revise Coverage code
 - CSystem.runPreemptively() 
@@ -20,7 +21,7 @@ Misc. implementation details
  -- Inline yield points - refactoring
  -- feature package names ?
  -- serial ids for exception classes
- -- org.cooperari.error package
+ -- org.cooperari.error package ?
 
 Future workloads:
 - Examples project
