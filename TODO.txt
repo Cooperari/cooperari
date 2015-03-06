@@ -1,14 +1,12 @@
 == 0.2.1. final ==
 
 Features left to implement:
-- Pretty print for cjunit 
 - cjava utility
-- cjunit -p switch / ensure CJUnitRunner runs preemptively as well
 - Revise Coverage code
 - CSystem.runPreemptively() 
-- CSystem.executeSession()
 - Windows scripts
 - javadoc / source / deploy maven targets
+- cjunit -p switch / ensure CJUnitRunner runs preemptively as well (maybe)
 
 Misc. implementation details
  -- Merge CRuntime / CSession ? Feature life-cycle revision.
