@@ -2,7 +2,7 @@ package org.cooperari.errors;
 
 
 /**
- * Internal Cooperari error, related to unexpected events that occur during execution.
+ * Error thrown due to an unexpected internal Cooperari error.
  * 
  * @since 0.2
  *

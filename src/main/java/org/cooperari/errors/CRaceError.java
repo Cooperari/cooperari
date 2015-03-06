@@ -2,7 +2,12 @@ package org.cooperari.errors;
 
 
 /**
- * Error thrown due to data races.
+ * Data race error.
+ * 
+ * <p>
+ * This error is thrown if and only if (1) race detection is enabled, (2) a data race is detected, 
+ * and (3) the {@link org.cooperari.config.CRaceDetection#throwErrors()} configuration flag is set.
+ * </p>
  * 
  * @since 0.2
  */

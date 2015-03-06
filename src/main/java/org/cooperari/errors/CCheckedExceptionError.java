@@ -2,9 +2,11 @@ package org.cooperari.errors;
 
 
 /**
- * Error class used to wrap a checked exceptions, that is an exceptions
- * that is NOT an instance of {@link java.lang.Error} or {@link java.lang.RuntimeException}.
- * The wrapped exception can be retrieved using {@link #getCause()}.
+ * Error class used to wrap a checked exception.
+ * 
+ * <p>The wrapped checked Java exception (i.e., a {@link java.lang.Throwable} object
+ * that is NOT an instance of {@link java.lang.Error} or {@link java.lang.RuntimeException}),
+ * can be retrieved using {@link #getCause()} for this exception type.
  * 
  * @since 0.2
  *

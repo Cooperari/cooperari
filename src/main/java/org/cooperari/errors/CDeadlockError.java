@@ -2,7 +2,9 @@ package org.cooperari.errors;
 
 
 /**
- * Error thrown due to deadlock errors.
+ * Deadlock error.
+ * 
+ * <p>An error of this type is thrown when a deadlock detected during cooperative execution.</p>
  * 
  * @since 0.2
  */

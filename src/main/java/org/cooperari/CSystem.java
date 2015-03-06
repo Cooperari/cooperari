@@ -8,7 +8,7 @@ import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;
 
 /**
- * Utility methods to interface with the Cooperari system.
+ * Cooperari system facade and utility methods.
  * 
  * @since 0.2
  *

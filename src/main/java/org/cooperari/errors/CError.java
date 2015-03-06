@@ -1,7 +1,7 @@
 package org.cooperari.errors;
 
 /**
- * Base class for Cooperari exceptions.
+ * Base class for Cooperari errors.
  * 
  * @since 0.1
  *
