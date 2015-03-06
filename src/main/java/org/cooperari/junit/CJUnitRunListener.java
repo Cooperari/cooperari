@@ -5,7 +5,6 @@ import java.io.PrintStream;
 import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
 import org.cooperari.core.aspectj.AgentFacade;
-import org.junit.internal.TextListener;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;

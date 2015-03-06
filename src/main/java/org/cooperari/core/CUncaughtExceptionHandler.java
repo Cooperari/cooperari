@@ -5,7 +5,6 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 
 import org.cooperari.errors.CCheckedExceptionError;
-import org.cooperari.errors.CInternalError;
 import org.cooperari.errors.CMultipleExceptionsError;
 
 /**
