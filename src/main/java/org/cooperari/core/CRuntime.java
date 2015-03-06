@@ -20,31 +20,32 @@ import org.cooperari.errors.CConfigurationError;
  * to it.
  * </p>
  * <p>
- * <b>Summary of functionality</b>
+ * <b>Summary of functionality:</b></p>
  * <ul>
- * <li>Environment association - a thread:
- * <ul>
- * <li>joins an environment using {@link #join()}.
- * <li>leaves an environment using {@link #leave()}.
- * <li>gets the environment it is associated to using {@link #getRuntime()}
- * </uL>
+ *   <li>Environment association - a thread:
+ *   <ul>
+ *     <li>joins an environment using {@link #join()}.</li>
+ *     <li>leaves an environment using {@link #leave()}.</li>
+ *     <li>gets the environment it is associated to using {@link #getRuntime()}</li>
+ *   </ul>
  * <li>A shared object is:
- * <ul>
- * <li>registered using {@link #register(Object)}, taking the object's class
- * obtained through {@link Object#getClass()} as key, or
- * {@link #register(Object, Object)} using an arbitrary key
- * <li>unregistered using {@link #unregister(Object) unregister(Object)} for any
- * type of key (which can be the original object's class if the object was
- * registered using {@link #register(Object)})
- * <li>obtained (while registered) using {@link #get(Class) get(Class)} for
- * class keys or {@link #get(Object)} for arbitrary keys
+ *   <ul>
+ *     <li>registered using {@link #register(Object)}, taking the object's class
+ *     obtained through {@link Object#getClass()} as key, or
+ *     {@link #register(Object, Object)} using an arbitrary key</li>
+ *     <li>unregistered using {@link #unregister(Object) unregister(Object)} for any
+ *     type of key (which can be the original object's class if the object was
+ *     registered using {@link #register(Object)})</li>
+ *     <li>obtained (while registered) using {@link #get(Class) get(Class)} for
+ *     class keys or {@link #get(Object)} for arbitrary keys</li>
+ *   </ul>
+ *   <li>Cooperari features
+ *   <ul>
+ *     <li>are initialized using {@link #initFeatures()}
+ *     <li>are shutdown using {@link #shutdownFeatures()}
+ *   </ul>
  * </ul>
- * <li>Cooperari features
- * <ul>
- * <li>are initialized using {@link #initFeatures()}
- * <li>are shutdown using {@link #shutdownFeatures()}
- * </ul>
- * </p>
+ * 
  * 
  * @since 0.2
  */
@@ -162,7 +163,7 @@ public class CRuntime {
    * to <code>register(o)</code> is equivalent to
    * <code>register(o.getClass(), o)</code>. An object registered with this
    * method should be unregistered with a call to
-   * <code>unregister(o.getClass())</unregister>.
+   * <code>unregister(o.getClass())</code>.
    * </p>
    * 
    * @param o Object.
@@ -180,7 +181,7 @@ public class CRuntime {
    * Any previous association with the key will be overridden. An object
    * registered with this method can be accessed through <code>get(key)</code>,
    * until unregistered with a call to
-   * <code>unregister(key)</unregister>. The key object reference
+   * <code>unregister(key)</code>. The key object reference
    * must be the same in calls to <code>get()</code> and
    * <code>unregister()</code>.
    * </p>

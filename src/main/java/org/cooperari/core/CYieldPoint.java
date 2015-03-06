@@ -122,7 +122,7 @@ public final class CYieldPoint {
    * available. The information will be defined if {{@link #getLocation()}
    * refers to an instance of {org.aspectj.lang.JoinPoint.StaticPart}.
    * 
-   * @return The source file name or <code>"<system>"</code> if the information is not
+   * @return The source file name or <code>"&lt;system&gt;"</code> if the information is not
    *         available.
    */
   public String getSourceFile() {

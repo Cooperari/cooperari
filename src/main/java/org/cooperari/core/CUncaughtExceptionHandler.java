@@ -10,13 +10,14 @@ import org.cooperari.errors.CMultipleExceptionsError;
 
 /**
  * Handler for uncaught thread exceptions.
+ * 
  * <p>
  * Objects of this type may aggregate exceptions from several threads. The
  * aggregated exceptions may be thrown back or wrapped up in a convenient exception type by calling
  * {@link #rethrowExceptionsIfAny}.
  * </p>
  * 
- * </p>
+ * @since 0.2
  */
 public final class CUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
@@ -59,7 +60,7 @@ public final class CUncaughtExceptionHandler implements UncaughtExceptionHandler
    * Throw uncaught exceptions, if any.
    * <p>
    * The internal exception buffer is cleared, and previously recorded exceptions may be thrown or wrapped
-   * up using other exception types, as follows:
+   * up using other exception types, as follows:</p>
    * <ul>
    * <li>If no exceptions are recorded, the method does nothing.</li>
    * <li>If exactly one exception is recorded then:
@@ -69,7 +70,7 @@ public final class CUncaughtExceptionHandler implements UncaughtExceptionHandler
    * types).</li>
    * <li>Otherwise the exception at stake must be checked ((note that this
    * should never happen but the case is covered in any case), the exception is
-   * wrapped up as the cause for a {@link CInternalError} exception that is
+   * wrapped up as the cause for a {@link CCheckedExceptionError} exception that is
    * thrown. .</li>
    * </ul>
    * </li>
@@ -77,7 +78,7 @@ public final class CUncaughtExceptionHandler implements UncaughtExceptionHandler
    * {@link CMultipleExceptionsError} exception is thrown grouping
    * information for all exceptions.</li>
    * </ul>
-   * </p>
+   * 
    */
   public void rethrowExceptionsIfAny()  {
     synchronized (_exceptions) {

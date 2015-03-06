@@ -19,6 +19,7 @@ public class CError extends Error {
 
   /**
    * Constructs error with an associated error message.
+   * @param message Error message.
    * @see Error#Error(String)
    */
   public CError(String message) {

@@ -1,6 +1,7 @@
 == 0.2.1. final ==
 
 Features left to implement:
+- @CKeepGoing
 - cjava utility
 - Revise Coverage code
 - CSystem.runPreemptively() 
@@ -18,7 +19,6 @@ Misc. implementation details
  -- Inline yield points - refactoring
  -- feature package names ?
  -- serial ids for exception classes
- -- org.cooperari.error package ?
 
 Future workloads:
 - Examples project
@@ -26,9 +26,11 @@ Future workloads:
 
 == 0.3 ==
 
-Features:
-- java.util.concurrent (Cyclic Barrier, phaser, etc)
-- CScheduler more efficient
-- java.io ? 
-- java.net ? 
-- randomized testing plugin
+Sketch of desired features:
+-- Important 
+ - java.util.concurrent (Cyclic Barrier, phaser, etc)
+ - CScheduler more efficient
+-- Think about ...
+ - java.io ? 
+ - java.net ? 
+ - reinstate randomized testing profile

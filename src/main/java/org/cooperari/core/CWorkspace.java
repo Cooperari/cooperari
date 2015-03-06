@@ -82,7 +82,7 @@ public enum CWorkspace {
   /**
    * Check if workspace is initialized.
    * @return <code>true</code> if the workspace has been initialized before.
-   * @see #initialize(File)
+   * @see #initialize(File,Option...)
    */
   public boolean isInitialized() {
     return _root != null; 

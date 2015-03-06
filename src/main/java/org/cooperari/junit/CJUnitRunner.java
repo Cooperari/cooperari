@@ -33,7 +33,7 @@ import org.junit.runners.model.Statement;
  * <p>
  * JUnit test classes must be parameterized with this test runner for cooperative test execution.
  * The usual {@link org.junit.runner.RunWith} annotation should be used to set this runner for test classes,
- * as usual. Here is a simple example:
+ * as usual. Here is a simple example:</p>
  * <pre>
  * import org.junit.runner.RunWith;
  * import org.cooperari.CJUnitRunner;
@@ -42,7 +42,7 @@ import org.junit.runners.model.Statement;
  * public class MyTestClass {
  *   ...
  * }
- * </p>
+ * </pre>
  * 
  * @see CIgnore
  * @since 0.2

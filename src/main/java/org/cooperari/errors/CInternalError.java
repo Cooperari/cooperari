@@ -12,7 +12,6 @@ public class CInternalError extends CError {
 
   /**
    * Constructs an error with no arguments.
-   * @see Error#Error()
    */
   public CInternalError() {
 
@@ -20,7 +19,7 @@ public class CInternalError extends CError {
 
   /**
    * Constructs error with an associated error message.
-   * @see Error#Error(String)
+   * @param message Error message.
    */
   public CInternalError(String message) {
     super(message);
@@ -29,7 +28,6 @@ public class CInternalError extends CError {
   /**
    * Constructs error with an associated cause.
    * @param cause Cause for the error.
-   * @see Error#Error(Throwable)
    */
   public CInternalError(Throwable cause) {
     super(cause);
@@ -39,7 +37,6 @@ public class CInternalError extends CError {
    * Constructs error with a message and a cause.
    * @param message Error message.
    * @param cause Cause for the error.
-   * @see Error#Error(String,Throwable)
    */
   public CInternalError(String message, Throwable cause) {
     super(message, cause);

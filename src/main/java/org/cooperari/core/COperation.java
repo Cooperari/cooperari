@@ -3,21 +3,20 @@ package org.cooperari.core;
 /**
  * Base class for cooperative operations.
  * 
- * @param <T> Type for operation result. It is usually parameterized as
- *        {@link Void}.
- *        
- * @since 0.2
+
  * 
- * <p>
- * Subclasses should override when necessary:
- * <li>{@link #getState()}, if the operation is subject to blocking;
+ * 
+ * <p>Subclasses should override when necessary the following methods:</p>
+ * <ul>
+ * <li>{@link #getState()}, if the operation is subject to blocking;</li>
  * <li>{@link #execute()}, if the operation has associated actions -- operations
  * that merely introduce yield points before proceeding to application code should
- * not need to;
- * <li>{@link #getResult()}, if the operation has an associated result, when <code>T</code> is not {@link Void};
- * <li>and {@link #getAbortOperation()} if the operation requires cleanup actions on
- * thread death.
- * </p>
+ * not need to;</li>
+ * <li>{@link #getResult()}, if the operation has an associated result, when <code>T</code> is not {@link Void};</li>
+ * <li>and, finally, {@link #getAbortOperation()} if the operation requires cleanup actions on
+ * thread death.</li>
+ * </ul>
+ *
  * 
  * <p>
  * The <code>_arguments</code> field is intentionally <code>protected</code>,
@@ -25,8 +24,13 @@ package org.cooperari.core;
  * {@link #hashCode()} --both of which play an important role in program state
  * representation/abstraction -- as well as {@link #toString()} in this class.
  * These three methods cannot be overridden by subclasses (they are
- * <code>final</code>). </code>
+ * <code>final</code>).
  * </p>
+ *
+ * @param <T> Type for operation result. It is usually parameterized as
+ *        {@link Void}.
+ *        
+ * @since 0.2
  */
 public abstract class COperation<T> {
 
