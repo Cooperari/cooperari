@@ -1,5 +1,5 @@
 /**
- * Cooperari bindings for JUnit.
+ * Cooperari engine.
  *
  * @since 0.2
  */

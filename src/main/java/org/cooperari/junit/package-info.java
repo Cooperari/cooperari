@@ -1,5 +1,5 @@
 /**
- * Support for Cooperari test configuration.
+ * Cooperari bindings for JUnit.
  *
  * @since 0.2
  */

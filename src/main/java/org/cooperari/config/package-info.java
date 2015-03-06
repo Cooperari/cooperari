@@ -1,5 +1,5 @@
 /**
- * Support for Cooperari test configuration.
+ * Support for test configuration.
  *
  * @since 0.2
  */
