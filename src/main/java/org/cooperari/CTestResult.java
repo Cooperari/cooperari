@@ -2,6 +2,8 @@ package org.cooperari;
 
 import java.io.File;
 
+import org.cooperari.config.CSometimes;
+
 /**
  * Execution result for a cooperative test.
  *  

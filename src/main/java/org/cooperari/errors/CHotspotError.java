@@ -3,9 +3,9 @@ package org.cooperari.errors;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.cooperari.CAlways;
-import org.cooperari.CNever;
-import org.cooperari.CSometimes;
+import org.cooperari.config.CAlways;
+import org.cooperari.config.CNever;
+import org.cooperari.config.CSometimes;
 
 /**
  * Hotspot errors.

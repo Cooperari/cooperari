@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Aggregation of multiple exceptions thrown by multiple threads.
+ * Aggregation of exceptions thrown by multiple threads.
  * 
  * @since 0.2
  *

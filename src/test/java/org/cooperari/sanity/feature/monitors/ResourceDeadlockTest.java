@@ -2,8 +2,8 @@ package org.cooperari.sanity.feature.monitors;
 
 import static org.cooperari.CSystem.cHotspot;
 
-import org.cooperari.CSometimes;
 import org.cooperari.CSystem;
+import org.cooperari.config.CSometimes;
 import org.cooperari.feature.monitor.CResourceDeadlockError;
 import org.cooperari.junit.CJUnitRunner;
 import org.cooperari.sanity.feature.Data;

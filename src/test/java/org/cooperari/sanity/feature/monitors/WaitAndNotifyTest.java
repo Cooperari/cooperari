@@ -5,10 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import org.cooperari.CAlways;
-import org.cooperari.CNever;
-import org.cooperari.CSometimes;
 import org.cooperari.CSystem;
+import org.cooperari.config.CAlways;
+import org.cooperari.config.CNever;
+import org.cooperari.config.CSometimes;
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.WaitDeadlockError;
 import org.cooperari.junit.CJUnitRunner;

@@ -4,8 +4,8 @@ import static org.cooperari.CSystem.cHotspot;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import org.cooperari.CAlways;
 import org.cooperari.CSystem;
+import org.cooperari.config.CAlways;
 import org.cooperari.core.WaitDeadlockError;
 import org.cooperari.junit.CJUnitRunner;
 import org.cooperari.sanity.feature.Data;

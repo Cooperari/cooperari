@@ -3,10 +3,10 @@ package org.cooperari.sanity.feature.hotspot;
 
 import static org.cooperari.CSystem.cHotspot;
 
-import org.cooperari.CAlways;
-import org.cooperari.CNever;
-import org.cooperari.CSometimes;
 import org.cooperari.CSystem;
+import org.cooperari.config.CAlways;
+import org.cooperari.config.CNever;
+import org.cooperari.config.CSometimes;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.FixMethodOrder;

@@ -2,6 +2,9 @@ package org.cooperari;
 
 import static org.cooperari.core.CRuntime.getRuntime;
 
+import org.cooperari.config.CAlways;
+import org.cooperari.config.CNever;
+import org.cooperari.config.CSometimes;
 import org.cooperari.core.CSession;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
@@ -37,11 +40,12 @@ public final class CSystem {
 
   /**
    * Signal that a hotspot has been reached.
+   * 
    * <p>
    * Place a call to this method in application code to mark a point where an
    * hotspot of interest has been reached. Reachability conditions may be marked
    * in test methods using reachability annotations like {@link CAlways},
-   * {@link CSometimes}, or {@link CNever}.
+   * {@link CSometimes}, and {@link CNever}.
    * </p>
    * 
    * @param id Hotspot id.

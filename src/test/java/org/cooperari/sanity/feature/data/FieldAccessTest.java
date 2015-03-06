@@ -2,9 +2,9 @@ package org.cooperari.sanity.feature.data;
 import static org.cooperari.CSystem.cHotspot;
 import static org.junit.Assert.assertEquals;
 
-import org.cooperari.CNever;
-import org.cooperari.CSometimes;
 import org.cooperari.CSystem;
+import org.cooperari.config.CNever;
+import org.cooperari.config.CSometimes;
 import org.cooperari.junit.CJUnitRunner;
 import org.cooperari.sanity.feature.Data;
 import org.junit.FixMethodOrder;

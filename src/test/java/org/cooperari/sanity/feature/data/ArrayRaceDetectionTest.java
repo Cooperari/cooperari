@@ -4,9 +4,9 @@ import static org.cooperari.CArray.cRead;
 import static org.cooperari.CArray.cWrite;
 import static org.cooperari.CSystem.cHotspot;
 
-import org.cooperari.CSometimes;
 import org.cooperari.CSystem;
 import org.cooperari.config.CRaceDetection;
+import org.cooperari.config.CSometimes;
 import org.cooperari.errors.CRaceError;
 import org.cooperari.junit.CJUnitRunner;
 import org.cooperari.sanity.feature.Data;

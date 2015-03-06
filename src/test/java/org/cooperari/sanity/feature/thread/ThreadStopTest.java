@@ -3,8 +3,8 @@ package org.cooperari.sanity.feature.thread;
 import static org.cooperari.CSystem.cHotspot;
 import static org.junit.Assert.fail;
 
-import org.cooperari.CAlways;
 import org.cooperari.CSystem;
+import org.cooperari.config.CAlways;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
