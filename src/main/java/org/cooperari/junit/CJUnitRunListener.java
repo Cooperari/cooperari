@@ -1,8 +1,12 @@
-package org.cooperari.tools.cjunit;
+package org.cooperari.junit;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 
+import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
+import org.cooperari.core.aspectj.AgentFacade;
 import org.junit.internal.TextListener;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -13,7 +17,7 @@ import org.junit.runner.notification.Failure;
  * 
  * @since 0.2 
  */
-class CJUnitRunListener extends TextListener {
+public class CJUnitRunListener extends TextListener {
 
   /**
    * Output stream.
@@ -56,13 +60,17 @@ class CJUnitRunListener extends TextListener {
         _out.println("== Failure details ==");
         printFailures(result);
       }
-      _out.println("== Execution summary ==");
-      _out.printf("  Executed: %d\n  Ignored: %d\n  Failed: %d\n  Execution time: %d ms\n", 
+      _out.println("== Summary ==");
+      _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms\n", 
           result.getRunCount(), 
           result.getIgnoreCount(), 
           result.getFailureCount(),
           result.getRunTime());
-    
+      _out.println("== Coverage ==");
+      _out.printf("%d yield points out of %d (%d %%)\n", 
+          AgentFacade.INSTANCE.getWeavePointsCovered(),
+          AgentFacade.INSTANCE.getWeavePointCount(),
+          AgentFacade.INSTANCE.getCoverageRate());
   }
 
   
@@ -86,6 +94,7 @@ class CJUnitRunListener extends TextListener {
   @Override
   public void testFinished(Description description) {
      _out.println("[passed]");
+     displayTestDetails(description);
   }
 
   /**
@@ -94,8 +103,23 @@ class CJUnitRunListener extends TextListener {
    */
   @Override
   public void testFailure(Failure failure) {
-    _out.printf("[failed : %s ]", failure.getException().getClass().getCanonicalName());
+    _out.printf("[failed: %s ]", failure.getException().getClass().getCanonicalName());
     _out.println();
+    displayTestDetails(failure.getDescription());
+  }
+
+  
+  @SuppressWarnings("javadoc")
+  private void displayTestDetails(Description description) {
+     CTestResult result = CTestResultPool.INSTANCE.getTestResult(description);
+     if (result == null) {
+       return;
+     }
+     _out.printf("    trials: %d time: %d ms", result.trials(), result.getExecutionTime());
+     if (result.failed() && result.getFailureTrace() != null) {
+       _out.printf(" trace: %s", result.getFailureTrace().getAbsolutePath());
+     }
+     _out.println();
   }
 
   /**
@@ -104,7 +128,7 @@ class CJUnitRunListener extends TextListener {
    */
   @Override
   public void testIgnored(Description description) {
-    _out.printf("  %-50s [ignored]", description.getMethodName());
+    _out.printf("  %-50s [skipped]", description.getMethodName());
     _out.println();
   }
 

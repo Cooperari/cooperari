@@ -107,6 +107,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
 
     CTest ctest = new MethodRunner(fm, createJUnitStatement(fm, false)); 
     CTestResult result = CSession.executeTest(ctest);
+    CTestResultPool.INSTANCE.setTestResult(desc, result);
     if (result.failed()) {
       notifier.fireTestFailure(new Failure(desc, result.getFailure()));
     } else {
