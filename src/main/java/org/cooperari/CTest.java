@@ -18,6 +18,12 @@ public interface CTest extends Runnable {
   String getName();
   
   /**
+   * Get name of the test suite to which this test belongs. 
+   * @return A string identifying the suite.
+   */
+  String getSuiteName();
+  
+  /**
    * Get configuration.
    * @return An annotation provider for the test configuration.
    * The default implementation returns the class handle for {@link CBaseConfiguration}.
@@ -52,5 +58,6 @@ public interface CTest extends Runnable {
   default boolean ignoreException(Throwable e) {
     return false;
   }
+
 
 }

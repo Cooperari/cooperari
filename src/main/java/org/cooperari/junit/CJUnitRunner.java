@@ -141,7 +141,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
    * Method runner thread.
    * @since 0.2 
    */
-  public class MethodRunner extends Thread implements CTest {
+  private final class MethodRunner extends Thread implements CTest {
     /** 
      * JUnit statement 
      */
@@ -169,6 +169,16 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       _expectedException = fm.getAnnotation(Test.class).expected();
     }
 
+
+    /**
+     * Suite name hook.
+     * @return Name of the test class.
+     */
+    @Override
+    public String getSuiteName() {
+      return CJUnitRunner.this.getTestClass().getJavaClass().getCanonicalName();
+    }
+    
     /**
      * Configuration hook.
      * @return The JUnit method at stake as configuration source.
@@ -209,6 +219,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
         throw new CCheckedExceptionError(e);
       }
     }
+
   }
 
 }

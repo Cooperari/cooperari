@@ -12,17 +12,13 @@ import java.io.PrintStream;
 public class CReport {
 
   /**
+   * Output file.
+   */
+  File _file;
+  /**
    * Output stream. 
    */
   private final PrintStream _out;
-  
-  /**
-   * Constructs a report.
-   * @param out Output stream.
-   */
-  public CReport(PrintStream out) {
-    _out = out;
-  }
   
   /**
    * Create a report using a given file for output.
@@ -30,9 +26,18 @@ public class CReport {
    * @throws IOException If an I/O error occurs.
    */
   public CReport(File file) throws IOException {
-    this(new PrintStream(file));
+    _file = file;
+    _out = new PrintStream(file);
   }
 
+  /**
+   * Get file associated to this report.
+   * @return A {@link File} instance.
+   */
+  public File getFile() {
+    return _file;
+  }
+  
   /**
    * Begin a section in the report.
    * @param title Title for the section.

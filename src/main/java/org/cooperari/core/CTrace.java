@@ -114,24 +114,14 @@ public final class CTrace {
     _stepCounter++;
   }
 
-  /**
-   * Write trace to file.
-   * @param file Output file.
-   * @throws IOException If an I/O error occurs.
-   */
-  public void write(File file) throws IOException {
-    PrintStream out = new PrintStream(file);
-    print(new PrintStream(file) );
-    out.close();
-  }
 
   /**
-   * Write trace to an output stream.
-   * @param out Output stream.
+   * Write trace to a output file.
+   * @param report Output file.
+   * @throws IOException If an I/O error occurs.
    */
-  public void print(PrintStream out) {
+  public void save(CReport report) throws IOException {
     // Write thread info
-    CReport report = new CReport(out);
     report.beginSection("THREADS", "TID", "NAME", "CLASS");
     for (Map.Entry<Integer, ThreadInfo> entry : _threadNames.entrySet()) {
       ThreadInfo ti = entry.getValue();

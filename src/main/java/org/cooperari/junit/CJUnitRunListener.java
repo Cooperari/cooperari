@@ -1,7 +1,5 @@
 package org.cooperari.junit;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.PrintStream;
 
 import org.cooperari.CTestResult;
@@ -11,13 +9,14 @@ import org.junit.internal.TextListener;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
+import org.junit.runner.notification.RunListener;
 
 /**
  * Custom JUnit run listener for <code>cjunit</code>.
  * 
  * @since 0.2 
  */
-public class CJUnitRunListener extends TextListener {
+public class CJUnitRunListener extends RunListener {
 
   /**
    * Output stream.
@@ -34,7 +33,6 @@ public class CJUnitRunListener extends TextListener {
    * @param out Output stream.
    */
   public CJUnitRunListener(PrintStream out) {
-    super(out);
     _out = out;
   }
   
@@ -58,7 +56,13 @@ public class CJUnitRunListener extends TextListener {
   public void testRunFinished(Result result) {
       if (result.getFailureCount() > 0) {
         _out.println("== Failure details ==");
-        printFailures(result);
+        int i = 0;
+        for (Failure f : result.getFailures()) {
+          _out.print(++i);
+          _out.print(") ");
+          _out.println(f.getTestHeader());
+          _out.print(f.getTrace());
+        }
       }
       _out.println("== Summary ==");
       _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms\n", 
@@ -103,7 +107,7 @@ public class CJUnitRunListener extends TextListener {
    */
   @Override
   public void testFailure(Failure failure) {
-    _out.printf("[failed: %s ]", failure.getException().getClass().getCanonicalName());
+    _out.printf("[failed: %s]", failure.getException().getClass().getCanonicalName());
     _out.println();
     displayTestDetails(failure.getDescription());
   }
@@ -115,9 +119,10 @@ public class CJUnitRunListener extends TextListener {
      if (result == null) {
        return;
      }
-     _out.printf("    trials: %d time: %d ms", result.trials(), result.getExecutionTime());
+     _out.printf("    > trials: %d time: %d ms", result.trials(), result.getExecutionTime());
      if (result.failed() && result.getFailureTrace() != null) {
-       _out.printf(" trace: %s", result.getFailureTrace().getAbsolutePath());
+       _out.println();
+       _out.printf("    > failure trace: '%s'", result.getFailureTrace().getAbsolutePath());
      }
      _out.println();
   }

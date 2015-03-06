@@ -8,6 +8,7 @@ import org.cooperari.CTestResult;
 import org.cooperari.config.CCoverage;
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
+import org.cooperari.core.util.CReport;
 import org.cooperari.errors.CCheckedExceptionError;
 import org.cooperari.errors.CConfigurationError;
 import org.cooperari.errors.CHotspotError;
@@ -137,7 +138,7 @@ public final class CSession {
 
     File traceFile = null;
     if (failure != null) {
-      traceFile = dumpTrace(test.getName(), trace);
+      traceFile = saveTrace(test, trials, trace);
     } else {
       try {
         hHandler.endTestSession();
@@ -157,27 +158,29 @@ public final class CSession {
     if (failure instanceof CCheckedExceptionError) {
       failure = failure.getCause();
     }
-    
+
     return new CTestResultImpl(failure != null, trials, timeElapsed, failure,
         traceFile);
   }
 
   @SuppressWarnings("javadoc")
-  private static File dumpTrace(String testName, CTrace trace) {
+  private static File saveTrace(CTest test, int trialNumber, CTrace trace) {
     try {
-      File logDir = new File("log");
-      logDir.mkdirs();
-      File file = new File(logDir, testName + ".trace.txt");
-      trace.write(file);
-      CWorkspace.log("Failure trace for %s written to '%s'", testName,
-          file.getAbsolutePath());
-      return file;
+      CReport report = CWorkspace.INSTANCE.createReport(test.getSuiteName() + '_' + test.getName() + "_trial_" + trialNumber);
+      try { 
+        trace.save(report);
+        CWorkspace.log("Failure trace for %s written to '%s'", test.getName(),
+            report.getFile().getAbsolutePath());
+        return report.getFile();
+      } finally {
+        report.close();
+      }
     } catch (Throwable e) {
-      CWorkspace.log("Error writing failure trace for %s to '%s'", testName,
+      CWorkspace.log("Error writing failure trace for %s: %s", test.getName(),
           e.getMessage());
       CWorkspace.log(e);
       return null;
-    }
+    } 
   }
 
   @SuppressWarnings("javadoc")
