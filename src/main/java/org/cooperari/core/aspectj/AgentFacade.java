@@ -1,6 +1,7 @@
 package org.cooperari.core.aspectj;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
@@ -162,16 +163,36 @@ public enum AgentFacade {
   }
 
  /**
-  * Mark a set of yield points as covered.
+  * Mark a set of yield points as covered and get an estimate of uncovered yield
+  * points in the same source files as the set that were not covered.
   * @param ypSet Set of yield points.
+  * @return Uncovered yield points. 
   */
-  public void recordYieldPointsCovered(Set<CYieldPoint> ypSet) {
+  public int recordYieldPointsCovered(Set<CYieldPoint> ypSet) {
+    CYieldPoint min=null, max=null;
     for (CYieldPoint yp : ypSet) {
+      if (min == null || yp.compareTo(min) < 0) {
+        min = yp;
+      }
+      if (max == null || yp.compareTo(max) > 0) {
+        max = yp;
+      }
       Boolean b = _yieldPoints.put(yp, true);
       if (b == null || b == false) {
         _coveredYieldPoints ++;
       }
     }  
+    // Now get an estimate of uncovered yield points
+    CYieldPointImpl lowerBound = new CYieldPointImpl("", min.getSourceFile(), -1);
+    CYieldPointImpl upperBound = new CYieldPointImpl("", max.getSourceFile(), Integer.MAX_VALUE);
+    Map<CYieldPoint,Boolean> view = _yieldPoints.subMap(lowerBound, upperBound);
+    int uncovered = 0;
+    for (Entry<CYieldPoint,Boolean> e : view.entrySet()) {
+      if (e.getValue() == false) {
+        uncovered++;
+      }
+    }
+    return uncovered;
   }
   
   /**

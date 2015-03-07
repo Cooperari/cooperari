@@ -87,7 +87,7 @@ public class CScheduler extends Thread {
     _coveragePolicy = coverage;
     _runtime.register(this);
     _runtime.register(new ThreadMappings());
-    _trace = new CTrace(runtime.getConfiguration(CTraceOptions.class));
+    _trace = _runtime.get(CTrace.class);
     setUncaughtExceptionHandler(_uncaughtExceptionHandler);
 
     for (Runnable r : runnables) {
@@ -117,13 +117,6 @@ public class CScheduler extends Thread {
     return _runtime;
   }
 
-  /**
-   * Get execution trace.
-   * @return A {@link CTrace} object.
-   */
-  public CTrace getTrace() {
-    return _trace;
-  }
 
   /**
    * Tell the scheduler to start a new thread.

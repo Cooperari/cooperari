@@ -75,7 +75,7 @@ public final class CTrace {
   /**
    * Yield points covered.
    */
-  private final HashSet<CYieldPoint> _yieldPointsCovered = new HashSet<>();
+  private final Set<CYieldPoint> _ypSet;
   
 
   /**
@@ -85,11 +85,14 @@ public final class CTrace {
 
   /**
    * Constructs a new trace.
+   * @param coverageSet Set in which to record covered yield points.
    * @param options Options.
    */
-  public CTrace(CTraceOptions options) {
+  public CTrace(Set<CYieldPoint> coverageSet, CTraceOptions options) {
+    _ypSet = coverageSet;
     _sizeLimit = options.limit();
   }
+
 
   /**
    * Record existence of thread. 
@@ -114,7 +117,7 @@ public final class CTrace {
    * @param type event type
    */
   public void record(CThread t, EventType type) {
-    _yieldPointsCovered.add(t.getLocation().getYieldPoint());
+    _ypSet.add(t.getLocation().getYieldPoint());
     _traceElements.addLast(new TraceItem(t, type));
     if (_sizeLimit > 0 && _traceElements.size() == _sizeLimit) {
       _traceElements.removeFirst();
@@ -127,7 +130,7 @@ public final class CTrace {
    * @return Set of yield points covered.
    */
   Set<CYieldPoint> getYieldPointsCovered() {
-    return _yieldPointsCovered;
+    return _ypSet;
   }
 
   /**

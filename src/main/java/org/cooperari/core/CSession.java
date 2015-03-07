@@ -2,12 +2,15 @@ package org.cooperari.core;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.util.HashSet;
 
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
+import org.cooperari.CYieldPoint;
 import org.cooperari.config.CCoverage;
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
+import org.cooperari.config.CTraceOptions;
 import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.core.util.CReport;
 import org.cooperari.errors.CCheckedExceptionError;
@@ -95,28 +98,30 @@ public final class CSession {
     int trials = 0;
     Throwable failure = null;
     long timeLimit = runtime.getConfiguration(CTimeLimit.class).value() * 1000L;
-    CTrace trace = null;
+
     HotspotHandler hHandler = new HotspotHandler(runtime);
     runtime.register(hHandler);
 
     // Main loop
     long startTime = System.currentTimeMillis();
     boolean done = false;
+    HashSet<CYieldPoint> coveredYieldPoints = new HashSet<>();
+    CTrace trace = new CTrace(coveredYieldPoints, runtime.getConfiguration(CTraceOptions.class));
+    runtime.register(trace);
 
     do {
       trials++;
+      trace.clear();
       hHandler.startTestTrial();
       cHandler.onTestStarted();
       CScheduler s = new CScheduler(runtime, cHandler, test);
-      trace = s.getTrace();
-      runtime.register(trace);
       s.start();
       try {
         s.join();
       } catch (InterruptedException e) {
         throw new CInternalError(e);
       }
-      AgentFacade.INSTANCE.recordYieldPointsCovered(trace.getYieldPointsCovered());
+      
       cHandler.onTestFinished();
       try {
         s.rethrowExceptionsIfAny();
@@ -148,7 +153,7 @@ public final class CSession {
         failure = e;
       }
     }
-
+    trace.clear();
     long timeElapsed = System.currentTimeMillis() - startTime;
 
     assert CWorkspace.debug("== TERMINATED %s ==", test.getName());
@@ -161,8 +166,10 @@ public final class CSession {
       failure = failure.getCause();
     }
 
+    int uncoveredYieldPoints = AgentFacade.INSTANCE.recordYieldPointsCovered(coveredYieldPoints);
+
     return new CTestResultImpl(failure != null, trials, timeElapsed, failure,
-        traceFile);
+        traceFile, coveredYieldPoints.size(), uncoveredYieldPoints);
   }
 
   @SuppressWarnings("javadoc")
@@ -192,14 +199,18 @@ public final class CSession {
     final Throwable _failure;
     final File _failureTrace;
     final long _executionTime;
+    final int _coveredYieldPoints;
+    final int _uncoveredYieldPoints;
 
     CTestResultImpl(boolean failed, int trials, long timeElapsed,
-        Throwable failure, File traceFile) {
+        Throwable failure, File traceFile, int coveredYieldPoints, int uncoveredYieldPoints) {
       _failed = failed;
       _trials = trials;
       _executionTime = timeElapsed;
       _failure = failure;
       _failureTrace = traceFile;
+      _coveredYieldPoints = coveredYieldPoints;
+      _uncoveredYieldPoints = uncoveredYieldPoints;
     }
 
     @Override
@@ -226,7 +237,17 @@ public final class CSession {
     public long getExecutionTime() {
       return _executionTime;
     }
+    
+    @Override 
+    public int getCoveredYieldPoints() {
+      return _coveredYieldPoints;
+    }
 
+    @Override 
+    public int getTotalYieldPoints() {
+      return _coveredYieldPoints + _uncoveredYieldPoints;
+    }
+    
   }
 
 }
