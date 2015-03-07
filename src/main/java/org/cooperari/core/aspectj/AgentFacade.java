@@ -198,7 +198,7 @@ public enum AgentFacade {
       int uncovered = 0;
       for (String sf : sourceFiles) {
         CYieldPointImpl lowerBound = new CYieldPointImpl("", sf, -1);
-        // Note: extra char to force iteration until last possible entry
+        // Note: extra char so that view iterates until the last possible entry
         CYieldPointImpl upperBound = new CYieldPointImpl("", sf + '*', -1);
         Map<CYieldPoint,Boolean> view = _yieldPoints.subMap(lowerBound, upperBound);
         for (CYieldPoint yp : view.keySet()) {
