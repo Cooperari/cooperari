@@ -70,7 +70,7 @@ public class Main {
       juc.addListener(new CJUnitRunListener(System.out));
       Result r = juc.run(classes);
       
-      CWorkspace.log("Yield points covered: %d out of %d\n", AgentFacade.INSTANCE.getWeavePointsCovered(), AgentFacade.INSTANCE.getWeavePointCount());
+      CWorkspace.log("Yield points covered: %d out of %d\n", AgentFacade.INSTANCE.getYieldPointsCovered(), AgentFacade.INSTANCE.getYieldPointCount());
       
       AgentFacade.INSTANCE.produceCoverageReport();
       

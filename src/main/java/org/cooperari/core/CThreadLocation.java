@@ -1,6 +1,7 @@
 package org.cooperari.core;
 
 import org.aspectj.lang.JoinPoint;
+import org.cooperari.CYieldPoint;
 import org.cooperari.core.aspectj.AgentFacade;
 
 /**
@@ -32,7 +33,7 @@ public final class CThreadLocation {
   /**
    * Thread location.
    */
-  private final Object _location;
+  private final CYieldPoint _yieldPoint;
 
   /**
    * Stage for the operation at current interference point.
@@ -46,34 +47,42 @@ public final class CThreadLocation {
   private final int _hash;
 
   /**
-   * Constructs yield point using supplied thread location key.
-   * 
-   * @param location thread location key
+   * Constructs location related to a special system event.
+   * @param id Event id.
    */
-  public CThreadLocation(Object location) {
-    this(location, 0);
+  public CThreadLocation(String id) {
+    this(new CYieldPointImpl(id, "<system>", 0), 0);
   }
-
+  
+  /**
+   * Constructs location based on yield point. 
+   * The stage will be set to 0.
+   * @param yp Yield point.
+   */
+  public CThreadLocation(CYieldPoint yp) {
+    this(yp, 0);
+  }
+  
   /**
    * Constructs yield point using supplied thread location key and stage
    * identification.
    * 
-   * @param location Thread location.
+   * @param yp Yield point.
    * @param stage Stage for the yield point.
    */
-  public CThreadLocation(Object location, int stage) {
-    _location = location;
+  public CThreadLocation(CYieldPoint yp, int stage) {
+    _yieldPoint = yp;
     _stage = stage;
-    _hash = _location.hashCode() ^ _stage;
+    _hash = _yieldPoint.hashCode() ^ _stage;
   }
 
   /**
-   * Get yield point location.
+   * Get yield point.
    * 
    * @return The yield point location.
    */
-  public Object getLocation() {
-    return _location;
+  public CYieldPoint getYieldPoint() {
+    return _yieldPoint;
   }
 
   /**
@@ -85,63 +94,6 @@ public final class CThreadLocation {
     return _stage;
   }
 
-  /**
-   * Get yield point signature.
-   * <p>
-   * If {@link #getLocation()} refers to an instance of
-   * {@link org.aspectj.lang.JoinPoint.StaticPart}, the signature will identify the
-   * the AspectJ join point. Otherwise, the textual representation of
-   * {@link #getLocation()} is returned (as defined by {@link Object#toString}) is returned.
-   * </p>
-   * 
-   * @return A string object.
-   */
-  public String getSignature() {
-    if (! (_location instanceof JoinPoint.StaticPart)) {
-      return _location.toString();
-    }
-    JoinPoint.StaticPart jpsp =  (JoinPoint.StaticPart) _location;
-    String kind = jpsp.getKind();
-    if (kind == JoinPoint.SYNCHRONIZATION_LOCK) {
-      return AgentFacade.MONITOR_ENTER_JOINPOINT;
-    }
-    if (kind == JoinPoint.SYNCHRONIZATION_UNLOCK) {
-      return AgentFacade.MONITOR_EXIT_JOINPOINT;
-    }
-    String shortSig = jpsp.getSignature().toString();
-    shortSig =  shortSig.substring(shortSig.indexOf(' ') + 1);
-    shortSig = shortSig.replace("java.lang.", "").replace('$', '.');
-    if (kind == JoinPoint.METHOD_CALL) {
-      return shortSig;
-    }
-    return kind + '(' + shortSig + ')';
-  }
-
-  /**
-   * Get name of source file for the yield point, if this information is
-   * available. The information will be defined if {{@link #getLocation()}
-   * refers to an instance of {org.aspectj.lang.JoinPoint.StaticPart}.
-   * 
-   * @return The source file name or <code>"&lt;system&gt;"</code> if the information is not
-   *         available.
-   */
-  public String getSourceFile() {
-    return (_location instanceof JoinPoint.StaticPart) ? ((JoinPoint.StaticPart) _location)
-        .getSourceLocation().getFileName() : "<system>";
-  }
-
-  /**
-   * Get line number in source file for the yield point, if this information is
-   * available. The information will be defined if {{@link #getLocation()}
-   * refers to an instance of {org.aspectj.lang.JoinPoint.StaticPart}.
-   * 
-   * @return The line number for the source file or <code>0</code> if the
-   *         information is not available.
-   */
-  public int getSourceLine() {
-    return (_location instanceof JoinPoint.StaticPart) ? ((JoinPoint.StaticPart) _location)
-        .getSourceLocation().getLine() : 0;
-  }
 
   /**
    * Test for equality against given object.
@@ -165,7 +117,7 @@ public final class CThreadLocation {
       return false;
 
     CThreadLocation other = (CThreadLocation) o;
-    return _location == other._location && _stage == other._stage;
+    return _hash == other._hash && _stage == other._stage && _yieldPoint.compareTo(other._yieldPoint) == 0;  
   }
 
   /**
@@ -197,13 +149,13 @@ public final class CThreadLocation {
    * @param sb {@link StringBuilder} instance.
    */
   public void toString(StringBuilder sb) {
-    if (_location instanceof JoinPoint.StaticPart) {
-      JoinPoint.StaticPart jpsp = (JoinPoint.StaticPart) _location;
+    if (_yieldPoint instanceof JoinPoint.StaticPart) {
+      JoinPoint.StaticPart jpsp = (JoinPoint.StaticPart) _yieldPoint;
       sb.append(jpsp.getSignature()).append(':').append(_stage).append("@")
       .append(jpsp.getSourceLocation().getFileName()).append(':')
       .append(jpsp.getSourceLocation().getLine());
     } else {
-      sb.append(_location).append(':').append(_stage);
+      sb.append(_yieldPoint).append(':').append(_stage);
     }
   }
 

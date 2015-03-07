@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cooperari.CYieldPoint;
 import org.cooperari.config.CTraceOptions;
 import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.core.util.CReport;
@@ -95,7 +96,7 @@ public final class CTrace {
    * @param t The thread at stake.
    */
   public void recordStep(CThread t) {
-    AgentFacade.INSTANCE.markAsCovered(t.getYieldPoint());
+    AgentFacade.INSTANCE.markAsCovered(t.getLocation().getYieldPoint());
     record(t, null);
   }
   
@@ -138,7 +139,8 @@ public final class CTrace {
                         "STAGE"); 
     
     for (TraceItem traceItem : _traceElements) {
-      CThreadLocation yp = traceItem.getYieldPoint();
+      CThreadLocation location = traceItem.getLocation();
+      CYieldPoint yp = location.getYieldPoint();
       report.writeEntry(stepId, 
                         traceItem.getThreadId(), 
                         traceItem.getThreadStep(), 
@@ -146,7 +148,7 @@ public final class CTrace {
                         yp.getSourceFile(), 
                         yp.getSourceLine(), 
                         yp.getSignature(), 
-                        yp.getStage());
+                        location.getStage());
       stepId++;
     }
   }
@@ -219,7 +221,7 @@ public final class CTrace {
     /**
      * Yield point for thread.
      */
-    private final CThreadLocation _yieldPoint;
+    private final CThreadLocation _location;
 
     /**
      * Constructs a new trace element.
@@ -230,7 +232,7 @@ public final class CTrace {
       this._threadId = t.getCID();
       this._threadStep = t.getStep();
       this._eventMarker = type != null ? type.getTraceMarker() : '-';
-      this._yieldPoint = t.getYieldPoint();
+      this._location = t.getLocation();
     }
     
     /**
@@ -260,8 +262,8 @@ public final class CTrace {
      * Get yield point.
      * @return The thread step counter for this step.
      */
-    CThreadLocation getYieldPoint() {
-      return _yieldPoint;
+    CThreadLocation getLocation() {
+      return _location;
     }
   }
 }

@@ -12,6 +12,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.locks.LockSupport;
 
 import org.aspectj.lang.JoinPoint;
+import org.cooperari.CYieldPoint;
 import org.cooperari.errors.CInternalError;
 
 /**
@@ -90,12 +91,12 @@ public final class CThread extends Thread {
   /**
    * Current join point, if any.
    */
-  private JoinPoint.StaticPart _joinPoint;
+  private CYieldPoint _yieldPoint;
 
   /**
    * Thread's yield point.
    */
-  private CThreadLocation _yieldPoint;
+  private CThreadLocation _location;
 
   /**
    * Pending operation for yield point.
@@ -144,7 +145,7 @@ public final class CThread extends Thread {
     setDaemon(true);
     _cid = cid;
     _operation = INIT;
-    _yieldPoint = new CThreadLocation("<init>", 0);
+    _location = new CThreadLocation("<init>");
     _scheduler = s;
     _runnable = r;
     _virtualizedThread = r instanceof Thread ? (Thread) r : null;
@@ -164,6 +165,7 @@ public final class CThread extends Thread {
   public void run() {
     _scheduler.getRuntime().join();
     try {
+      _location = new CThreadLocation("<started>");
       cYield(START);
       _runnable.run();
     } catch (ThreadDeath death) {
@@ -173,7 +175,7 @@ public final class CThread extends Thread {
       throw ex;
     } finally {
       _operation = TERMINATED;
-      _yieldPoint = new CThreadLocation("<end>", 0);
+      _location = new CThreadLocation("<stopped>");
       _scheduler.getRuntime().leave();
     }
   }
@@ -200,8 +202,8 @@ public final class CThread extends Thread {
    * 
    * @return The current yield point.
    */
-  public CThreadLocation getYieldPoint() {
-    return _yieldPoint;
+  public CThreadLocation getLocation() {
+    return _location;
   }
 
   /**
@@ -252,7 +254,7 @@ public final class CThread extends Thread {
     if (!(t instanceof CThread))
       return null;
     CThread ct = (CThread) t;
-    ct._joinPoint = jp.getStaticPart();
+    ct._yieldPoint = new CYieldPointImpl(jp.getStaticPart());
     return ct;
   }
 
@@ -346,12 +348,9 @@ public final class CThread extends Thread {
   public <T> T cYield(COperation<T> op) {
 
     // Initiate yield sequence.
-    if (_joinPoint != null) {
-      _yieldPoint = new CThreadLocation(_joinPoint, op.getStage());
-    } else {
-      // Special op
-      _yieldPoint = new CThreadLocation(op);
-    }
+    if (_yieldPoint != null) {
+      _location = new CThreadLocation(_yieldPoint, op.getStage());
+    } 
 
     _operation = op;
     assert CWorkspace.debug("yielding - %s", toString());
@@ -391,7 +390,7 @@ public final class CThread extends Thread {
       throw new CInternalError(e);
     }
 
-    assert CWorkspace.debug("fully resumed [%s]", getYieldPoint());
+    assert CWorkspace.debug("fully resumed [%s]", getLocation());
 
     // Return sequence.
     if (rtExc != null) {
@@ -478,7 +477,7 @@ public final class CThread extends Thread {
   public void cStop(Throwable e) {
     if (getCState() != CTERMINATED && !_dying) {
       _dying = true;
-      _yieldPoint = new CThreadLocation(_yieldPoint.getLocation(), -1);
+      _location = new CThreadLocation(_location.getYieldPoint(), -1);
       _operation = new Die(_operation.getAbortOperation(), e);
     }
   }
@@ -567,7 +566,7 @@ public final class CThread extends Thread {
   @Override
   public String toString() {
     return String.format("[%03d,O=%s,Y=%s,S=%s,J=%s,Y=%s,I=%s,D=%s]", _cid,
-        _operation, _yieldPoint, getCState(), getState(), _atYieldPoint,
+        _operation, _location, getCState(), getState(), _atYieldPoint,
         _interruptTime, _dying);
   }
 

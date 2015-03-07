@@ -71,8 +71,8 @@ public class CJUnitRunListener extends RunListener {
           result.getRunTime());
       _out.println("== Coverage ==");
       _out.printf("%d yield points out of %d (%d %%)\n", 
-          AgentFacade.INSTANCE.getWeavePointsCovered(),
-          AgentFacade.INSTANCE.getWeavePointCount(),
+          AgentFacade.INSTANCE.getYieldPointsCovered(),
+          AgentFacade.INSTANCE.getYieldPointCount(),
           AgentFacade.INSTANCE.getCoverageRate());
   }
 

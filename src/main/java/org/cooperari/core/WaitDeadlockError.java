@@ -29,13 +29,13 @@ public class WaitDeadlockError extends CDeadlockError {
     sb.append("Alive threads waiting indefinitely : {");
     for (CThread t : threads) {
       if (! t.isTerminated()) {
-        CThreadLocation pc = t.getYieldPoint();
+        CThreadLocation pc = t.getLocation();
         sb.append(' ')
           .append(t.getName())
           .append('/')
-          .append(pc.getSourceFile())
+          .append(pc.getYieldPoint().getSourceFile())
           .append(':')
-          .append(pc.getSourceLine())
+          .append(pc.getYieldPoint().getSourceLine())
           .append(' ');
       }
     }

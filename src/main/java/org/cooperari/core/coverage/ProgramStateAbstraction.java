@@ -19,7 +19,7 @@ public class ProgramStateAbstraction {
     _tPC = new LinkedHashMap<>(readyThreads.size());
     int h = 0;
     for (int i=0; i < readyThreads.size(); i++) {
-      CThreadLocation pc = readyThreads.get(i).getYieldPoint();
+      CThreadLocation pc = readyThreads.get(i).getLocation();
       Integer count = _tPC.get(pc);
       if (count == null) {
         count = 1;

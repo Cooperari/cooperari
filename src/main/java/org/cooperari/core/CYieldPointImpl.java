@@ -2,15 +2,29 @@ package org.cooperari.core;
 
 import org.aspectj.lang.JoinPoint;
 import org.cooperari.CYieldPoint;
-import org.cooperari.core.aspectj.AgentFacade;
 
 /**
  * Yield point implementation.
  * @since 0.2
  *
  */
-final class CYieldPointImpl implements CYieldPoint {
+public final class CYieldPointImpl implements CYieldPoint {
 
+  /**
+   * Constant for thread initialization.
+   */
+  public static final CYieldPoint THREAD_INITIALIZATION = new CYieldPointImpl("<initialized>", "<system>", 0);
+  
+  /**
+   * Constant for thread start yield point.
+   */
+  public static final CYieldPoint THREAD_STARTED_YIELD_POINT = new CYieldPointImpl("<started>", "<system>", 0);
+ 
+  /**
+   * Constant for thread stop yield point.
+   */
+  public static final CYieldPoint THREAD_STOPPED_YIELD_POINT = new CYieldPointImpl("<stopped>", "<system>", 0);
+  
   /**
    * Signature.
    */
@@ -36,7 +50,7 @@ final class CYieldPointImpl implements CYieldPoint {
    * @param file Source code file.
    * @param line Source code line.
    */
-  CYieldPointImpl(String signature, String file, int line) {
+  public CYieldPointImpl(String signature, String file, int line) {
     _signature = signature;
     _file = file;
     _line = line;
