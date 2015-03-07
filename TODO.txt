@@ -1,13 +1,17 @@
 == 0.2.1. final ==
 
 Features left to implement:
-- @CKeepGoing
+- produce coverage files per JUnit test case
+- static fields
 - cjava utility
-- Revise Coverage code
+- operation arguments (yes/no? if yes at least written to trace)
+- Revise Coverage/CoveragePolicy code
 - CSystem.runPreemptively() 
 - Windows scripts
 - javadoc / source / deploy maven targets
-- cjunit -p switch / ensure CJUnitRunner runs preemptively as well (maybe)
+- tools package organized differently (?)
+- cjunit/cjava -p switch / ensure CJUnitRunner runs preemptively as well (maybe)
+- @CKeepGoing (maybe)
 
 Misc. implementation details
  -- Merge CRuntime / CSession ? Feature life-cycle revision.
