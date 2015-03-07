@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import org.aspectj.bridge.IMessage;
 import org.aspectj.lang.JoinPoint;
 import org.cooperari.core.CWorkspace;
-import org.cooperari.core.CYieldPoint;
+import org.cooperari.core.CThreadLocation;
 import org.cooperari.core.util.CLog;
 import org.cooperari.core.util.CReport;
 
@@ -206,7 +206,7 @@ public enum AgentFacade {
    *  
    * @param yp Yield point as represent by the main engine.
    */
-  public void markAsCovered(CYieldPoint yp) {
+  public void markAsCovered(CThreadLocation yp) {
     if(yp.getLocation() instanceof JoinPoint.StaticPart) {
       WeavePoint wp = new WeavePoint(yp.getSourceFile(), yp.getSourceLine(), yp.getSignature());
       Boolean b = _weavePoints.put(wp, true);

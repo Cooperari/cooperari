@@ -138,7 +138,7 @@ public final class CTrace {
                         "STAGE"); 
     
     for (TraceItem traceItem : _traceElements) {
-      CYieldPoint yp = traceItem.getYieldPoint();
+      CThreadLocation yp = traceItem.getYieldPoint();
       report.writeEntry(stepId, 
                         traceItem.getThreadId(), 
                         traceItem.getThreadStep(), 
@@ -219,7 +219,7 @@ public final class CTrace {
     /**
      * Yield point for thread.
      */
-    private final CYieldPoint _yieldPoint;
+    private final CThreadLocation _yieldPoint;
 
     /**
      * Constructs a new trace element.
@@ -260,7 +260,7 @@ public final class CTrace {
      * Get yield point.
      * @return The thread step counter for this step.
      */
-    CYieldPoint getYieldPoint() {
+    CThreadLocation getYieldPoint() {
       return _yieldPoint;
     }
   }

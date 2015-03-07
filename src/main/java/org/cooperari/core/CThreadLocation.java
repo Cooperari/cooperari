@@ -27,7 +27,7 @@ import org.cooperari.core.aspectj.AgentFacade;
  * 
  * @since 0.2
  */
-public final class CYieldPoint {
+public final class CThreadLocation {
 
   /**
    * Thread location.
@@ -50,7 +50,7 @@ public final class CYieldPoint {
    * 
    * @param location thread location key
    */
-  public CYieldPoint(Object location) {
+  public CThreadLocation(Object location) {
     this(location, 0);
   }
 
@@ -61,7 +61,7 @@ public final class CYieldPoint {
    * @param location Thread location.
    * @param stage Stage for the yield point.
    */
-  public CYieldPoint(Object location, int stage) {
+  public CThreadLocation(Object location, int stage) {
     _location = location;
     _stage = stage;
     _hash = _location.hashCode() ^ _stage;
@@ -161,10 +161,10 @@ public final class CYieldPoint {
     if (o == this) {
       return true;
     }
-    if (!(o instanceof CYieldPoint))
+    if (!(o instanceof CThreadLocation))
       return false;
 
-    CYieldPoint other = (CYieldPoint) o;
+    CThreadLocation other = (CThreadLocation) o;
     return _location == other._location && _stage == other._stage;
   }
 

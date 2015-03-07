@@ -95,7 +95,7 @@ public final class CThread extends Thread {
   /**
    * Thread's yield point.
    */
-  private CYieldPoint _yieldPoint;
+  private CThreadLocation _yieldPoint;
 
   /**
    * Pending operation for yield point.
@@ -144,7 +144,7 @@ public final class CThread extends Thread {
     setDaemon(true);
     _cid = cid;
     _operation = INIT;
-    _yieldPoint = new CYieldPoint("<init>", 0);
+    _yieldPoint = new CThreadLocation("<init>", 0);
     _scheduler = s;
     _runnable = r;
     _virtualizedThread = r instanceof Thread ? (Thread) r : null;
@@ -173,7 +173,7 @@ public final class CThread extends Thread {
       throw ex;
     } finally {
       _operation = TERMINATED;
-      _yieldPoint = new CYieldPoint("<end>", 0);
+      _yieldPoint = new CThreadLocation("<end>", 0);
       _scheduler.getRuntime().leave();
     }
   }
@@ -200,7 +200,7 @@ public final class CThread extends Thread {
    * 
    * @return The current yield point.
    */
-  public CYieldPoint getYieldPoint() {
+  public CThreadLocation getYieldPoint() {
     return _yieldPoint;
   }
 
@@ -347,10 +347,10 @@ public final class CThread extends Thread {
 
     // Initiate yield sequence.
     if (_joinPoint != null) {
-      _yieldPoint = new CYieldPoint(_joinPoint, op.getStage());
+      _yieldPoint = new CThreadLocation(_joinPoint, op.getStage());
     } else {
       // Special op
-      _yieldPoint = new CYieldPoint(op);
+      _yieldPoint = new CThreadLocation(op);
     }
 
     _operation = op;
@@ -478,7 +478,7 @@ public final class CThread extends Thread {
   public void cStop(Throwable e) {
     if (getCState() != CTERMINATED && !_dying) {
       _dying = true;
-      _yieldPoint = new CYieldPoint(_yieldPoint.getLocation(), -1);
+      _yieldPoint = new CThreadLocation(_yieldPoint.getLocation(), -1);
       _operation = new Die(_operation.getAbortOperation(), e);
     }
   }

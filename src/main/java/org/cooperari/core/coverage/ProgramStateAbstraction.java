@@ -8,18 +8,18 @@ import java.util.Map.Entry;
 
 import org.cooperari.core.CThread;
 import org.cooperari.core.CWorkspace;
-import org.cooperari.core.CYieldPoint;
+import org.cooperari.core.CThreadLocation;
 
 
 public class ProgramStateAbstraction {
-  private final HashMap<CYieldPoint,Integer> _tPC;
+  private final HashMap<CThreadLocation,Integer> _tPC;
   private final int _hash;
 
   public ProgramStateAbstraction(List<CThread> readyThreads) {
     _tPC = new LinkedHashMap<>(readyThreads.size());
     int h = 0;
     for (int i=0; i < readyThreads.size(); i++) {
-      CYieldPoint pc = readyThreads.get(i).getYieldPoint();
+      CThreadLocation pc = readyThreads.get(i).getYieldPoint();
       Integer count = _tPC.get(pc);
       if (count == null) {
         count = 1;
@@ -60,7 +60,7 @@ public class ProgramStateAbstraction {
   
   public boolean dumpDebugInfo() {
     assert CWorkspace.debug("=> READY THREAD STATE <=");
-    for (Entry<CYieldPoint,Integer> _entry : _tPC.entrySet()) {
+    for (Entry<CThreadLocation,Integer> _entry : _tPC.entrySet()) {
       assert CWorkspace.debug("%d: %s", _entry.getValue(), _entry.getKey());
     }
     return true;

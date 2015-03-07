@@ -120,7 +120,7 @@ public abstract class COperation<T> {
    * Get yield point stage for this operation.
    * The base implementation returns 0.
    * @return The stage for the yield point this operation relates to.
-   * @see CYieldPoint
+   * @see CThreadLocation
    */
   public int getStage() {
     return 0;
