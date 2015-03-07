@@ -4,6 +4,7 @@ Features left to implement:
 - produce coverage files per JUnit test case
 - update scripts to disable assertions in org.cooperari 
 - cjava utility
+- make cjunit invoke itself to move indirection
 - operation arguments (yes/no? if yes at least written to trace)
 - Revise Coverage/CoveragePolicy code
 - CSystem.runPreemptively() 
