@@ -35,13 +35,14 @@ public enum AgentFacade {
   private boolean _active = false;
 
   /**
-   * Weave point map. It maps weave points to a boolean value indicating if the
-   * weave point has been covered or not.
+   * Weave point map. It maps yield points to a boolean value indicating if the
+   * weave point has been covered or not. A navigable tree-map is used to allow for
+   * individual test coverage to be derived easily.
    */
   private final TreeMap<CYieldPoint, Boolean> _yieldPoints = new TreeMap<>();
 
   /**
-   * Covered weave point count.
+   * Count of covered yield points.
    */
   private int _coveredYieldPoints = 0;
 
@@ -55,8 +56,8 @@ public enum AgentFacade {
   }
 
   /**
-   * Signal activation. This method is (only) called by
-   * {@link AgentMessageHandler#AgentMessageHandler}.
+   * Signal activation. This method is (only) called by {@link AgentMessageHandler#AgentMessageHandler}, 
+   * which in turn is instantiated (only) by the load-time weaver agent.
    */
   void signalActivation() {
     _active = true;
