@@ -5,25 +5,32 @@ import org.cooperari.CYieldPoint;
 
 /**
  * Yield point implementation.
+ * 
  * @since 0.2
  *
  */
 public final class CYieldPointImpl implements CYieldPoint {
+  /**
+   * Internal location used for "system" yield points.
+   */
+  private static final String INTERNAL = "<system>";
 
   /**
    * Constant for thread initialization.
    */
-  public static final CYieldPoint THREAD_INITIALIZATION = new CYieldPointImpl("<initialized>", "<system>", 0);
+  public static final CYieldPoint THREAD_INITIALIZATION = new CYieldPointImpl(CYieldPoint.THREAD_INITIALIZATION_SIGNATURE, INTERNAL, 0);
   
   /**
    * Constant for thread start yield point.
    */
-  public static final CYieldPoint THREAD_STARTED_YIELD_POINT = new CYieldPointImpl("<started>", "<system>", 0);
+  public static final CYieldPoint THREAD_STARTED_YIELD_POINT = new CYieldPointImpl(CYieldPoint.THREAD_STARTED_SIGNATURE, INTERNAL, 0);
  
   /**
    * Constant for thread stop yield point.
    */
-  public static final CYieldPoint THREAD_STOPPED_YIELD_POINT = new CYieldPointImpl("<stopped>", "<system>", 0);
+  public static final CYieldPoint THREAD_TERMINATED_YIELD_POINT = new CYieldPointImpl(CYieldPoint.THREAD_TERMINATED_SIGNATURE, INTERNAL, 0);
+  
+
   
   /**
    * Signature.

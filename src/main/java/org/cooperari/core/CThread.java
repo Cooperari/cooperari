@@ -145,7 +145,7 @@ public final class CThread extends Thread {
     setDaemon(true);
     _cid = cid;
     _operation = INIT;
-    _location = new CThreadLocation("<init>");
+    _location = new CThreadLocation(CYieldPointImpl.THREAD_INITIALIZATION);
     _scheduler = s;
     _runnable = r;
     _virtualizedThread = r instanceof Thread ? (Thread) r : null;
@@ -165,7 +165,7 @@ public final class CThread extends Thread {
   public void run() {
     _scheduler.getRuntime().join();
     try {
-      _location = new CThreadLocation("<started>");
+      _location = new CThreadLocation(CYieldPointImpl.THREAD_STARTED_YIELD_POINT);
       cYield(START);
       _runnable.run();
     } catch (ThreadDeath death) {
@@ -175,7 +175,7 @@ public final class CThread extends Thread {
       throw ex;
     } finally {
       _operation = TERMINATED;
-      _location = new CThreadLocation("<stopped>");
+      _location = new CThreadLocation(CYieldPointImpl.THREAD_TERMINATED_YIELD_POINT);
       _scheduler.getRuntime().leave();
     }
   }

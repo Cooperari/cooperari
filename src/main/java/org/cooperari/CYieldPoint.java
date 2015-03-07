@@ -18,6 +18,21 @@ public interface CYieldPoint extends Comparable<CYieldPoint>{
   String MONITOR_EXIT_SIGNATURE = "<monitorexit>";
 
   /**
+   * Thread initialization signature.
+   */
+  String THREAD_INITIALIZATION_SIGNATURE = "<init>";
+  
+  /**
+   * Thread startup signature.
+   */
+  String THREAD_STARTED_SIGNATURE = "<started>";
+  
+  /**
+   * Thread termination signature.
+   */
+  String THREAD_TERMINATED_SIGNATURE = "<terminated>";
+  
+  /**
    * Get signature. This represents the point of execution
    * that caused the thread yield.
    * @return The signature for the yield point.
