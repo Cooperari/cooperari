@@ -1,5 +1,6 @@
 package org.cooperari.core.aspectj;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,9 +36,9 @@ public enum AgentFacade {
   private boolean _active = false;
 
   /**
-   * Weave point map. It maps yield points to a boolean value indicating if the
+   * Yield point map. It maps yield points to a boolean value indicating if the
    * weave point has been covered or not. A navigable tree-map is used to allow for
-   * individual test coverage to be derived easily.
+   * individual test coverage data to be derived easily.
    */
   private final TreeMap<CYieldPoint, Boolean> _yieldPoints = new TreeMap<>();
 
@@ -97,9 +98,6 @@ public enum AgentFacade {
    */
   private CLog _agentLog;
 
-  /**
-   * Log handle
-   */
   /**
    * Handle weaver agent message.
    * 
@@ -162,10 +160,10 @@ public enum AgentFacade {
   /**
    * Get coverage rate.
    * 
-   * @return The percentage of weave points covered.
+   * @return The percentage of yield points covered.
    */
-  public int getCoverageRate() {
-    return (_coveredYieldPoints * 100) / _yieldPoints.size();
+  public double getCoverageRate() {
+    return (_coveredYieldPoints * 100.0) / (double) _yieldPoints.size();
   }
 
   /**
@@ -229,18 +227,20 @@ public enum AgentFacade {
    * Generate coverage report.
    * 
    * @throws IOException if an I/O error occurs.
+   * @return File object for the coverage report.
    */
-  public void produceCoverageReport() throws IOException {
+  public File produceCoverageReport() throws IOException {
     CReport r = CWorkspace.INSTANCE.createReport(COVERAGE_REPORT_ID);
     r.beginSection("GLOBAL STATISTICS", "TOTAL", "COVERED", "%");
     r.writeEntry(getYieldPointCount(), getYieldPointsCovered(),
         getCoverageRate());
-    r.beginSection("WEAVE POINTS", "C", "SOURCE FILE", "LINE", "SIGNATURE");
+    r.beginSection("YIELD POINTS", "C", "SOURCE FILE", "LINE", "SIGNATURE");
     for (Entry<CYieldPoint, Boolean> e : _yieldPoints.entrySet()) {
       r.writeEntry(e.getValue() ? 'Y' : 'N', e.getKey().getSourceFile(), e
           .getKey().getSourceLine(), e.getKey().getSignature());
     }
     r.close();
+    return r.getFile();
   }
 
 }

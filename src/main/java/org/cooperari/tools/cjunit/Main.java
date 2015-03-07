@@ -72,8 +72,6 @@ public class Main {
       
       CWorkspace.log("Yield points covered: %d out of %d\n", AgentFacade.INSTANCE.getYieldPointsCovered(), AgentFacade.INSTANCE.getYieldPointCount());
       
-      AgentFacade.INSTANCE.produceCoverageReport();
-      
       return r.getFailureCount() == 0 ? 0 : 1;
     } catch (Throwable e) {
       e.printStackTrace(out);

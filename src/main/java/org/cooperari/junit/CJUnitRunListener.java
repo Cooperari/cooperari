@@ -1,5 +1,6 @@
 package org.cooperari.junit;
 
+import java.io.File;
 import java.io.PrintStream;
 
 import org.cooperari.CTestResult;
@@ -69,11 +70,18 @@ public class CJUnitRunListener extends RunListener {
           result.getIgnoreCount(), 
           result.getFailureCount(),
           result.getRunTime());
-      _out.println("== Coverage ==");
-      _out.printf("%d yield points out of %d (%d %%)\n", 
+      _out.println("== Global coverage ==");
+      _out.printf("Coverage rate: %4.1f %% (%d / %d yp)\n", 
+          AgentFacade.INSTANCE.getCoverageRate(),
           AgentFacade.INSTANCE.getYieldPointsCovered(),
-          AgentFacade.INSTANCE.getYieldPointCount(),
-          AgentFacade.INSTANCE.getCoverageRate());
+          AgentFacade.INSTANCE.getYieldPointCount());
+      try {
+        File report = AgentFacade.INSTANCE.produceCoverageReport();
+        _out.printf("Coverage report: '%s'\n", report.getAbsolutePath());
+      }
+      catch (Throwable e) {
+        e.printStackTrace(_out);
+      }
   }
 
   
