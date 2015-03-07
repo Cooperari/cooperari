@@ -2,7 +2,6 @@ package org.cooperari.core;
 
 import org.aspectj.lang.JoinPoint;
 import org.cooperari.CYieldPoint;
-import org.cooperari.core.aspectj.AgentFacade;
 
 /**
  * Information for the yield point of a cooperative thread.

@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.cooperari.core.CThread;
-import org.cooperari.core.CWorkspace;
 import org.cooperari.core.CThreadLocation;
+import org.cooperari.core.CWorkspace;
 
 
 public class ProgramStateAbstraction {
