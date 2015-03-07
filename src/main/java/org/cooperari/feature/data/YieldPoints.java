@@ -17,6 +17,37 @@ import org.cooperari.core.CWorkspace;
 public class YieldPoints {
 
   /**
+   * Constant used to denote a static field access.
+   */
+  private static final String STATIC_FIELD = "<static>";
+  
+  /**
+   * Advice executed before static field read accesses.
+   * @param thisJoinPoint Join point.
+   */
+  @Before("get(static * *.*)")
+  public void beforeGetStaticField(JoinPoint thisJoinPoint) {
+    assert CWorkspace.debug(thisJoinPoint);
+    CThread t = CThread.intercept(thisJoinPoint);
+    if (t != null) {
+      Read.before(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
+    }
+  }
+  
+  /**
+   * Advice executed after static field read accesses.
+   * @param thisJoinPoint Join point.
+   */
+  @After("get(static * *.*)")
+  public void afterGetStaticField(JoinPoint thisJoinPoint) {
+    assert CWorkspace.debug(thisJoinPoint);
+    CThread t = CThread.intercept(thisJoinPoint);
+    if (t != null) {
+      Read.after(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
+    }
+  }
+  
+  /**
    * Advice executed before field read accesses.
    * @param thisJoinPoint Join point.
    * @param o Target object.
@@ -44,6 +75,31 @@ public class YieldPoints {
     }
   }
   
+  /**
+   * Advice executed before static field write accesses.
+   * @param thisJoinPoint Join point.
+   */
+  @Before("set(static * *.*)")
+  public void beforeSetStaticField(JoinPoint thisJoinPoint) {
+    assert CWorkspace.debug(thisJoinPoint);
+    CThread t = CThread.intercept(thisJoinPoint);
+    if (t != null) {
+      Write.before(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
+    }
+  }
+  
+  /**
+   * Advice executed after static field write accesses.
+   * @param thisJoinPoint Join point.
+   */
+  @After("set(static * *.*)")
+  public void afterSetStaticField(JoinPoint thisJoinPoint) {
+    assert CWorkspace.debug(thisJoinPoint);
+    CThread t = CThread.intercept(thisJoinPoint);
+    if (t != null) {
+      Write.after(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
+    }
+  }
   /**
    * Advice executed before field write accesses.
    * @param thisJoinPoint Join point.

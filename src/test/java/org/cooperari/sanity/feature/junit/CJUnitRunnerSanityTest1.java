@@ -1,9 +1,8 @@
-package org.cooperari.sanity.junit;
+package org.cooperari.sanity.feature.junit;
 
 import static org.junit.Assert.assertEquals;
 
 import org.cooperari.config.CMaxTrials;
-import org.cooperari.junit.CIgnore;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,41 +16,8 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({ "javadoc" })
 @RunWith(CJUnitRunner.class)
-public class CJUnitRunnerSanityTest2 {
-  
-  @Test
-  @CMaxTrials(2)
-  public void testC1() {
-
-  }
-
-  @Test
-  @CMaxTrials(2)
-  public void testC2() {
-    
-  }
-
-  @Test
-  @CMaxTrials(2)
-  public void testC3() {
-    
-  }
-  
-  @Test
-  @CIgnore
-  @CMaxTrials(2) 
-  public void testNC1() {
-    
-  }
-  @Test
-  @CIgnore
-  @CMaxTrials(2)
-  public void testNC2() {
-    
-  }
-  
-  private static final int C_TEST_METHODS = 3; // testC1, testC2, testC3
-  private static final int C_TEST_METHODS_WITH_CIGNORE = 2; // testNC1, testNC2
+public class CJUnitRunnerSanityTest1 {
+  private static final int TEST_METHODS = 3;
   private static int setupBeforeClassCounter = 0;
   private static int setupCounter = Integer.MAX_VALUE;
   private static int tearDownCounter = Integer.MAX_VALUE;
@@ -62,7 +28,14 @@ public class CJUnitRunnerSanityTest2 {
     setupCounter = 0;
     tearDownCounter = 0;
   }
-  
+
+  @AfterClass
+  public static void tearDownAfterClass() {
+    assertEquals("setup counter", TEST_METHODS, setupCounter);
+    assertEquals("teardown counter", TEST_METHODS, tearDownCounter);
+    assertEquals("class setup counter", 1, setupBeforeClassCounter);
+  }
+
   @Before
   public void setUp() throws Exception {
     setupCounter++;
@@ -74,14 +47,25 @@ public class CJUnitRunnerSanityTest2 {
     assertEquals("setup vs. teardown", tearDownCounter, setupCounter);
   }
 
-
-  @AfterClass
-  public static void tearDownAfterClass() {
-    assertEquals("setup counter", C_TEST_METHODS * 2 + C_TEST_METHODS_WITH_CIGNORE, setupCounter);
-    assertEquals("teardown counter", C_TEST_METHODS * 2 + C_TEST_METHODS_WITH_CIGNORE, tearDownCounter);
-    assertEquals("class setup counter", 1, setupBeforeClassCounter);
+  @Test(expected = NullPointerException.class)
+  @CMaxTrials(1)
+  public void test1() {
+    assertEquals("teardown counter", 0, tearDownCounter);
+    assertEquals("setup counter", 1, setupCounter);
+    throw new NullPointerException();
   }
 
-  
+  @Test
+  @CMaxTrials(1)
+  public void test2() {
+    assertEquals("teardown counter", 1, tearDownCounter);
+    assertEquals("setup counter", 2, setupCounter);
+  }
 
+  @Test
+  @CMaxTrials(1)
+  public void test3() {
+    assertEquals("teardown counter", 2, tearDownCounter);
+    assertEquals("setup counter", 3, setupCounter);
+  }
 }

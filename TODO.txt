@@ -3,7 +3,6 @@
 Features left to implement:
 - produce coverage files per JUnit test case
 - update scripts to disable assertions in org.cooperari 
-- static fields
 - cjava utility
 - operation arguments (yes/no? if yes at least written to trace)
 - Revise Coverage/CoveragePolicy code
