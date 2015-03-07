@@ -13,7 +13,7 @@ public final class CYieldPointImpl implements CYieldPoint {
   /**
    * Internal location used for "system" yield points.
    */
-  private static final String INTERNAL = "<system>";
+  public static final String INTERNAL = "<system>";
 
   /**
    * Constant for thread initialization.
@@ -114,13 +114,23 @@ public final class CYieldPointImpl implements CYieldPoint {
   }
 
   /**
-   * Get hash code
+   * Get hash code.
+   * @return Hash code value.
    */
   @Override
   public int hashCode() {
     return _hash;
   }
 
+  /**
+   * Test for equality.
+   * @param o Object reference.
+   * @return <code>true</code> if the parameter represents an equivalent yield point.
+   */
+  public boolean equals(Object o) {
+    return o == this || ((o instanceof CYieldPoint) && compareTo((CYieldPoint) o) == 0);
+  }
+  
   /**
    * @{inheritDoc}
    */
@@ -137,4 +147,12 @@ public final class CYieldPointImpl implements CYieldPoint {
     return c;
   }
 
+  /**
+   * @{inheritDoc}
+   */
+  @Override
+  public String toString() {
+    return new StringBuilder().append(getSourceFile()).append('|')
+        .append(getSourceLine()).append('|').append(getSignature()).toString();
+  }
 }

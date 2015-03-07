@@ -117,7 +117,10 @@ public final class CTrace {
    * @param type event type
    */
   public void record(CThread t, EventType type) {
-    _ypSet.add(t.getLocation().getYieldPoint());
+    CYieldPoint yp = t.getLocation().getYieldPoint();
+    if (yp.getSourceFile() != CYieldPointImpl.INTERNAL) {
+      _ypSet.add(yp);
+    }
     _traceElements.addLast(new TraceItem(t, type));
     if (_sizeLimit > 0 && _traceElements.size() == _sizeLimit) {
       _traceElements.removeFirst();
