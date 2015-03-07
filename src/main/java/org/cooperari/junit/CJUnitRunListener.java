@@ -87,7 +87,7 @@ public class CJUnitRunListener extends RunListener {
       _currentClassName = description.getClassName();
       _out.println(_currentClassName);
     }
-    _out.printf("  %-50s ", description.getMethodName());
+    _out.printf("  %-55s ", description.getMethodName());
   }
   
   /**
@@ -134,7 +134,7 @@ public class CJUnitRunListener extends RunListener {
    */
   @Override
   public void testIgnored(Description description) {
-    _out.printf("  %-50s [skipped]", description.getMethodName());
+    _out.printf("  %-55s [skipped]", description.getMethodName());
     _out.println();
   }
 
