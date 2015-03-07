@@ -2,6 +2,7 @@ package org.cooperari.core.aspectj;
 
 import java.io.IOException;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -160,19 +161,19 @@ public enum AgentFacade {
     return (_coveredYieldPoints * 100) / _yieldPoints.size();
   }
 
-  /**
-   * Mark location as reached.   
-   *  
-   * @param yp Yield point as represent by the main engine.
-   */
-  public void markAsCovered(CYieldPoint yp) {
-    Boolean b = _yieldPoints.put(yp, true);
-    if (b == null || b == false) {
-      _coveredYieldPoints ++;
-    }
-  } 
-
-
+ /**
+  * Mark a set of yield points as covered.
+  * @param ypSet Set of yield points.
+  */
+  public void recordYieldPointsCovered(Set<CYieldPoint> ypSet) {
+    for (CYieldPoint yp : ypSet) {
+      Boolean b = _yieldPoints.put(yp, true);
+      if (b == null || b == false) {
+        _coveredYieldPoints ++;
+      }
+    }  
+  }
+  
   /**
    * Handle an error.
    * @param e Exception object.
@@ -203,4 +204,5 @@ public enum AgentFacade {
     }
     r.close();
   }
+
 }

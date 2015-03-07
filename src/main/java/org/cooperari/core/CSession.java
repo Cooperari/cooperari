@@ -8,6 +8,7 @@ import org.cooperari.CTestResult;
 import org.cooperari.config.CCoverage;
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
+import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.core.util.CReport;
 import org.cooperari.errors.CCheckedExceptionError;
 import org.cooperari.errors.CConfigurationError;
@@ -115,6 +116,7 @@ public final class CSession {
       } catch (InterruptedException e) {
         throw new CInternalError(e);
       }
+      AgentFacade.INSTANCE.recordYieldPointsCovered(trace.getYieldPointsCovered());
       cHandler.onTestFinished();
       try {
         s.rethrowExceptionsIfAny();

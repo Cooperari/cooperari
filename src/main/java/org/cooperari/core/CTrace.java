@@ -3,7 +3,9 @@ package org.cooperari.core;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.cooperari.CYieldPoint;
 import org.cooperari.config.CTraceOptions;
@@ -65,9 +67,16 @@ public final class CTrace {
   private final ArrayDeque<TraceItem> _traceElements = new ArrayDeque<>();
 
   /**
-   * Map of thread ids to names.
+   * Map of thread identifiers to names.
    */
   private final HashMap<Integer,ThreadInfo> _threadNames = new HashMap<>();
+  
+
+  /**
+   * Yield points covered.
+   */
+  private final HashSet<CYieldPoint> _yieldPointsCovered = new HashSet<>();
+  
 
   /**
    * Step counter.
@@ -96,7 +105,6 @@ public final class CTrace {
    * @param t The thread at stake.
    */
   public void recordStep(CThread t) {
-    AgentFacade.INSTANCE.markAsCovered(t.getLocation().getYieldPoint());
     record(t, null);
   }
   
@@ -106,6 +114,7 @@ public final class CTrace {
    * @param type event type
    */
   public void record(CThread t, EventType type) {
+    _yieldPointsCovered.add(t.getLocation().getYieldPoint());
     _traceElements.addLast(new TraceItem(t, type));
     if (_sizeLimit > 0 && _traceElements.size() == _sizeLimit) {
       _traceElements.removeFirst();
@@ -113,6 +122,13 @@ public final class CTrace {
     _stepCounter++;
   }
 
+  /**
+   * Get yield points covered.
+   * @return Set of yield points covered.
+   */
+  Set<CYieldPoint> getYieldPointsCovered() {
+    return _yieldPointsCovered;
+  }
 
   /**
    * Write trace to a output file.
