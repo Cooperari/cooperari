@@ -6,6 +6,8 @@ Features left to implement:
 - cjava utility
 - make cjunit invoke itself to move indirection
 - operation arguments (yes/no? if yes at least written to trace)
+- verification package (generalization of hotspot functionality)
+  -- @CPre @CPost @CInvariant @CFieldProperty 
 - Revise Coverage/CoveragePolicy code
 - CSystem.runPreemptively() 
 - Windows scripts
@@ -13,6 +15,7 @@ Features left to implement:
 - tools package organized differently (?)
 - cjunit/cjava -p switch / ensure CJUnitRunner runs preemptively as well (maybe)
 - @CKeepGoing (maybe)
+
 
 Misc. implementation details
  -- Merge CRuntime / CSession ? Feature life-cycle revision.
