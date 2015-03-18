@@ -26,6 +26,7 @@ public @interface CCondition {
      */
     POST
   }
+  
   /**
    * Event.
    */
@@ -34,6 +35,7 @@ public @interface CCondition {
      * Field update.
      */
     FIELD_UPDATE,
+    
     /**
      * Method call.
      */

@@ -1,26 +1,35 @@
 package org.cooperari.verification;
 
+import java.util.Collection;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import org.aspectj.weaver.ast.Not;
 
 public class CLogic {
 
+  @SuppressWarnings("unchecked")
   static <T extends Thread> boolean exists(Class<T> threadClass, Predicate<T> predicate) {
-    return false;
+    return allThreads(threadClass).anyMatch(predicate);
   }
  
-  static <T extends Thread> boolean thereAre(Class<T> threadClass, Predicate<T> predicate, int count) {
-    return false;
-  }
-
-  static <T extends Thread> boolean forAll(Class<T> threadClass, Predicate<T> predicate) {
-    return false;
+  @SuppressWarnings("unchecked")
+  static <T extends Thread> boolean forall(Class<T> threadClass, Predicate<T> predicate) {
+    return allThreads(threadClass).allMatch(predicate);
   }
   
-  static <T extends Thread> boolean verify(T thread, Predicate<T> predicate) {
-    return predicate.test(thread);
-  }
 
-  public static void main(String[] args) {
-    System.out.println(verify(Thread.currentThread(), a -> a.isAlive()));
+  @SuppressWarnings("unchecked")
+  static <T extends Thread> boolean count(Class<T> threadClass, Predicate<T> predicate, int count) {
+    return allThreads(threadClass).filter(predicate).count() == count;
   }
+ 
+  @SuppressWarnings("unchecked")
+  private static <T extends Thread> Stream<T> allThreads(Class<T> threadClass) {
+    return (Stream<T>) allThreads().stream().filter(t -> t.getClass() == threadClass);
+  }
+  private static <T extends Thread> Collection<Thread> allThreads() {
+    return null;
+  }
+ 
 }
