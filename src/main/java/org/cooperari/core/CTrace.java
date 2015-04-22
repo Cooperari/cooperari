@@ -71,9 +71,9 @@ public final class CTrace {
   
 
   /**
-   * Yield points covered.
+   * Coverage log to use.
    */
-  private final Set<CYieldPoint> _ypSet;
+  private final CoverageLog _clog;
   
 
   /**
@@ -83,11 +83,11 @@ public final class CTrace {
 
   /**
    * Constructs a new trace.
-   * @param coverageSet Set in which to record covered yield points.
+   * @param clog Set in which to record covered yield points.
    * @param options Options.
    */
-  public CTrace(Set<CYieldPoint> coverageSet, CTraceOptions options) {
-    _ypSet = coverageSet;
+  public CTrace(CoverageLog clog, CTraceOptions options) {
+    _clog = clog;
     _sizeLimit = options.limit();
   }
 
@@ -117,21 +117,13 @@ public final class CTrace {
   public void record(CThread t, EventType type) {
     CYieldPoint yp = t.getLocation().getYieldPoint();
     if (yp.getSourceFile() != CYieldPointImpl.INTERNAL) {
-      _ypSet.add(yp);
+      _clog.markAsCovered(yp);
     }
     _traceElements.addLast(new TraceItem(t, type));
     if (_sizeLimit > 0 && _traceElements.size() == _sizeLimit) {
       _traceElements.removeFirst();
     }
     _stepCounter++;
-  }
-
-  /**
-   * Get yield points covered.
-   * @return Set of yield points covered.
-   */
-  Set<CYieldPoint> getYieldPointsCovered() {
-    return _ypSet;
   }
 
   /**

@@ -17,6 +17,13 @@ Features left to implement:
 - @CKeepGoing (maybe)
 
 
+- Examples:
+  Herlihy and Wing Queue.
+  http://arxiv.org/pdf/1502.07639.pdf
+
+https://bugs.openjdk.java.net/browse/JDK-4334376
+https://bugs.openjdk.java.net/browse/JDK-4810210
+
 Misc. implementation details
  -- Merge CRuntime / CSession ? Feature life-cycle revision.
  -- Get rid of Scheduler.wakeup() interaction

@@ -15,6 +15,7 @@ import org.aspectj.lang.JoinPoint;
 import org.cooperari.CYieldPoint;
 import org.cooperari.core.CWorkspace;
 import org.cooperari.core.CYieldPointImpl;
+import org.cooperari.core.CoverageLog;
 import org.cooperari.core.util.CLog;
 import org.cooperari.core.util.CReport;
 
@@ -36,16 +37,9 @@ public enum AgentFacade {
   private boolean _active = false;
 
   /**
-   * Yield point map. It maps yield points to a boolean value indicating if the
-   * weave point has been covered or not. A navigable tree-map is used to allow for
-   * individual test coverage data to be derived easily.
+   * Global coverage log.
    */
-  private final TreeMap<CYieldPoint, Boolean> _yieldPoints = new TreeMap<>();
-
-  /**
-   * Count of covered yield points.
-   */
-  private int _coveredYieldPoints = 0;
+  private final CoverageLog _globalCoverageLog = new CoverageLog();
 
   /**
    * Test if weaver agent is active.
@@ -70,7 +64,7 @@ public enum AgentFacade {
    * @return Yield point count.
    */
   public int getYieldPointCount() {
-    return _yieldPoints.size();
+    return _globalCoverageLog.getYieldPointCount();
   }
 
   /**
@@ -79,7 +73,7 @@ public enum AgentFacade {
    * @return Yield point count.
    */
   public int getYieldPointsCovered() {
-    return _coveredYieldPoints;
+    return _globalCoverageLog.getYieldPointsCovered();
   }
 
   /**
@@ -138,9 +132,7 @@ public enum AgentFacade {
           CYieldPointImpl yp = new CYieldPointImpl(signature, fileInfo,
               lineInfo);
           synchronized (this) {
-            if (!_yieldPoints.containsKey(yp)) {
-              _yieldPoints.put(yp, false);
-            }
+            _globalCoverageLog.recordDefinition(yp);
           }
         }
       } catch (Throwable e) {
@@ -163,49 +155,25 @@ public enum AgentFacade {
    * @return The percentage of yield points covered.
    */
   public double getCoverageRate() {
-    return (_coveredYieldPoints * 100.0) / (double) _yieldPoints.size();
+    return _globalCoverageLog.getCoverageRate();
   }
 
   /**
    * Mark a set of yield points as covered and get an estimate of uncovered
    * yield points in the same source files as the set that were not covered.
+   * The method also writes a coverage report to a file for the given set of yield points.
    * 
-   * @param ypSet Set of yield points.
+   * @param log Log containing only covered yield points.
    * @return Uncovered yield points.
    */
-  public int recordYieldPointsCovered(Set<CYieldPoint> ypSet) {
+  public int enrichCoverageInfo(CoverageLog log) {
     synchronized(this) {
-      if (ypSet.isEmpty()) {
+      if (log.getYieldPointCount() == 0) {
         return 0;
       }
-
-      // First update global coverage data 
-      // and get list of source files to look for uncovered yield points.
-      HashSet<String> sourceFiles = new HashSet<>();
-      for (CYieldPoint yp : ypSet) {
-        sourceFiles.add(yp.getSourceFile());
-        synchronized(_yieldPoints) {
-          Boolean b = _yieldPoints.put(yp, true);
-          if (b == null || b == false) {
-            // Mark yield point as globally covered
-            _coveredYieldPoints ++;
-          }
-        }
-      }
-      // Now get number uncovered yield points in all source files
-      int uncovered = 0;
-      for (String sf : sourceFiles) {
-        CYieldPointImpl lowerBound = new CYieldPointImpl("", sf, -1);
-        // Note: extra char so that view iterates until the last possible entry
-        CYieldPointImpl upperBound = new CYieldPointImpl("", sf + '*', -1);
-        Map<CYieldPoint,Boolean> view = _yieldPoints.subMap(lowerBound, upperBound);
-        for (CYieldPoint yp : view.keySet()) {
-          if (!ypSet.contains(yp)) {
-            uncovered++;
-          }
-        }
-      }
-      return uncovered;
+      _globalCoverageLog.enrich(log, false);
+      log.enrich(_globalCoverageLog, true);
+      return log.getYieldPointCount() - log.getYieldPointsCovered();
     }
   }
 
@@ -230,17 +198,9 @@ public enum AgentFacade {
    * @return File object for the coverage report.
    */
   public File produceCoverageReport() throws IOException {
-    CReport r = CWorkspace.INSTANCE.createReport(COVERAGE_REPORT_ID);
-    r.beginSection("GLOBAL STATISTICS", "TOTAL", "COVERED", "%");
-    r.writeEntry(getYieldPointCount(), getYieldPointsCovered(),
-        getCoverageRate());
-    r.beginSection("YIELD POINTS", "C", "SOURCE FILE", "LINE", "SIGNATURE");
-    for (Entry<CYieldPoint, Boolean> e : _yieldPoints.entrySet()) {
-      r.writeEntry(e.getValue() ? 'Y' : 'N', e.getKey().getSourceFile(), e
-          .getKey().getSourceLine(), e.getKey().getSignature());
+    synchronized (this) {
+      return _globalCoverageLog.produceCoverageReport(COVERAGE_REPORT_ID);
     }
-    r.close();
-    return r.getFile();
   }
 
 }

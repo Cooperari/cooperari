@@ -129,6 +129,7 @@ public class CJUnitRunListener extends RunListener {
      _out.printf("    > trials: %d time: %d ms coverage: %4.1f %% (%d / %d yp)", 
          result.trials(), result.getExecutionTime(),
          result.getCoverageRate(), result.getCoveredYieldPoints(), result.getTotalYieldPoints());
+     
      if (result.failed() && result.getFailureTrace() != null) {
        _out.println();
        _out.printf("    > failure trace: '%s'", result.getFailureTrace().getAbsolutePath());

@@ -107,8 +107,8 @@ public final class CSession {
     // Main loop
     long startTime = System.currentTimeMillis();
     boolean done = false;
-    HashSet<CYieldPoint> coveredYieldPoints = new HashSet<>();
-    CTrace trace = new CTrace(coveredYieldPoints, traceOptions);
+    CoverageLog clog = new CoverageLog();
+    CTrace trace = new CTrace(clog, traceOptions);
     runtime.register(trace);
 
     do {
@@ -173,10 +173,10 @@ public final class CSession {
       failure = failure.getCause();
     }
 
-    int uncoveredYieldPoints = AgentFacade.INSTANCE.recordYieldPointsCovered(coveredYieldPoints);
+    AgentFacade.INSTANCE.enrichCoverageInfo(clog);
 
     return new CTestResultImpl(failure != null, trials, timeElapsed, failure,
-        traceFile, coveredYieldPoints.size(), uncoveredYieldPoints);
+        traceFile, clog.getYieldPointsCovered(), clog.getYieldPointCount() - clog.getYieldPointsCovered());
   }
 
   @SuppressWarnings("javadoc")
