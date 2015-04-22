@@ -1,18 +1,19 @@
 == 0.2.1. final ==
 
 Features left to implement:
-- @CTimeLimit
-- update scripts to disable assertions in org.cooperari 
 - cjava utility
-- make cjunit invoke itself to move indirection
+- update scripts to disable assertions in org.cooperari 
 - operation arguments (yes/no? if yes at least written to trace)
 - Revise Coverage/CoveragePolicy code
 - CSystem.runPreemptively() 
-- Windows scripts
 - javadoc / source / deploy maven targets
-- tools package organized differently (?)
+
+Maybe:
 - cjunit/cjava -p switch / ensure CJUnitRunner runs preemptively as well (maybe)
-- @CKeepGoing (maybe)
+- tools package organized differently (?)
+- @CKeepGoing 
+- make cjunit/cjava invoke csetup to move indirection
+- Windows scripts
 
 
 - Examples:
