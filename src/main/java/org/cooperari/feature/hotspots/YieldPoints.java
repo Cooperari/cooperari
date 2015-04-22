@@ -20,7 +20,7 @@ public class YieldPoints {
    * @param thisJoinPoint Join point.
    * @param id Hotspot id.
    */
-  @Before("call(* org.cooperari.CSystem.cHotspot(String)) && args(id)")
+  @Before("call(* org.cooperari.CSystem.hotspot(String)) && args(id)")
   public void beforeHotspot(JoinPoint thisJoinPoint, String id) {
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
@@ -29,12 +29,12 @@ public class YieldPoints {
   }
   
   /**
-   * Advice executed before a call to {@link org.cooperari.CSystem#cHotspot(String,boolean)}.
+   * Advice executed before a call to {@link org.cooperari.CSystem#hotspot(String,boolean)}.
    * @param thisJoinPoint Join point.
    * @param id Hotspot id.
    * @param cond Condition value.
    */
-  @Before("call(* org.cooperari.cSystem.cHotspot(String,boolean)) && args(id,cond)")
+  @Before("call(* org.cooperari.cSystem.hotspot(String,boolean)) && args(id,cond)")
   public void beforeHotspot(JoinPoint thisJoinPoint, String id, boolean cond) {
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {

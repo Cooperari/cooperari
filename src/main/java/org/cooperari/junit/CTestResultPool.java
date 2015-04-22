@@ -8,7 +8,7 @@ import org.junit.runner.Description;
  * Test result pool that provides a map from alive {@link org.junit.runner.Description} objects
  * to {@link org.cooperari.CTestResult} objects.
  * <p>
- * This lets classes like {@link org.cooperari.junit.CJUnitRunListener}
+ * This lets classes like {@link org.cooperari.tools.cjunit.CJUnitRunListener}
  * </p>
  * 
  * <p>
@@ -22,7 +22,7 @@ import org.junit.runner.Description;
  * @since 0.2
  *
  */
-enum CTestResultPool {
+public enum CTestResultPool {
   /**
    * Singleton instance.
    */

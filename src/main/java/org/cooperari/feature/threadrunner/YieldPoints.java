@@ -14,13 +14,13 @@ import org.cooperari.core.CThread;
 @Aspect
 public class YieldPoints {
   /**
-   * Around advice executed for a call to {@link org.cooperari.CSystem#cRun}.
+   * Around advice executed for a call to {@link org.cooperari.CSystem#forkAndJoin(Runnable...)}.
    * @param thisJoinPoint Join point.
    * @param runnables Runnable instances.
-   * @throws IllegalThreadStateException In accordance to {@link org.cooperari.CSystem#cRun}.
+   * @throws IllegalThreadStateException In accordance to {@link org.cooperari.CSystem#forkAndJoin(Runnable...)}.
    * @throws Throwable Throwable In accordance to {@link ProceedingJoinPoint#proceed()}.
    */
-  @Around("call(* org.cooperari.CSystem.cRun(Runnable...)) && args(runnables)")
+  @Around("call(* org.cooperari.CSystem.forkAndJoin(Runnable...)) && args(runnables)")
   public void aroundCall(ProceedingJoinPoint thisJoinPoint, Runnable[] runnables) throws Throwable {
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {

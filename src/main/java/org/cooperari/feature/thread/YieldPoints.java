@@ -264,7 +264,7 @@ public class YieldPoints {
    * @throws Throwable In accordance to {@link ProceedingJoinPoint#proceed()}.
    * @throws CInternalError if current (calling) thread is not cooperative.
    */
-  @Around("call(void org.cooperari.CSystem.cSpuriousWakeup(java.lang.Thread)) && args(thread)")
+  @Around("call(void org.cooperari.CSystem.sendSpuriousWakeup(java.lang.Thread)) && args(thread)")
   public void around(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
 
     CThread thisThread = CThread.intercept(thisJoinPoint);

@@ -1,4 +1,4 @@
-package org.cooperari.junit;
+package org.cooperari.tools.cjunit;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -7,17 +7,18 @@ import org.cooperari.CSystem;
 import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
 import org.cooperari.CoverageInfo;
+import org.cooperari.junit.CTestResultPool;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
 /**
- * Custom JUnit run listener for <code>cjunit</code>.
+ * JUnit run listener for <code>cjunit</code>.
  * 
  * @since 0.2 
  */
-public class CJUnitRunListener extends RunListener {
+class CJUnitRunListener extends RunListener {
 
   /**
    * Output stream.

@@ -35,7 +35,7 @@ Misc. implementation details
  -- serial ids for exception classes
  -- do not use CThread.intercept() for "unnecessary" yield points
  -- make CSystem.generateGlobalCoverageReport() call optional
- -- move JUnitRunListener to tools package
+
 
 Future workloads:
 - Examples project
