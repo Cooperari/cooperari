@@ -1,7 +1,7 @@
 package org.cooperari.sanity.feature.hotspot;
 
 
-import static org.cooperari.CSystem.cHotspot;
+import static org.cooperari.CSystem.hotspot;
 
 import org.cooperari.CSystem;
 import org.cooperari.config.CAlways;

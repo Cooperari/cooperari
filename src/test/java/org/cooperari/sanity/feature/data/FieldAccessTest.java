@@ -1,5 +1,5 @@
 package org.cooperari.sanity.feature.data;
-import static org.cooperari.CSystem.cHotspot;
+import static org.cooperari.CSystem.hotspot;
 import static org.junit.Assert.assertEquals;
 
 import org.cooperari.CSystem;

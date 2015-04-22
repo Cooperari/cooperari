@@ -1,6 +1,6 @@
 package org.cooperari.sanity.feature.thread;
 
-import static org.cooperari.CSystem.cHotspot;
+import static org.cooperari.CSystem.hotspot;
 import static org.junit.Assert.assertSame;
 
 import org.cooperari.config.CAlways;
