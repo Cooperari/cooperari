@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.cooperari.core.CThread;
-import org.cooperari.core.CWorkspace;
 
 
 /**
@@ -23,7 +22,7 @@ public final class YieldPoints {
    */
   @Before("lock() && args(o)")
   public void beforeMonitorEnter(JoinPoint thisJoinPoint, Object o) {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Enter.execute(t, o);
@@ -37,7 +36,7 @@ public final class YieldPoints {
    */
   @Before("unlock() && args(o)")
   public void beforeMonitorExit(JoinPoint thisJoinPoint, Object o) {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Exit.execute(t, o);
@@ -53,7 +52,7 @@ public final class YieldPoints {
    */
   @Around("call(boolean Thread.holdsLock(Object)) && args(o)")
   public boolean aroundThreadHoldsLock(ProceedingJoinPoint thisJoinPoint, Object o) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
      return ThreadHoldsLock.execute(t, o);
@@ -70,7 +69,7 @@ public final class YieldPoints {
    */
   @Around("call(void Object.wait()) && target(o)")
   public void aroundWait(ProceedingJoinPoint thisJoinPoint, Object o) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Wait.execute(t, o, 0L);
@@ -89,7 +88,7 @@ public final class YieldPoints {
    */
   @Around("call(void Object.wait(long)) && target(o) && args(millis)")
   public void aroundWait(ProceedingJoinPoint thisJoinPoint, Object o, long millis) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Wait.execute(t, o, millis * 1000000L);
@@ -109,7 +108,7 @@ public final class YieldPoints {
    */
   @Around("call(void Object.wait(long,int)) && target(o) && args(millis,nano)")
   public void aroundWait(ProceedingJoinPoint thisJoinPoint, Object o, long millis, int nano) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Wait.execute(t, o, millis * 1000000L + nano);
@@ -126,7 +125,7 @@ public final class YieldPoints {
    */
   @Around("call(void Object.notify()) && target(o)")
   public void aroundNotify(ProceedingJoinPoint thisJoinPoint, Object o) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
      Notify.execute(t, o);
@@ -143,7 +142,7 @@ public final class YieldPoints {
    */
   @Around("call(void Object.notifyAll()) && target(o)")
   public void aroundNotifyAll(ProceedingJoinPoint thisJoinPoint, Object o) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       NotifyAll.execute(t, o);

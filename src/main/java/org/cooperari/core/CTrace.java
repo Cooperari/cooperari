@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.cooperari.CYieldPoint;
 import org.cooperari.config.CTraceOptions;

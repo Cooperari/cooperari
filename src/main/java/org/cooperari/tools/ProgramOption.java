@@ -5,9 +5,6 @@ import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.Optional;
-
-import org.cooperari.errors.CInternalError;
 
 /**
  * Representation of a program option

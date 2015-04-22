@@ -2,11 +2,6 @@ package org.cooperari.core.aspectj;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +12,6 @@ import org.cooperari.core.CWorkspace;
 import org.cooperari.core.CYieldPointImpl;
 import org.cooperari.core.CoverageLog;
 import org.cooperari.core.util.CLog;
-import org.cooperari.core.util.CReport;
 
 /**
  * Facade for the load-time weaving agent.

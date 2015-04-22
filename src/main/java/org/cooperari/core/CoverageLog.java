@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import org.cooperari.CYieldPoint;
 import org.cooperari.core.util.CReport;

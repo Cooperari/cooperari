@@ -5,7 +5,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.cooperari.CSystem;
 import org.cooperari.core.CThread;
-import org.cooperari.core.CWorkspace;
 import org.cooperari.errors.CInternalError;
 
 /**
@@ -25,7 +24,7 @@ public class YieldPoints {
    */
   @Around("call(Thread Thread.currentThread())")
   public Thread aroundThreadCurrentThread(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       t.cYield(CThread.NOP);
@@ -45,7 +44,7 @@ public class YieldPoints {
    */
   @Around("call(Thread.State Thread.getState()) && target(thread)")
   public Thread.State aroundGetState(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       thisThread.cYield(CThread.NOP);
@@ -63,7 +62,7 @@ public class YieldPoints {
    */
   @Around("call(boolean Thread.isAlive()) && target(thread)")
   public boolean aroundIsAlive(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       thisThread.cYield(CThread.NOP);
@@ -81,7 +80,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.interrupt()) && target(thread)")
   public void aroundInterrupt(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Interrupt.execute(t, thread);
@@ -98,7 +97,7 @@ public class YieldPoints {
    */
   @Around("call(boolean Thread.interrupted())")
   public boolean aroundInterrupted(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     return t != null ?
         Interrupted.execute(t)
@@ -115,7 +114,6 @@ public class YieldPoints {
    */
   @Around("call(boolean Thread.isInterrupted()) && target(thread)")
   public boolean aroundIsInterrupted(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
     CThread t = CThread.intercept(thisJoinPoint);
     return t != null ?
         IsInterrupted.execute(t, thread)
@@ -132,7 +130,6 @@ public class YieldPoints {
    */
   @Around("call(void Thread.start()) && target(thread)")
   public void aroundStart(ProceedingJoinPoint thisJoinPoint, Thread thread) throws IllegalThreadStateException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       Start.execute(thisThread, thread);
@@ -150,7 +147,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.join()) && target(thread)")
   public void aroundJoin(ProceedingJoinPoint thisJoinPoint, Thread thread) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       Join.execute(thisThread, thread, 0L);
@@ -169,7 +166,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.join(long)) && target(thread) && args(millis)")
   public void aroundJoin(ProceedingJoinPoint thisJoinPoint, Thread thread, long millis) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Join.execute(t,  thread, millis < 0 ? -1L : millis * 1000000L);
@@ -189,7 +186,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.join(long)) && target(thread) && args(millis, nano)")
   public void aroundJoin(ProceedingJoinPoint thisJoinPoint, Thread thread, long millis, int nano) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Join.execute(t,  thread, millis < 0 || nano < 0 || nano > 999999L ? -1L : millis * 1000000L + nano);
@@ -207,7 +204,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.sleep(long)) && args(millis)")
   public void aroundSleep(ProceedingJoinPoint thisJoinPoint, long millis) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Sleep.execute(t, millis < 0 ? -1L : millis * 1000000L);
@@ -225,7 +222,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.sleep(long,int)) && args(millis,nano)")
   public void aroundSleep(ProceedingJoinPoint thisJoinPoint, long millis, int nano) throws InterruptedException, Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Sleep.execute(t, millis < 0 || nano < 0 || nano > 999999L ? -1L : millis * 1000000L + nano);
@@ -242,7 +239,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.stop()) && target(thread)")
   public void aroundStop(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Stop.execute(t,  thread);
@@ -259,7 +256,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.yield())")
   public void aroundYield(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Yield.execute(t);
@@ -277,7 +274,7 @@ public class YieldPoints {
    */
   @Around("call(void org.cooperari.CSystem.cSpuriousWakeup(java.lang.Thread)) && args(thread)")
   public void around(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
+    
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       SpuriousWakeup.execute(thisThread, thread);

@@ -4,7 +4,6 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.cooperari.core.CThread;
-import org.cooperari.core.CWorkspace;
 
 
 /**
@@ -23,7 +22,6 @@ public class YieldPoints {
    */
   @Before("call(* org.cooperari.CSystem.cHotspot(String)) && args(id)")
   public void beforeHotspot(JoinPoint thisJoinPoint, String id) {
-    assert CWorkspace.debug(thisJoinPoint);
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       t.cYield(new HotspotOperation(id));
@@ -38,7 +36,6 @@ public class YieldPoints {
    */
   @Before("call(* org.cooperari.cSystem.cHotspot(String,boolean)) && args(id,cond)")
   public void beforeHotspot(JoinPoint thisJoinPoint, String id, boolean cond) {
-    assert CWorkspace.debug(thisJoinPoint);
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       t.cYield(new HotspotOperation(id, cond));

@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import org.aspectj.weaver.ast.Not;
-
 public class CLogic {
 
   @SuppressWarnings("unchecked")

@@ -4,7 +4,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.cooperari.core.CThread;
-import org.cooperari.core.CWorkspace;
 
 
 /**
@@ -23,7 +22,6 @@ public class YieldPoints {
    */
   @Around("call(* org.cooperari.CSystem.cRun(Runnable...)) && args(runnables)")
   public void aroundCall(ProceedingJoinPoint thisJoinPoint, Runnable[] runnables) throws Throwable {
-    assert CWorkspace.debug(thisJoinPoint);
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       ThreadRunnerOperation.execute(t, runnables);
