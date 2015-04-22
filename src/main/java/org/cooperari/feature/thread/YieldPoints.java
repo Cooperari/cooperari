@@ -24,10 +24,8 @@ public class YieldPoints {
    */
   @Around("call(Thread Thread.currentThread())")
   public Thread aroundThreadCurrentThread(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
-      t.cYield(CThread.NOP);
       Thread vt = t.getVirtualizedThread();
       return (vt != null) ? vt : t;
     } else {
