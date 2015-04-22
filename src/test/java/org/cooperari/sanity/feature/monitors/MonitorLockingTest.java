@@ -126,12 +126,12 @@ public class MonitorLockingTest  {
   
   @Test
   public final void test3() {
-    CSystem.cRun(SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE);
+    CSystem.forkAndJoin(SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE);
   }
 
   
   @Test
   public final void test4() {
-    CSystem.cRun(SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE);
+    CSystem.forkAndJoin(SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE);
   }
 }

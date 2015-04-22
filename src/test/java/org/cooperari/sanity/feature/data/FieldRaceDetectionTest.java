@@ -29,7 +29,7 @@ public class FieldRaceDetectionTest {
         try {
           SHARED.x = 1;  
         } catch(CRaceError e) {
-          cHotspot("writer");
+          hotspot("writer");
         }
       } 
     };
@@ -41,51 +41,51 @@ public class FieldRaceDetectionTest {
             try {
               int x = SHARED.x;
             } catch(CRaceError e) {
-              cHotspot("reader");
+              hotspot("reader");
             }
           } 
         };
 
     @Test
     public void testNoRace() {
-      CSystem.cRun(READER);
+      CSystem.forkAndJoin(READER);
     }
     @Test
     public void testNoRace2() {
-      CSystem.cRun(READER, READER);
+      CSystem.forkAndJoin(READER, READER);
     }
     @Test
     public void testNoRace3() {
-      CSystem.cRun(READER, READER, READER);
+      CSystem.forkAndJoin(READER, READER, READER);
     }
     @Test
     @CSometimes({"reader", "writer"})
     public void testReadWriteRace() {
-      CSystem.cRun(READER, WRITER);
+      CSystem.forkAndJoin(READER, WRITER);
     }
   
     @Test
     @CSometimes({"reader", "writer"})
     public void testReadWriteRace2() {
-      CSystem.cRun(READER, READER, WRITER);
+      CSystem.forkAndJoin(READER, READER, WRITER);
     }
     
     @Test
     @CSometimes({"writer"})
     public void testWriteWriteRace() {
-      CSystem.cRun(WRITER, WRITER);
+      CSystem.forkAndJoin(WRITER, WRITER);
     }
     
     @Test
     @CSometimes({"writer"})
     public void testWriteWriteRace2() {
-      CSystem.cRun(WRITER, WRITER, WRITER);
+      CSystem.forkAndJoin(WRITER, WRITER, WRITER);
     }
     
     @Test
     @CSometimes({"reader", "writer"})
     public void testReadWriteRace3() {
-      CSystem.cRun(READER, READER, READER, WRITER, WRITER, WRITER);
+      CSystem.forkAndJoin(READER, READER, READER, WRITER, WRITER, WRITER);
     }
     
   }

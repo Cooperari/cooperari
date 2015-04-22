@@ -56,7 +56,7 @@ public class AtomicTest {
         }
       };
     }
-    CSystem.cRun(r);
+    CSystem.forkAndJoin(r);
     assertEquals("list size", n, list.size());
     assertEquals("atomic integer value", n, nextValue.get());
     for (int i = 0; i < n ; i++) {

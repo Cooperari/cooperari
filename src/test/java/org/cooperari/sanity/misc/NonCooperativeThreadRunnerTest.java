@@ -22,7 +22,7 @@ public class NonCooperativeThreadRunnerTest {
   // TODO: reconvert test
   @Test(expected = WaitDeadlockError.class) @Ignore
   public final void testWaitDealock() {
-    CSystem.cRun(new Runnable() {
+    CSystem.forkAndJoin(new Runnable() {
       public void run() {
         Object o = new Object();
         synchronized (o) {

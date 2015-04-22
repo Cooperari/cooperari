@@ -7,7 +7,7 @@ import org.cooperari.core.CThread;
 
 
 /**
- * Yield points for calls to {@link org.cooperari.CSystem#cHotspot(String)}
+ * Yield points for calls to {@link org.cooperari.CSystem#hotspot(String)}
  * and {@link org.cooperari.CSystem#cHotspot(String,boolean)}.
  *
  * @since 0.2
@@ -16,7 +16,7 @@ import org.cooperari.core.CThread;
 public class YieldPoints {
 
   /**
-   * Advice executed before a call to {@link org.cooperari.CSystem#cHotspot(String)}.
+   * Advice executed before a call to {@link org.cooperari.CSystem#hotspot(String)}.
    * @param thisJoinPoint Join point.
    * @param id Hotspot id.
    */

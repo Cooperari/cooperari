@@ -1,6 +1,6 @@
 /**
  * Reachability monitoring features.
  * 
- * @see org.cooperari.CSystem#cHotspot(String)
+ * @see org.cooperari.CSystem#hotspot(String)
  */
 package org.cooperari.feature.hotspots;

@@ -28,7 +28,7 @@ public class ResourceDeadlockTest {
           try {
             synchronized (B) { }
           } catch(CResourceDeadlockError e) {
-            cHotspot("deadlock");
+            hotspot("deadlock");
           }
         }
       }
@@ -39,7 +39,7 @@ public class ResourceDeadlockTest {
           try {
             synchronized (A) { }
           } catch(CResourceDeadlockError e) {
-            cHotspot("deadlock");
+            hotspot("deadlock");
           }
         }
       }
@@ -48,7 +48,7 @@ public class ResourceDeadlockTest {
 
   @Test @CSometimes({"deadlock"})
   public final void testDeadlock1() {
-    CSystem.cRun(rDeadlockPair);
+    CSystem.forkAndJoin(rDeadlockPair);
   }
 
   private static final Runnable[] 
@@ -60,7 +60,7 @@ public class ResourceDeadlockTest {
           try {
             synchronized (B) { B.x = 1; }
           } catch (CResourceDeadlockError e) {
-            cHotspot("deadlock1");
+            hotspot("deadlock1");
           }
         }
       } 
@@ -72,7 +72,7 @@ public class ResourceDeadlockTest {
           try {
             synchronized (A) { }
           } catch (CResourceDeadlockError e) {
-            cHotspot("deadlock2");
+            hotspot("deadlock2");
           }
         }
       }
@@ -82,6 +82,6 @@ public class ResourceDeadlockTest {
   public final void testDeadlock2() {
     A.x = 0;
     B.x = 0;
-    CSystem.cRun(rDeadlockForSure);
+    CSystem.forkAndJoin(rDeadlockForSure);
   }
 }

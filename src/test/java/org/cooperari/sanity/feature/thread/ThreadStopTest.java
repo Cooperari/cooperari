@@ -18,7 +18,7 @@ public class ThreadStopTest {
 
   @Test @CAlways("suicide")
   public final void testSuicide() {
-    CSystem.cRun(new Runnable() {
+    CSystem.forkAndJoin(new Runnable() {
       public void run() {
         try {
           Thread.currentThread().stop();
@@ -26,7 +26,7 @@ public class ThreadStopTest {
         }
         catch(ThreadDeath e) {
           // OK
-          cHotspot("suicide");
+          hotspot("suicide");
           throw e;
         }
       }
@@ -51,7 +51,7 @@ public class ThreadStopTest {
           }
         }
       } catch(ThreadDeath e) {
-        cHotspot("death"+id);
+        hotspot("death"+id);
         // ok !
         throw e;
       }

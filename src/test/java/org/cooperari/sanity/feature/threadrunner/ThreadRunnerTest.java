@@ -18,7 +18,7 @@ import org.junit.runners.MethodSorters;
 public class ThreadRunnerTest {
   private void executeTest(final int n) {
     final AtomicInteger value = new AtomicInteger(0);
-    CSystem.cRun(new Runnable() { 
+    CSystem.forkAndJoin(new Runnable() { 
       public void run() {
         Runnable r = new Runnable() {
           public void run() {
@@ -29,7 +29,7 @@ public class ThreadRunnerTest {
         for (int i = 0; i < n; i++) {
           runnables[i] = r;
         }
-        CSystem.cRun(runnables);
+        CSystem.forkAndJoin(runnables);
         assertEquals("expected value", n, value.get());
       }
     });

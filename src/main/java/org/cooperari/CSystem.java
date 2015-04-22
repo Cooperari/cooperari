@@ -28,18 +28,19 @@ public final class CSystem {
    * @param test Test to execute.
    * @return An instance of {@link CTestResult}. 
    */
-  public CTestResult cExecuteTest(CTest test) {
+  public CTestResult executeTest(CTest test) {
     return CSession.executeTest(test);
   }
   
   /**
    * Start some threads and wait until they are finished.
+   * The threads will be started cooperatively.
    * 
    * @param runnables Runnable instances.
    * @throws IllegalThreadStateException if any of the runnable instances is
-   *         actually an already alive {@link Thread} object.
+   *          an already alive {@link Thread} object.
    */
-  public static void cRun(Runnable... runnables) {
+  public static void forkAndJoin(Runnable... runnables) {
     throw new CInternalError("Call not handled as a yield point!");
   }
 
@@ -55,9 +56,9 @@ public final class CSystem {
    * 
    * @param id Hotspot id.
    * @throws CHotspotError if <code>id</code> is a {@link CNever} hotspot.
-   * @see #cHotspot(String, boolean)
+   * @see #hotspot(String, boolean)
    */
-  public static void cHotspot(String id) throws CHotspotError {
+  public static void hotspot(String id) throws CHotspotError {
     getRuntime().get(HotspotHandler.class).onHotspotReached(id);
   }
 
@@ -71,21 +72,21 @@ public final class CSystem {
    * @param condition Boolean condition value.
    * @throws CHotspotError if the <code>condition == true</code> and
    *         <code>id</code> is a {@link CNever} hotspot.
-   * @see #cHotspot(String)
+   * @see #hotspot(String)
    */
-  public static void cHotspot(String id, boolean condition)
+  public static void hotspot(String id, boolean condition)
       throws CHotspotError {
     if (condition) {
-      cHotspot(id);
+      hotspot(id);
     }
   }
 
   /**
-   * Trigger a spurious wakeup for given thread.
+   * Simulate a spurious thread wakeup.
    * 
    * @param t Target thread.
    */
-  public static void cSpuriousWakeup(Thread t) {
+  public static void sendSpuriousWakeup(Thread t) {
     throw new CInternalError("Call not handled as a yield point!");
   }
 

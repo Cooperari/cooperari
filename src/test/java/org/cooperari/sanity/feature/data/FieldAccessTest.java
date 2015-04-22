@@ -34,7 +34,7 @@ public class FieldAccessTest {
 
   @Test
   public final void testBasic() {
-    CSystem.cRun(rTestBasic);
+    CSystem.forkAndJoin(rTestBasic);
   }
 
   private static final Runnable 
@@ -43,13 +43,13 @@ public class FieldAccessTest {
       public void run() {
         if (A.x == 0) {
           B.x = 1;
-          cHotspot("B1");
+          hotspot("B1");
         } else if (A.x == 1) {
           B.x = 2;
-          cHotspot("B2");
+          hotspot("B2");
         } else {
           B.x = 3;
-          cHotspot("B3"); 
+          hotspot("B3"); 
         }
       }
     },
@@ -57,13 +57,13 @@ public class FieldAccessTest {
       public void run() {
         if (B.x == 0) {
           A.x = 1;
-          cHotspot("A1");
+          hotspot("A1");
         } else if (B.x == 1){
           A.x = 2;
-          cHotspot("A2");
+          hotspot("A2");
         } else {
           A.x = 3;
-          cHotspot("A3");
+          hotspot("A3");
         }
       }
     }
@@ -75,7 +75,7 @@ public class FieldAccessTest {
   public final void testCoverage() {
     A = new Data();
     B = new Data();
-    CSystem.cRun(rTestCoverage);
+    CSystem.forkAndJoin(rTestCoverage);
   }
 
 

@@ -24,41 +24,41 @@ public class HotspotSanityTest {
     @Override
     public void run() {
       if (REACH)
-        cHotspot("x");
+        hotspot("x");
     } 
   };
   
   @Test @CAlways("x")
   public void test1() {
     REACH = true;
-    CSystem.cRun(rReach);
+    CSystem.forkAndJoin(rReach);
   }
   
   @Test 
   @CSometimes("x")
   public void test2() {
     REACH = true;
-    CSystem.cRun(rReach);
+    CSystem.forkAndJoin(rReach);
   }
   
   @Test 
   @CNever("x")
   public void test3() {
     REACH = false;
-    CSystem.cRun(rReach);
+    CSystem.forkAndJoin(rReach);
   }
   
   @Test(expected=CHotspotError.class) 
   @CAlways("x") 
   public void test4() {
     REACH = false;
-    CSystem.cRun(rReach);
+    CSystem.forkAndJoin(rReach);
   }
   
   @Test(expected=CHotspotError.class)  
   @CNever("x")
   public void test6() {
     REACH = true;
-    CSystem.cRun(rReach);
+    CSystem.forkAndJoin(rReach);
   }
 }

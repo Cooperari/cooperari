@@ -48,7 +48,7 @@ public class ThreadJoinTest {
           fail("unexpected interrupt");
         }
       }
-      cHotspot("run " + value);
+      hotspot("run " + value);
     }
   }
 
@@ -128,6 +128,6 @@ public class ThreadJoinTest {
   }
   @Test @Ignore
   public void testMSOneSlave() {
-    CSystem.cRun(new MasterThread(2));
+    CSystem.forkAndJoin(new MasterThread(2));
   }
 }

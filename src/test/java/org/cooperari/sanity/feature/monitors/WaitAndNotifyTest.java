@@ -86,10 +86,10 @@ public class WaitAndNotifyTest  {
       synchronized(o) {
         try { 
           o.wait(); 
-          cHotspot("DONE"); 
+          hotspot("DONE"); 
         } 
         catch (InterruptedException e) { 
-          cHotspot("INT"); 
+          hotspot("INT"); 
           assertFalse("interrupt status not clear", Thread.currentThread().isInterrupted());   
        }
       }
@@ -103,12 +103,12 @@ public class WaitAndNotifyTest  {
 
   @Test(expected=WaitDeadlockError.class) @CNever({"INT","DONE"})
   public final void testBlockingWait2() {
-    CSystem.cRun(WAIT_FOREVER, WAIT_FOREVER);
+    CSystem.forkAndJoin(WAIT_FOREVER, WAIT_FOREVER);
   }
 
   @Test(expected=WaitDeadlockError.class) @CNever({"INT","DONE"})
   public final void testBlockingWait4() {
-    CSystem.cRun(WAIT_FOREVER, WAIT_FOREVER, WAIT_FOREVER, WAIT_FOREVER);
+    CSystem.forkAndJoin(WAIT_FOREVER, WAIT_FOREVER, WAIT_FOREVER, WAIT_FOREVER);
   }
   
   @Test @CAlways("INT") @CNever("DONE")
@@ -123,7 +123,7 @@ public class WaitAndNotifyTest  {
     Thread t = new Thread(WAIT_FOREVER);
     t.start();
     while (t.getState() != Thread.State.WAITING) {  }
-    CSystem.cSpuriousWakeup(t);
+    CSystem.sendSpuriousWakeup(t);
   }
   
   @Test @CAlways("DONE") @CNever("INT")
@@ -131,7 +131,7 @@ public class WaitAndNotifyTest  {
     Thread t = new Thread(WAIT_FOREVER);
     t.start();
     while (t.getState() != Thread.State.WAITING) {  }
-    CSystem.cSpuriousWakeup(t); 
+    CSystem.sendSpuriousWakeup(t); 
     t.interrupt();
   }
 
@@ -141,7 +141,7 @@ public class WaitAndNotifyTest  {
     t.start();
     while (t.getState() != Thread.State.WAITING) {  }
     t.interrupt(); // interrupt should be considered first
-    CSystem.cSpuriousWakeup(t); 
+    CSystem.sendSpuriousWakeup(t); 
   }
   
   @SuppressWarnings("null")
@@ -200,16 +200,16 @@ public class WaitAndNotifyTest  {
       synchronized(data) {
         while (data.x < threshold) {
           try {
-            cHotspot("WAIT");
+            hotspot("WAIT");
             data.wait();
             didWait = true;
           } catch (InterruptedException e) { 
-            cHotspot("INT");
+            hotspot("INT");
           }
         }
       }
       if (!didWait) {
-        cHotspot("NOWAIT");
+        hotspot("NOWAIT");
       }
     }
   }
@@ -241,30 +241,30 @@ public class WaitAndNotifyTest  {
   @Test @CSometimes({"WAIT","NOWAIT"}) @CNever("INT")
   public final void testPairedNotifyAndWait() {    
     Data d = new Data();
-    CSystem.cRun(new Notifier(d,1,false), new Waiter(d, 1));
+    CSystem.forkAndJoin(new Notifier(d,1,false), new Waiter(d, 1));
   }
 
   @Test @CSometimes({"WAIT","NOWAIT"}) @CNever("INT")
   public final void testPairedNotifyAllAndWait() {    
     Data d = new Data();
-    CSystem.cRun(new Notifier(d,1,true), new Waiter(d, 1));
+    CSystem.forkAndJoin(new Notifier(d,1,true), new Waiter(d, 1));
   }
 
   @Test @CSometimes({"WAIT","NOWAIT"}) @CNever("INT")
   public final void testPairedNotifyAllAndTwoWaiters() {    
     Data d = new Data();
-    CSystem.cRun(new Notifier(d,2,true), new Waiter(d, 1), new Waiter(d, 2));
+    CSystem.forkAndJoin(new Notifier(d,2,true), new Waiter(d, 1), new Waiter(d, 2));
   }
 
   @Test @CSometimes({"WAIT","NOWAIT"}) @CNever("INT")
   public final void testPairedNotifyAllAndFourWaitersCaseA() {    
     Data d = new Data();
-    CSystem.cRun(new Notifier(d,4,true), new Waiter(d, 1), new Waiter(d,1), new Waiter(d, 2), new Waiter(d, 2));
+    CSystem.forkAndJoin(new Notifier(d,4,true), new Waiter(d, 1), new Waiter(d,1), new Waiter(d, 2), new Waiter(d, 2));
   }
   @Test @CSometimes({"WAIT","NOWAIT"}) @CNever("INT")
   public final void testPairedNotifyAllAndFourWaitersCaseB() {    
     Data d = new Data();
-    CSystem.cRun(new Notifier(d,4,true), new Waiter(d, 1), new Waiter(d,1), new Waiter(d, 3), new Waiter(d, 4));
+    CSystem.forkAndJoin(new Notifier(d,4,true), new Waiter(d, 1), new Waiter(d,1), new Waiter(d, 3), new Waiter(d, 4));
   }
 
   private static final Runnable[]
@@ -288,9 +288,9 @@ public class WaitAndNotifyTest  {
               if (SHARED_DATA.x == 0) {
                 t = System.nanoTime() - t;
                 assertTrue(t >= 1);
-                cHotspot("not notified");
+                hotspot("not notified");
               } else {
-                cHotspot("notified");
+                hotspot("notified");
               }
             }
           } catch (InterruptedException e) {
@@ -303,7 +303,7 @@ public class WaitAndNotifyTest  {
   @Test @CSometimes({"notified", "not notified"}) @Ignore
   public final void testPairedNotifyAndTimedWait() {
     SHARED_DATA = new Data();
-    CSystem.cRun(rPairedNotifyAndTimedWait);
+    CSystem.forkAndJoin(rPairedNotifyAndTimedWait);
   }
 
 
@@ -329,9 +329,9 @@ public class WaitAndNotifyTest  {
               if (SHARED_DATA.x == 0) {
                 t = System.nanoTime() - t;
                 assertTrue(t >= 1);
-                cHotspot("not notified");
+                hotspot("not notified");
               } else {
-                cHotspot("notified");
+                hotspot("notified");
               }
             }
           } catch (InterruptedException e) {
@@ -344,7 +344,7 @@ public class WaitAndNotifyTest  {
   @Test @CSometimes({"notified", "not notified"}) @Ignore
   public final void testPairedNotifyAllAndTimedWait() {
     SHARED_DATA = new Data();
-    CSystem.cRun(rPairedNotifyAllAndTimedWait);
+    CSystem.forkAndJoin(rPairedNotifyAllAndTimedWait);
   }
 
   public static final Runnable[]
@@ -362,14 +362,14 @@ public class WaitAndNotifyTest  {
         synchronized (SHARED_DATA) {
           if (SHARED_DATA.x == 0) {
             try {
-              cHotspot("wait");
+              hotspot("wait");
               SHARED_DATA.wait();
-              cHotspot("after wait");
+              hotspot("after wait");
             } catch (InterruptedException e) {
 
             }
           } else {
-            cHotspot("no wait");
+            hotspot("no wait");
           }
         }
       }
@@ -381,6 +381,6 @@ public class WaitAndNotifyTest  {
   @CNever("after wait")
   public final void testPairedInterruptAndWait() {
     SHARED_DATA = new Data();
-    CSystem.cRun(rPairedInterruptAndWait);
+    CSystem.forkAndJoin(rPairedInterruptAndWait);
   }
 }

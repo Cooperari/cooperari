@@ -258,7 +258,7 @@ public class YieldPoints {
   }
 
   /**
-   * Around advice executed in place of {@link CSystem#cSpuriousWakeup(Thread)}.
+   * Around advice executed in place of {@link CSystem#sendSpuriousWakeup(Thread)}.
    * @param thisJoinPoint Join point.
    * @param thread Target thread object.
    * @throws Throwable In accordance to {@link ProceedingJoinPoint#proceed()}.

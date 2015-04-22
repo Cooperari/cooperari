@@ -28,7 +28,7 @@ public class ThreadStartTest {
       if (value > 1) {
         new TestThread(value-1).start();
       }
-      cHotspot("run " + value);
+      hotspot("run " + value);
     }
   }
   

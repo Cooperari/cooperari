@@ -58,7 +58,7 @@ public class ArrayAccessTest {
   
   @Test
   public final void testArrayAccess() {
-    CSystem.cRun(rArrayAccess);
+    CSystem.forkAndJoin(rArrayAccess);
   }
  
 }
