@@ -11,7 +11,6 @@ import org.cooperari.config.CSometimes;
 import org.cooperari.core.CSession;
 import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.errors.CHotspotError;
-import org.cooperari.errors.CInternalError;
 import org.cooperari.errors.CNonCooperativeModeError;
 import org.cooperari.feature.hotspots.HotspotHandler;
 
