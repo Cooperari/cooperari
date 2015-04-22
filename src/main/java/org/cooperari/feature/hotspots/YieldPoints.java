@@ -8,7 +8,7 @@ import org.cooperari.core.CThread;
 
 /**
  * Yield points for calls to {@link org.cooperari.CSystem#hotspot(String)}
- * and {@link org.cooperari.CSystem#cHotspot(String,boolean)}.
+ * and {@link org.cooperari.CSystem#hotspot(String,boolean)}.
  *
  * @since 0.2
  */
