@@ -162,8 +162,10 @@ public final class CoverageLog {
         getCoverageRate());
     r.beginSection("YIELD POINTS", "C", "SOURCE FILE", "LINE", "SIGNATURE");
     for (Entry<CYieldPoint, Boolean> e : _log.entrySet()) {
-      r.writeEntry(e.getValue() ? 'Y' : 'N', e.getKey().getSourceFile(), e
-          .getKey().getSourceLine(), e.getKey().getSignature());
+      r.writeEntry(e.getValue() ? 'Y' : 'N', 
+                   e.getKey().getSourceFile(), 
+                   e.getKey().getSourceLine(), 
+                   e.getKey().getSignature());
     }
     r.close();
     return r.getFile();
