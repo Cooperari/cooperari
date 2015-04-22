@@ -45,8 +45,7 @@ public class YieldPoints {
     
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
-      thisThread.cYield(CThread.NOP);
-      return  Feature.getCThread(thread).getVirtualState();
+      return GetState.execute(thisThread, thread);
     } 
     return (Thread.State) thisJoinPoint.proceed(new Object[]{ thread });
   }
