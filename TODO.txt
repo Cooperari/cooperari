@@ -1,13 +1,11 @@
 == 0.2.1. final ==
 
 Features left to implement:
-- produce coverage files per JUnit test case
+- @CTimeLimit
 - update scripts to disable assertions in org.cooperari 
 - cjava utility
 - make cjunit invoke itself to move indirection
 - operation arguments (yes/no? if yes at least written to trace)
-- verification package (generalization of hotspot functionality)
-  -- @CPre @CPost @CInvariant @CFieldProperty 
 - Revise Coverage/CoveragePolicy code
 - CSystem.runPreemptively() 
 - Windows scripts
@@ -37,6 +35,7 @@ Misc. implementation details
  -- serial ids for exception classes
  -- do not use CThread.intercept() for "unnecessary" yield points
  -- make CSystem.generateGlobalCoverageReport() call optional
+ -- move JUnitRunListener to tools package
 
 Future workloads:
 - Examples project
@@ -45,6 +44,8 @@ Future workloads:
 == 0.3 ==
 
 Sketch of desired features:
+- verification package (generalization of hotspot functionality)
+  -- @CPre @CPost @CInvariant @CFieldProperty 
 -- Important 
  - java.util.concurrent (Cyclic Barrier, phaser, etc)
  - CScheduler more efficient
