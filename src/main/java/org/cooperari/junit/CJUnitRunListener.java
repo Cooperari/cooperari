@@ -7,7 +7,6 @@ import org.cooperari.CSystem;
 import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
 import org.cooperari.CoverageInfo;
-
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;

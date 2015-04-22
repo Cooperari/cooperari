@@ -9,7 +9,6 @@ import org.cooperari.config.CAlways;
 import org.cooperari.config.CNever;
 import org.cooperari.config.CSometimes;
 import org.cooperari.core.CSession;
-import org.cooperari.core.CoverageLog;
 import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
