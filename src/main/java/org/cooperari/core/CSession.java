@@ -1,11 +1,13 @@
 package org.cooperari.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
 import org.cooperari.config.CCoverage;
+import org.cooperari.config.CGenerateCoverageReports;
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
 import org.cooperari.config.CTraceOptions;
@@ -122,7 +124,7 @@ public final class CSession {
       } catch (InterruptedException e) {
         throw new CInternalError(e);
       }
-      
+
       cHandler.onTestFinished();
       try {
         s.rethrowExceptionsIfAny();
@@ -148,7 +150,7 @@ public final class CSession {
     } while (!done);
 
     File traceFile = null;
-    
+
     if (failure != null) {
       traceFile = saveTrace(test, trials, trace);
     } else {
@@ -171,16 +173,23 @@ public final class CSession {
       failure = failure.getCause();
     }
 
-    AgentFacade.INSTANCE.enrichCoverageInfo(clog);
-
-    return new CTestResultImpl(failure != null, trials, timeElapsed, failure,
-        traceFile, clog.getYieldPointsCovered(), clog.getYieldPointCount() - clog.getYieldPointsCovered());
+    AgentFacade.INSTANCE.complementCoverageInfo(clog);
+    
+    if (runtime.getConfiguration(CGenerateCoverageReports.class).value()) {
+      try {
+        clog.produceCoverageReport(test.getSuiteName(), test.getName());
+      } 
+      catch(IOException e) {
+        throw new CInternalError(e);  
+      }
+    }
+    return new CTestResultImpl(trials, timeElapsed, clog, failure, traceFile);
   }
 
   @SuppressWarnings("javadoc")
   private static File saveTrace(CTest test, int trialNumber, CTrace trace) {
     try {
-      CReport report = CWorkspace.INSTANCE.createReport(test.getSuiteName() + '_' + test.getName() + "_trial_" + trialNumber);
+      CReport report = CWorkspace.INSTANCE.createReport(test.getSuiteName(), test.getName() + "_trial_" + trialNumber);
       try { 
         trace.save(report);
         CWorkspace.log("Trace for trial %d of %s written to '%s'", trialNumber, test.getName(),
@@ -191,7 +200,7 @@ public final class CSession {
       }
     } catch (Throwable e) {
       CWorkspace.log("Error trace file for %s: %s", 
-                     test.getName(), e.getMessage());
+          test.getName(), e.getMessage());
       CWorkspace.log(e);
       return null;
     } 
@@ -200,27 +209,35 @@ public final class CSession {
   @SuppressWarnings("javadoc")
   private static class CTestResultImpl implements CTestResult {
     final int _trials;
-    final boolean _failed;
+    final long _executionTime;
+    final int _yieldPoints;
+    final int _yieldPointsCovered;
     final Throwable _failure;
     final File _failureTrace;
-    final long _executionTime;
-    final int _coveredYieldPoints;
-    final int _uncoveredYieldPoints;
 
-    CTestResultImpl(boolean failed, int trials, long timeElapsed,
-        Throwable failure, File traceFile, int coveredYieldPoints, int uncoveredYieldPoints) {
-      _failed = failed;
+    CTestResultImpl(int trials, long timeElapsed, CoverageLog clog,
+        Throwable failure, File failureTrace) {
       _trials = trials;
       _executionTime = timeElapsed;
+      _yieldPoints = clog.getTotalYieldPoints();
+      _yieldPointsCovered = clog.getCoveredYieldPoints();
       _failure = failure;
-      _failureTrace = traceFile;
-      _coveredYieldPoints = coveredYieldPoints;
-      _uncoveredYieldPoints = uncoveredYieldPoints;
+      _failureTrace = failureTrace;
     }
 
     @Override
     public boolean failed() {
-      return _failed;
+      return _failure != null;
+    }
+
+    @Override
+    public int trials() {
+      return _trials;
+    }
+
+    @Override
+    public long getExecutionTime() {
+      return _executionTime;
     }
 
     @Override
@@ -233,26 +250,16 @@ public final class CSession {
       return _failureTrace;
     }
 
-    @Override
-    public int trials() {
-      return _trials;
-    }
 
-    @Override
-    public long getExecutionTime() {
-      return _executionTime;
-    }
-    
     @Override 
     public int getCoveredYieldPoints() {
-      return _coveredYieldPoints;
+      return _yieldPointsCovered;
     }
 
     @Override 
     public int getTotalYieldPoints() {
-      return _coveredYieldPoints + _uncoveredYieldPoints;
+      return _yieldPoints;
     }
-    
   }
 
 }

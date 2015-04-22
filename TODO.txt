@@ -31,9 +31,12 @@ Misc. implementation details
  -- resource deadlocks / wait release step ?
  -- improve wait/notify tests + check tests being ignored
  -- CBlockingOperationResult used more often (sleep, join, ..., also)
+ -- Optimise CScheduler operation using CBlockingOperation interface / base class?
  -- Inline yield points - refactoring
  -- feature package names ?
  -- serial ids for exception classes
+ -- do not use CThread.intercept() for "unnecessary" yield points
+ -- make CSystem.generateGlobalCoverageReport() call optional
 
 Future workloads:
 - Examples project

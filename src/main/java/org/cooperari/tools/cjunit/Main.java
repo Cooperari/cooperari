@@ -69,9 +69,7 @@ public class Main {
 
       juc.addListener(new CJUnitRunListener(System.out));
       Result r = juc.run(classes);
-      
-      CWorkspace.log("Yield points covered: %d out of %d\n", AgentFacade.INSTANCE.getYieldPointsCovered(), AgentFacade.INSTANCE.getYieldPointCount());
-      
+           
       return r.getFailureCount() == 0 ? 0 : 1;
     } catch (Throwable e) {
       e.printStackTrace(out);

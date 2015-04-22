@@ -3,9 +3,11 @@ package org.cooperari.junit;
 import java.io.File;
 import java.io.PrintStream;
 
+import org.cooperari.CSystem;
 import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
-import org.cooperari.core.aspectj.AgentFacade;
+import org.cooperari.CoverageInfo;
+
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -22,12 +24,12 @@ public class CJUnitRunListener extends RunListener {
    * Output stream.
    */
   private final PrintStream _out;
-  
+
   /**
    * Last class. 
    */
   private String _currentClassName;
-  
+
   /**
    * Constructs a new listener.
    * @param out Output stream.
@@ -35,7 +37,7 @@ public class CJUnitRunListener extends RunListener {
   public CJUnitRunListener(PrintStream out) {
     _out = out;
   }
-  
+
   /**
    * JUnit test-run hook.
    * @param description Test description.
@@ -46,45 +48,47 @@ public class CJUnitRunListener extends RunListener {
     _out.println();
     _currentClassName = "";
   }
-  
-  
+
+
   /**
    * JUnit test-run finished hook.
    * @param result Test result.
    */
   @Override
   public void testRunFinished(Result result) {
-      if (result.getFailureCount() > 0) {
-        _out.println("== Failure details ==");
-        int i = 0;
-        for (Failure f : result.getFailures()) {
-          _out.print(++i);
-          _out.print(") ");
-          _out.println(f.getTestHeader());
-          _out.print(f.getTrace());
-        }
+    if (result.getFailureCount() > 0) {
+      _out.println("== Failure details ==");
+      int i = 0;
+      for (Failure f : result.getFailures()) {
+        _out.print(++i);
+        _out.print(") ");
+        _out.println(f.getTestHeader());
+        _out.print(f.getTrace());
       }
-      _out.println("== Summary ==");
-      _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms\n", 
-          result.getRunCount(), 
-          result.getIgnoreCount(), 
-          result.getFailureCount(),
-          result.getRunTime());
-      _out.println("== Global coverage ==");
-      _out.printf("Coverage rate: %4.1f %% (%d / %d yp)\n", 
-          AgentFacade.INSTANCE.getCoverageRate(),
-          AgentFacade.INSTANCE.getYieldPointsCovered(),
-          AgentFacade.INSTANCE.getYieldPointCount());
-      try {
-        File report = AgentFacade.INSTANCE.produceCoverageReport();
-        _out.printf("Coverage report: '%s'\n", report.getAbsolutePath());
-      }
-      catch (Throwable e) {
-        e.printStackTrace(_out);
-      }
+    }
+    _out.println("== Summary ==");
+    _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms\n", 
+        result.getRunCount(), 
+        result.getIgnoreCount(), 
+        result.getFailureCount(),
+        result.getRunTime());
+    _out.println("== Global coverage ==");
+    CoverageInfo ci = CSystem.getGlobalCoverageInfo();
+
+    _out.printf("Coverage rate: %4.1f %% (%d / %d yp)\n", 
+        ci.getCoverageRate(),
+        ci.getCoveredYieldPoints(),
+        ci.getTotalYieldPoints());
+    try {
+      File report = CSystem.generateGlobalCoverageReport();
+      _out.printf("Global coverage report: '%s'\n", report.getAbsolutePath());
+    }
+    catch (Throwable e) {
+      e.printStackTrace(_out);
+    }
   }
 
-  
+
   /**
    * JUnit atomic test start hook.
    * @param description Test description.
@@ -97,15 +101,15 @@ public class CJUnitRunListener extends RunListener {
     }
     _out.printf("  %-55s ", description.getMethodName());
   }
-  
+
   /**
    * JUnit atomic test finish hook.
    * @param description Test description.
    */
   @Override
   public void testFinished(Description description) {
-     _out.println("[passed]");
-     displayTestDetails(description);
+    _out.println("[passed]");
+    displayTestDetails(description);
   }
 
   /**
@@ -119,22 +123,22 @@ public class CJUnitRunListener extends RunListener {
     displayTestDetails(failure.getDescription());
   }
 
-  
+
   @SuppressWarnings("javadoc")
   private void displayTestDetails(Description description) {
-     CTestResult result = CTestResultPool.INSTANCE.getTestResult(description);
-     if (result == null) {
-       return;
-     }
-     _out.printf("    > trials: %d time: %d ms coverage: %4.1f %% (%d / %d yp)", 
-         result.trials(), result.getExecutionTime(),
-         result.getCoverageRate(), result.getCoveredYieldPoints(), result.getTotalYieldPoints());
-     
-     if (result.failed() && result.getFailureTrace() != null) {
-       _out.println();
-       _out.printf("    > failure trace: '%s'", result.getFailureTrace().getAbsolutePath());
-     }
-     _out.println();
+    CTestResult result = CTestResultPool.INSTANCE.getTestResult(description);
+    if (result == null) {
+      return;
+    }
+    _out.printf("    > trials: %d time: %d ms coverage: %4.1f %% (%d / %d yp)", 
+        result.trials(), result.getExecutionTime(),
+        result.getCoverageRate(), result.getCoveredYieldPoints(), result.getTotalYieldPoints());
+
+    if (result.failed() && result.getFailureTrace() != null) {
+      _out.println();
+      _out.printf("    > failure trace: '%s'", result.getFailureTrace().getAbsolutePath());
+    }
+    _out.println();
   }
 
   /**

@@ -2,10 +2,15 @@ package org.cooperari;
 
 import static org.cooperari.core.CRuntime.getRuntime;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.cooperari.config.CAlways;
 import org.cooperari.config.CNever;
 import org.cooperari.config.CSometimes;
 import org.cooperari.core.CSession;
+import org.cooperari.core.CoverageLog;
+import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;
@@ -84,9 +89,28 @@ public final class CSystem {
     throw new CInternalError("Call not handled as a yield point!");
   }
 
+  /**
+   * Get global coverage information for all tests executed so far.
+   * @return An instance of {@link CoverageInfo}.
+   */
+  public static CoverageInfo getGlobalCoverageInfo() {
+    return AgentFacade.INSTANCE.getGlobalCoverageLog();
+  }
+  
+  /**
+   * Generate a global coverage report.
+   * @return {@link File} object indicating the generated report.
+   * @throws IOException If an I/O error occurs.
+   */
+  public static File generateGlobalCoverageReport() throws IOException {
+    return AgentFacade.INSTANCE.produceCoverageReport();
+  }
+  
   @SuppressWarnings("javadoc")
   private CSystem() {
 
   }
+
+  
 
 }

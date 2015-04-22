@@ -25,14 +25,9 @@ public class YieldPoints {
   @Around("call(Thread Thread.currentThread())")
   public Thread aroundThreadCurrentThread(ProceedingJoinPoint thisJoinPoint) throws Throwable {
     CThread t = CThread.intercept(thisJoinPoint);
-    if (t != null) {
-      Thread vt = t.getVirtualizedThread();
-      return (vt != null) ? vt : t;
-    } else {
-      return (Thread) thisJoinPoint.proceed();
-    }
+    return t != null ?  CurrentThread.execute(t) : (Thread) thisJoinPoint.proceed();
   }
-  
+
   /**
    * Around advice executed in place of {@link Thread#getState()}}.
    * @param thisJoinPoint Join point.
@@ -42,14 +37,14 @@ public class YieldPoints {
    */
   @Around("call(Thread.State Thread.getState()) && target(thread)")
   public Thread.State aroundGetState(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    
+
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       return GetState.execute(thisThread, thread);
     } 
     return (Thread.State) thisJoinPoint.proceed(new Object[]{ thread });
   }
-  
+
   /**
    * Around advice executed in place of {@link Thread#isAlive()}}.
    * @param thisJoinPoint Join point.
@@ -59,7 +54,7 @@ public class YieldPoints {
    */
   @Around("call(boolean Thread.isAlive()) && target(thread)")
   public boolean aroundIsAlive(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    
+
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       thisThread.cYield(CThread.NOP);
@@ -77,7 +72,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.interrupt()) && target(thread)")
   public void aroundInterrupt(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Interrupt.execute(t, thread);
@@ -94,7 +89,7 @@ public class YieldPoints {
    */
   @Around("call(boolean Thread.interrupted())")
   public boolean aroundInterrupted(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     return t != null ?
         Interrupted.execute(t)
@@ -144,7 +139,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.join()) && target(thread)")
   public void aroundJoin(ProceedingJoinPoint thisJoinPoint, Thread thread) throws InterruptedException, Throwable {
-    
+
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       Join.execute(thisThread, thread, 0L);
@@ -163,7 +158,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.join(long)) && target(thread) && args(millis)")
   public void aroundJoin(ProceedingJoinPoint thisJoinPoint, Thread thread, long millis) throws InterruptedException, Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Join.execute(t,  thread, millis < 0 ? -1L : millis * 1000000L);
@@ -183,7 +178,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.join(long)) && target(thread) && args(millis, nano)")
   public void aroundJoin(ProceedingJoinPoint thisJoinPoint, Thread thread, long millis, int nano) throws InterruptedException, Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Join.execute(t,  thread, millis < 0 || nano < 0 || nano > 999999L ? -1L : millis * 1000000L + nano);
@@ -201,7 +196,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.sleep(long)) && args(millis)")
   public void aroundSleep(ProceedingJoinPoint thisJoinPoint, long millis) throws InterruptedException, Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Sleep.execute(t, millis < 0 ? -1L : millis * 1000000L);
@@ -219,7 +214,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.sleep(long,int)) && args(millis,nano)")
   public void aroundSleep(ProceedingJoinPoint thisJoinPoint, long millis, int nano) throws InterruptedException, Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Sleep.execute(t, millis < 0 || nano < 0 || nano > 999999L ? -1L : millis * 1000000L + nano);
@@ -236,7 +231,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.stop()) && target(thread)")
   public void aroundStop(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Stop.execute(t,  thread);
@@ -244,7 +239,7 @@ public class YieldPoints {
       thisJoinPoint.proceed(new Object[]{ thread });
     }
   }
- 
+
 
   /**
    * Around advice executed in place of {@link Thread#yield()}.
@@ -253,7 +248,7 @@ public class YieldPoints {
    */
   @Around("call(void Thread.yield())")
   public void aroundYield(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-    
+
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Yield.execute(t);
@@ -271,7 +266,7 @@ public class YieldPoints {
    */
   @Around("call(void org.cooperari.CSystem.cSpuriousWakeup(java.lang.Thread)) && args(thread)")
   public void around(ProceedingJoinPoint thisJoinPoint, Thread thread) throws Throwable {
-    
+
     CThread thisThread = CThread.intercept(thisJoinPoint);
     if (thisThread != null) {
       SpuriousWakeup.execute(thisThread, thread);

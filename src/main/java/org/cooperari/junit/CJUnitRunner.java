@@ -187,6 +187,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
     public AnnotatedElement getConfiguration() {
       return _method;
     }
+    
     /**
      * Normal completion hook.
      * @see CTest#onNormalCompletion()

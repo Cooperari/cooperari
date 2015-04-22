@@ -11,11 +11,12 @@ package org.cooperari.config;
 @CMaxTrials(20)
 @CRaceDetection(false)
 @CDetectResourceDeadlocks()
+@CTimeLimit()
+@CGenerateCoverageReports()
 @CAlways({}) 
 @CNever({}) 
 @CSometimes({})
 @CTraceOptions()
-@CTimeLimit()
 public final class CBaseConfiguration {
   
   /**

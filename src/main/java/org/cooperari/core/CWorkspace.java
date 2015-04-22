@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.EnumSet;
 
 import org.aspectj.lang.JoinPoint;
+import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.core.util.CLog;
 import org.cooperari.core.util.CReport;
 import org.cooperari.errors.CConfigurationError;
@@ -133,9 +134,6 @@ public enum CWorkspace {
     return _root;
   }
 
-
- 
-
   /**
    * Create a file in the workspace directory.
    * 
@@ -159,27 +157,29 @@ public enum CWorkspace {
 
   /**
    * Create a log. 
+   * @param dirName Name for the sub-directory in the workspace.
    * @param logName Name for the log.
    * @param options Log options.
    * @return A {@link CLog} instance.
    * @throws IOException If an I/O error occurs.
    * @throws CConfigurationError if the workspace is not initialized. 
    */
-  public CLog createLog(String logName, CLog.Option... options) throws CConfigurationError, IOException {
+  public CLog createLog(String dirName, String logName, CLog.Option... options) throws CConfigurationError, IOException {
     checkForInitialization();
-    return new CLog(createFile(logName.concat(LOG_SUFFIX)), options); 
+    return new CLog(createFile(dirName + "/" + logName + LOG_SUFFIX), options); 
   }
 
   /**
    * Create a report. 
+   * @param dirName Name for the sub-directory in the workspace.
    * @param reportName Name for the report.
    * @return A {@link CReport} instance.
    * @throws IOException If an I/O error occurs.
    * @throws CConfigurationError if the workspace is not initialized. 
    */
-  public CReport createReport(String reportName) throws CConfigurationError, IOException {
+  public CReport createReport(String dirName, String reportName) throws CConfigurationError, IOException {
     checkForInitialization();
-    return new CReport(createFile(reportName.concat(REPORT_SUFFIX))); 
+    return new CReport(createFile(dirName + '/' + reportName + REPORT_SUFFIX)); 
   }
 
 
@@ -264,5 +264,8 @@ public enum CWorkspace {
     return true;
   }
 
+ 
+
+  
  
 }

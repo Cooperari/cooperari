@@ -2,14 +2,13 @@ package org.cooperari.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
 
 import org.cooperari.CYieldPoint;
+import org.cooperari.CoverageInfo;
 import org.cooperari.core.util.CReport;
 
 /**
@@ -22,7 +21,7 @@ import org.cooperari.core.util.CReport;
  * @since 0.2
  *
  */
-public final class CoverageLog {
+public final class CoverageLog implements CoverageInfo {
 
   /**
    * The actual log.
@@ -51,25 +50,18 @@ public final class CoverageLog {
    * 
    * @return Yield point count.
    */
-  public int getYieldPointCount() {
+  @Override
+  public int getTotalYieldPoints() {
     return _log.size();
-  }
-
-  /**
-   * Get coverage rate.
-   * 
-   * @return The percentage of yield points covered.
-   */
-  public double getCoverageRate() {
-    return (_coveredYieldPoints * 100.0) / (double) _log.size();
   }
 
   /**
    * Get total number of yield points covered.
    * 
-   * @return Yield point count.
+   * @return Number of covered yield points.
    */
-  public int getYieldPointsCovered() {
+  @Override
+  public int getCoveredYieldPoints() {
     return _coveredYieldPoints;
   }
 
@@ -103,7 +95,6 @@ public final class CoverageLog {
     }
   }
 
-
   /**
    * Enrich this log with information from other log.
    * 
@@ -130,7 +121,7 @@ public final class CoverageLog {
    * @param ignoreCoverageStatus Ignore coverage status from the other log.
    */
   public void enrich(CoverageLog otherLog, boolean ignoreCoverageStatus) {
-    assert CWorkspace.debug("ENRICHING log %d %s :: %d %d", otherLog.getYieldPointCount(), ignoreCoverageStatus,  getYieldPointCount(), getYieldPointsCovered());
+    assert CWorkspace.debug("ENRICHING log %d %s :: %d %d", otherLog.getTotalYieldPoints(), ignoreCoverageStatus,  getTotalYieldPoints(), getCoveredYieldPoints());
     for (String sf : _sourceFiles) {
       CYieldPointImpl lowerBound = new CYieldPointImpl("", sf, -1);
       // Note: extra char so that view iterates until the last possible entry
@@ -145,20 +136,21 @@ public final class CoverageLog {
         }
       }
     }
-    assert CWorkspace.debug("ENRICHED log :: %d %d", getYieldPointCount(), getYieldPointsCovered());
+    assert CWorkspace.debug("ENRICHED log :: %d %d", getTotalYieldPoints(), getCoveredYieldPoints());
   }
 
   
   /**
    * Generate a coverage report.
+   * @param dirName Directory name inside workspace.
    * @param reportId Report id.
    * @throws IOException if an I/O error occurs.
    * @return File object for the coverage report.
    */
-  public File produceCoverageReport(String reportId) throws IOException {
-    CReport r = CWorkspace.INSTANCE.createReport(reportId);
+  public File produceCoverageReport(String dirName, String reportId) throws IOException {
+    CReport r = CWorkspace.INSTANCE.createReport(dirName, reportId);
     r.beginSection("GLOBAL STATISTICS", "TOTAL", "COVERED", "%");
-    r.writeEntry(getYieldPointCount(), getYieldPointsCovered(),
+    r.writeEntry(getTotalYieldPoints(), getCoveredYieldPoints(),
         getCoverageRate());
     r.beginSection("YIELD POINTS", "C", "SOURCE FILE", "LINE", "SIGNATURE");
     for (Entry<CYieldPoint, Boolean> e : _log.entrySet()) {
