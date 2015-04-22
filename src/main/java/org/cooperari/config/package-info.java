@@ -1,5 +1,5 @@
 /**
- * Support for test configuration.
+ * Annotations for test configuration.
  *
  * @since 0.2
  */
