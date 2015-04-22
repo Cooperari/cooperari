@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.cooperari.CSystem;
+import org.cooperari.config.CTraceOptions;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")
 @RunWith(CJUnitRunner.class)
+@CTraceOptions(logEveryTrace=true)
 public class AtomicTest {
 
   @Test 
