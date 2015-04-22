@@ -19,4 +19,9 @@ public @interface CTraceOptions {
    */
   int limit() default 0;
   
+  /**
+   * @return Flag indicating if every trace should be written to a file or not.
+   * By default the setting is off, meaning that only failure traces will be written.
+   */
+  boolean logEveryTrace() default false;
 }

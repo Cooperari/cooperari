@@ -79,6 +79,8 @@ public final class CSession {
     assert CWorkspace.debug("== STARTED %s ==", test.getName());
     CRuntime runtime = new CRuntime(new CConfiguration(test.getConfiguration()));
     CCoverage coverage = runtime.getConfiguration(CCoverage.class);
+    CTraceOptions traceOptions = runtime.getConfiguration(CTraceOptions.class);
+
     CoveragePolicy cHandler;
     try {
       Constructor<? extends CoveragePolicy> c = coverage.value()
@@ -96,7 +98,7 @@ public final class CSession {
     }
 
     int trials = 0;
-    Throwable failure = null;
+    Throwable failure;
     long timeLimit = runtime.getConfiguration(CTimeLimit.class).value() * 1000L;
 
     HotspotHandler hHandler = new HotspotHandler(runtime);
@@ -106,10 +108,11 @@ public final class CSession {
     long startTime = System.currentTimeMillis();
     boolean done = false;
     HashSet<CYieldPoint> coveredYieldPoints = new HashSet<>();
-    CTrace trace = new CTrace(coveredYieldPoints, runtime.getConfiguration(CTraceOptions.class));
+    CTrace trace = new CTrace(coveredYieldPoints, traceOptions);
     runtime.register(trace);
 
     do {
+      failure = null;
       trials++;
       trace.clear();
       hHandler.startTestTrial();
@@ -137,6 +140,9 @@ public final class CSession {
           failure = e;
         }
       }
+      if (failure == null && traceOptions.logEveryTrace()) {
+        saveTrace(test, trials, trace);
+      }
       done = failure != null
           || cHandler.done()
           || trials >= maxTrials.value()
@@ -144,6 +150,7 @@ public final class CSession {
     } while (!done);
 
     File traceFile = null;
+    
     if (failure != null) {
       traceFile = saveTrace(test, trials, trace);
     } else {
@@ -178,15 +185,15 @@ public final class CSession {
       CReport report = CWorkspace.INSTANCE.createReport(test.getSuiteName() + '_' + test.getName() + "_trial_" + trialNumber);
       try { 
         trace.save(report);
-        CWorkspace.log("Failure trace for %s written to '%s'", test.getName(),
+        CWorkspace.log("Trace for trial %d of %s written to '%s'", trialNumber, test.getName(),
             report.getFile().getAbsolutePath());
         return report.getFile();
       } finally {
         report.close();
       }
     } catch (Throwable e) {
-      CWorkspace.log("Error writing failure trace for %s: %s", test.getName(),
-          e.getMessage());
+      CWorkspace.log("Error trace file for %s: %s", 
+                     test.getName(), e.getMessage());
       CWorkspace.log(e);
       return null;
     } 
