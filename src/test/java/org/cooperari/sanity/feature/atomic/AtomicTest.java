@@ -17,27 +17,27 @@ import org.junit.runners.MethodSorters;
 @SuppressWarnings("javadoc")
 @RunWith(CJUnitRunner.class)
 public class AtomicTest {
-  
+
   @Test 
   public void test1() {
     executeTest(1);
   }
-  
+
   @Test 
   public void test2() {
     executeTest(2);
   }
-  
+
   @Test 
   public void test4() {
     executeTest(4);
   }
-  
+
   @Test 
   public void test8() {
     executeTest(8);
   }
-  
+
   private void executeTest(int n) {
     final AtomicBoolean token = new AtomicBoolean(true);
     final AtomicInteger nextValue = new AtomicInteger(0);
@@ -55,7 +55,7 @@ public class AtomicTest {
           }
         }
       };
-     }
+    }
     CSystem.cRun(r);
     assertEquals("list size", n, list.size());
     assertEquals("atomic integer value", n, nextValue.get());
@@ -63,5 +63,5 @@ public class AtomicTest {
       assertEquals("position " + i, (Integer) i, list.get(i));
     }
   }
-  
+
 }
