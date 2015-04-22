@@ -65,14 +65,6 @@ public final class CoverageLog {
   }
 
   /**
-   * Get yield points in the log.
-   * @return A set-view 
-   */
-  public Set<CYieldPoint> getYieldPoints() {
-    return Collections.unmodifiableSet(_log.keySet());
-  }
-
-  /**
    * Get total number of yield points covered.
    * 
    * @return Yield point count.
@@ -89,7 +81,7 @@ public final class CoverageLog {
    */
   public void recordDefinition(CYieldPoint yp) {
     if (!_log.containsKey(yp)) {
-      CWorkspace.log("DEF %s", yp);
+      assert CWorkspace.debug("DEF %s", yp);
       _log.put(yp, false);
       _sourceFiles.add(yp.getSourceFile());
     }
@@ -100,13 +92,14 @@ public final class CoverageLog {
    * @param yp Yield point.
    */
   public void markAsCovered(CYieldPoint yp) {
-    CWorkspace.log("COVERED %s", yp);
     Boolean b = _log.put(yp, true);
     if ( b == null) { 
       _coveredYieldPoints++;
       _sourceFiles.add(yp.getSourceFile());
+      CWorkspace.log("COVERED %s", yp);
     } else if (b == false) {
       _coveredYieldPoints++;
+      assert CWorkspace.debug("COVERED %s", yp);
     }
   }
 
@@ -137,7 +130,7 @@ public final class CoverageLog {
    * @param ignoreCoverageStatus Ignore coverage status from the other log.
    */
   public void enrich(CoverageLog otherLog, boolean ignoreCoverageStatus) {
-    CWorkspace.log("ENRICHING log %d %s", otherLog.getYieldPointCount(), ignoreCoverageStatus);
+    assert CWorkspace.debug("ENRICHING log %d %s :: %d %d", otherLog.getYieldPointCount(), ignoreCoverageStatus,  getYieldPointCount(), getYieldPointsCovered());
     for (String sf : _sourceFiles) {
       CYieldPointImpl lowerBound = new CYieldPointImpl("", sf, -1);
       // Note: extra char so that view iterates until the last possible entry
@@ -152,7 +145,7 @@ public final class CoverageLog {
         }
       }
     }
-
+    assert CWorkspace.debug("ENRICHED log :: %d %d", getYieldPointCount(), getYieldPointsCovered());
   }
 
   
