@@ -12,11 +12,18 @@ import org.cooperari.core.CSession;
 import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
+import org.cooperari.errors.CNonCooperativeModeError;
 import org.cooperari.feature.hotspots.HotspotHandler;
 
 /**
  * Cooperari system facade.
  * 
+ * <p>
+ * Note that some methods can only be called from code that is already 
+ * running cooperatively, for instance from a JUnit test method that is being executed
+ * using Cooperari's custom JUnit runner ({@link org.cooperari.junit#CJUnitRunner}).
+ * These methods will throw {@link org.cooperari.errors.CNonCooperativeModeError} otherwise.</p>.
+ * </p>
  * @since 0.2
  *
  */
@@ -30,17 +37,17 @@ public final class CSystem {
   public CTestResult executeTest(CTest test) {
     return CSession.executeTest(test);
   }
-  
+
   /**
    * Start some threads and wait until they are finished.
-   * The threads will be started cooperatively.
-   * 
+   * The threads will execute cooperatively.
    * @param runnables Runnable instances.
    * @throws IllegalThreadStateException if any of the runnable instances is
    *          an already alive {@link Thread} object.
+   * @throws CNonCooperativeModeError If the method is invoked by a non-cooperative thread.
    */
   public static void forkAndJoin(Runnable... runnables) {
-    throw new CInternalError("Call not handled as a yield point!");
+    throw new CNonCooperativeModeError();
   }
 
   /**
@@ -84,9 +91,10 @@ public final class CSystem {
    * Simulate a spurious thread wakeup.
    * 
    * @param t Target thread.
+   * @throws CNonCooperativeModeError If the method is invoked by a non-cooperative thread.
    */
   public static void sendSpuriousWakeup(Thread t) {
-    throw new CInternalError("Call not handled as a yield point!");
+    throw new CNonCooperativeModeError();
   }
 
   /**
@@ -96,7 +104,7 @@ public final class CSystem {
   public static CoverageInfo getGlobalCoverageInfo() {
     return AgentFacade.INSTANCE.getGlobalCoverageLog();
   }
-  
+
   /**
    * Generate a global coverage report.
    * @return {@link File} object indicating the generated report.
@@ -105,12 +113,12 @@ public final class CSystem {
   public static File generateGlobalCoverageReport() throws IOException {
     return AgentFacade.INSTANCE.produceCoverageReport();
   }
-  
+
   @SuppressWarnings("javadoc")
   private CSystem() {
 
   }
 
-  
+
 
 }
