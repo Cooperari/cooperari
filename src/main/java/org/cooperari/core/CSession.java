@@ -6,7 +6,6 @@ import java.lang.reflect.Constructor;
 
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
-import org.cooperari.config.CCoverage;
 import org.cooperari.config.CGenerateCoverageReports;
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CScheduling;
