@@ -1,12 +1,12 @@
 == 0.2.1. final ==
 
 Features left to implement:
+- Revise Coverage/CoveragePolicy code
 - cjava utility
+- javadoc / source / deploy maven targets
 - update scripts to disable assertions in org.cooperari 
 - operation arguments (yes/no? if yes at least written to trace)
-- Revise Coverage/CoveragePolicy code
 - CSystem.runPreemptively() 
-- javadoc / source / deploy maven targets
 
 Maybe:
 - cjunit/cjava -p switch / ensure CJUnitRunner runs preemptively as well (maybe)
@@ -14,7 +14,6 @@ Maybe:
 - @CKeepGoing 
 - make cjunit/cjava invoke csetup to move indirection
 - Windows scripts
-
 
 - Examples:
   Herlihy and Wing Queue.
