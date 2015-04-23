@@ -15,7 +15,6 @@ public final class CurrentThread {
    * @return The state of the target thread.
    */
   public static Thread execute(CThread thisThread) {
-    thisThread.cYield(CThread.NOP);
     Thread vt = thisThread.getVirtualizedThread();
     return (vt != null) ? vt : thisThread;
   }

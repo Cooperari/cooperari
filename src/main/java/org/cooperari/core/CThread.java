@@ -250,14 +250,30 @@ public final class CThread extends Thread {
    *         <code>null</code> otherwise.
    */
   public static CThread intercept(JoinPoint jp) {
-    Thread t = Thread.currentThread();
-    if (!(t instanceof CThread))
-      return null;
-    CThread ct = (CThread) t;
-    ct._yieldPoint = new CYieldPointImpl(jp.getStaticPart());
+    CThread ct = self();
+    if (ct != null) {
+      ct._yieldPoint = new CYieldPointImpl(jp.getStaticPart());
+    }
     return ct;
   }
 
+  /**
+   * Get current thread object if the thread is cooperative, <code>null</code> otherwise.
+   * <p>
+   * Callers can use this method
+   * to determine if they are executing in a cooperative context.
+   * Note also that the returned thread may be masking 
+   * an actual application thread.  The latter can be queried
+   * by {@link #getVirtualizedThread()}.
+   * </p>
+   * 
+   * @return The thread object or <code>null</code> if the thread is non-cooperative.
+   */
+  public static CThread self() {
+    Thread t = Thread.currentThread();
+    return t instanceof CThread ? (CThread) t : null;
+  }
+  
   /**
    * Get logical running state of thread.
    * 

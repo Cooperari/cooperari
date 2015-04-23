@@ -2,6 +2,7 @@ package org.cooperari.core.aspectj;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,18 @@ public enum AgentFacade {
    */
   private final CoverageLog _globalCoverageLog = new CoverageLog();
 
+  /**
+   * Ignore set (a few methods are instrumented but should not be considered yield points).
+   */
+  private final HashSet<String> _ignoreSet = new HashSet<>();
+  
+  /**
+   * Constructor.
+   */
+  private AgentFacade() {
+    _ignoreSet.add("Thread.currentThread()");
+  }
+  
   /**
    * Test if weaver agent is active.
    * 
@@ -106,10 +119,13 @@ public enum AgentFacade {
           } else {
             signature = kind + "(" + uniformize(desc) + ")";
           }
+          if (_ignoreSet.contains(signature)) {
+            return;
+          }
           String fileInfo = matcher.group(3);
           int lineInfo = Integer.parseInt(matcher.group(4));
-          CYieldPointImpl yp = new CYieldPointImpl(signature, fileInfo,
-              lineInfo);
+          CYieldPointImpl yp = 
+              new CYieldPointImpl(signature, fileInfo, lineInfo);
           synchronized (this) {
             _globalCoverageLog.recordDefinition(yp);
           }

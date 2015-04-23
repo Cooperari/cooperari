@@ -24,8 +24,8 @@ public class YieldPoints {
    */
   @Around("call(Thread Thread.currentThread())")
   public Thread aroundThreadCurrentThread(ProceedingJoinPoint thisJoinPoint) throws Throwable {
-    CThread t = CThread.intercept(thisJoinPoint);
-    return t != null ?  CurrentThread.execute(t) : (Thread) thisJoinPoint.proceed();
+    CThread t = CThread.self();
+    return t != null ? CurrentThread.execute(t) : (Thread) thisJoinPoint.proceed();
   }
 
   /**
