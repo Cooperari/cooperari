@@ -16,7 +16,6 @@ import org.junit.runners.MethodSorters;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")
 @RunWith(CJUnitRunner.class)
-@CCoverage(CCoverageType.NONE)
 public class NonCooperativeThreadRunnerTest {
 
   // TODO: reconvert test

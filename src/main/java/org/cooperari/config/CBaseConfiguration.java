@@ -7,8 +7,8 @@ package org.cooperari.config;
  * @since 0.2
  */
 @CInstrument()
-@CCoverage(CCoverageType.HDC)
-@CMaxTrials(20)
+@CScheduling()
+@CMaxTrials()
 @CRaceDetection(false)
 @CDetectResourceDeadlocks()
 @CTimeLimit()

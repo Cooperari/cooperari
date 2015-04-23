@@ -9,12 +9,14 @@ import org.cooperari.CTestResult;
 import org.cooperari.config.CCoverage;
 import org.cooperari.config.CGenerateCoverageReports;
 import org.cooperari.config.CMaxTrials;
+import org.cooperari.config.CScheduling;
 import org.cooperari.config.CTimeLimit;
 import org.cooperari.config.CTraceOptions;
 import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.core.util.CReport;
 import org.cooperari.errors.CCheckedExceptionError;
 import org.cooperari.errors.CConfigurationError;
+import org.cooperari.errors.CError;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;
@@ -79,15 +81,19 @@ public final class CSession {
   public static CTestResult executeTest(CTest test) {
     assert CWorkspace.debug("== STARTED %s ==", test.getName());
     CRuntime runtime = new CRuntime(new CConfiguration(test.getConfiguration()));
-    CCoverage coverage = runtime.getConfiguration(CCoverage.class);
+    CScheduling schConfig = runtime.getConfiguration(CScheduling.class);
     CTraceOptions traceOptions = runtime.getConfiguration(CTraceOptions.class);
 
     CScheduler scheduler;
     try {
-      Constructor<? extends CScheduler> c = coverage.value()
-          .getImplementation().getConstructor(CRuntime.class);
+      Constructor<? extends CScheduler> c = 
+          schConfig.scheduler().getConstructor(CRuntime.class);
       scheduler = c.newInstance(runtime);
-    } catch (Exception e) {
+    }
+    catch (CError e) {
+      throw e;
+    }
+    catch (Throwable e) {
       throw new CInternalError(e);
     }
 

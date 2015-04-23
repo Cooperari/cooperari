@@ -41,7 +41,7 @@ public final class Start extends ThreadOperation<Void> {
     if (_threadToStart.getState() != Thread.State.NEW) {
       throw new IllegalThreadStateException("Thread already started");
     }
-    _thisThread.getScheduler().createNewThread(_threadToStart, null);
+    _thisThread.getEngine().createNewThread(_threadToStart, null);
   }
 
 

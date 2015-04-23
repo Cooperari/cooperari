@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+import org.cooperari.config.CScheduling;
 import org.cooperari.errors.CInternalError;
+import org.cooperari.scheduling.CProgramState;
+import org.cooperari.scheduling.CProgramStateFactory;
 import org.cooperari.scheduling.CScheduler;
 
 
@@ -166,7 +169,7 @@ public class CEngine extends Thread {
 
 
   /**
-   * Execution method for the scheduler.
+   * Execution method for the engine thread.
    */
   @Override
   public void run() {
@@ -176,6 +179,8 @@ public class CEngine extends Thread {
     
     handleNewThreads(); // handle initial thread
 
+    boolean useStateAbstraction = _runtime.get(CScheduling.class).useStateAbstraction();
+    
     ArrayList<CThread> readySet = new ArrayList<>();
 
     CThread running = null, lastRunning = null;
@@ -232,7 +237,8 @@ public class CEngine extends Thread {
         }
 
         if (readySet.size() > 0) {
-          running = (CThread) _scheduler.decision(readySet);
+          CProgramState ps = CProgramStateFactory.create(useStateAbstraction, readySet);
+          running = (CThread) _scheduler.decision(ps);
           if (running != lastRunning)
             _virtualPreemptions++;
           _schedulingSteps++;

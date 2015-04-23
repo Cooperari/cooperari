@@ -12,7 +12,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface CMaxTrials {
   /**
-   * @return Maximum trials per test. The setting is ignored if the value is lower or equal to 0.
+   * @return Maximum trials per test. It must be a positive value:
+   * a runtime error will be thrown in the execution engine if the value is lower or equal to 0.
    */
-  int value() default 1000; 
+  int value() default 20; 
 } 
