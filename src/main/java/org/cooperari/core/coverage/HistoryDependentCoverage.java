@@ -8,13 +8,13 @@ import java.util.Random;
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CWorkspace;
-import org.cooperari.core.CoveragePolicy;
+import org.cooperari.scheduling.CScheduler;
 
 /**
  * Synchronization coverage with a few twists.
  *
  */
-public class HistoryDependentCoverage implements CoveragePolicy {
+public class HistoryDependentCoverage implements CScheduler {
 
   private static final boolean PREEMPTION_BOUND_HEURISTIC;
   

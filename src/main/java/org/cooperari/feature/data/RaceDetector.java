@@ -141,8 +141,8 @@ public class RaceDetector {
           String.format
           ("Race: %s at %s:%d over %s.%s", 
               t.getName(), 
-              t.getLocation().getYieldPoint().getSourceFile(),
-              t.getLocation().getYieldPoint().getSourceLine(),
+              t.location().getYieldPoint().getSourceFile(),
+              t.location().getYieldPoint().getSourceLine(),
               d._object.getClass().getCanonicalName(), 
               d._key);
       throw new CRaceError(msg);

@@ -6,14 +6,14 @@ import java.util.Random;
 
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.CThread;
-import org.cooperari.core.CoveragePolicy;
+import org.cooperari.scheduling.CScheduler;
 
 
 /**
  * Random coverage.
  *
  */
-public class RandomCoverage implements CoveragePolicy {
+public class RandomCoverage implements CScheduler {
 
 
   

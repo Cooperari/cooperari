@@ -1,7 +1,7 @@
 package org.cooperari.core;
 
 import org.aspectj.lang.JoinPoint;
-import org.cooperari.CYieldPoint;
+import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Yield point implementation.

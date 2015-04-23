@@ -1,10 +1,10 @@
-package org.cooperari.core;
+package org.cooperari.scheduling;
 
 import org.aspectj.lang.JoinPoint;
-import org.cooperari.CYieldPoint;
+import org.cooperari.core.CYieldPointImpl;
 
 /**
- * Information for the yield point of a cooperative thread.
+ * Thread location information.
  * 
  * <p>
  * The information comprises the location that identifies the point of yield,
@@ -21,7 +21,8 @@ import org.cooperari.CYieldPoint;
  * The value returned by {#link getStage()} is usually <code>0</code> as most
  * thread interference points map to just one yield point. For operations that
  * proceed in several yield points like {@link Thread#wait()}. the information
- * is used to distinguish the distinct yield points (usually in sequence)
+ * is used to distinguish the distinct yield points (usually in sequence) for
+ * the same operation.
  * </p>
  * 
  * 
@@ -30,7 +31,7 @@ import org.cooperari.CYieldPoint;
 public final class CThreadLocation {
 
   /**
-   * Thread location.
+   * Yield point.
    */
   private final CYieldPoint _yieldPoint;
 
@@ -147,7 +148,7 @@ public final class CThreadLocation {
    * 
    * @param sb {@link StringBuilder} instance.
    */
-  public void toString(StringBuilder sb) {
+  private void toString(StringBuilder sb) {
     if (_yieldPoint instanceof JoinPoint.StaticPart) {
       JoinPoint.StaticPart jpsp = (JoinPoint.StaticPart) _yieldPoint;
       sb.append(jpsp.getSignature()).append(':').append(_stage).append("@")

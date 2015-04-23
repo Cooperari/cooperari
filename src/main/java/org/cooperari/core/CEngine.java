@@ -7,15 +7,16 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import org.cooperari.errors.CInternalError;
+import org.cooperari.scheduling.CScheduler;
 
 
 /**
- * Cooperative scheduler.
+ * Cooperative execution engine.
  * 
  * @since 0.2
  *
  */
-public class CScheduler extends Thread {
+public class CEngine extends Thread {
 
   /**
    * Runtime instance.
@@ -28,9 +29,9 @@ public class CScheduler extends Thread {
   private final Object _wakeupLock = new Object();
 
   /**
-   * Coverage policy.
+   * Scheduler.
    */
-  private final CoveragePolicy _coveragePolicy;
+  private final CScheduler _scheduler;
 
   /**
    *  Map representing all alive threads.
@@ -77,13 +78,13 @@ public class CScheduler extends Thread {
   /**
    * Constructs a new cooperative scheduler.
    * @param runtime Runtime environent instance.
-   * @param coverage Coverage policy.
+   * @param scheduler Coverage policy.
    * @param runnables Array of {@link Runnable} instances. The scheduler thread will create one initial thread per each element in the array.
    */
-  public CScheduler(CRuntime runtime, CoveragePolicy coverage, Runnable... runnables) {
+  public CEngine(CRuntime runtime, CScheduler scheduler, Runnable... runnables) {
     super("CSCheduler");
     _runtime = runtime;
-    _coveragePolicy = coverage;
+    _scheduler = scheduler;
     _runtime.register(this);
     _runtime.register(new ThreadMappings());
     _trace = _runtime.get(CTrace.class);
@@ -95,10 +96,10 @@ public class CScheduler extends Thread {
   }
 
   /**
-   * Throw any uncaught exceptions by threads executed using this scheduler. 
+   * Throw any uncaught exceptions during thread execution. 
    * <p>
-   * The scheduler uses a {@link CUncaughtExceptionHandler} object internally to record
-   * uncaught exceptions and calls {@link CUncaughtExceptionHandler#rethrowExceptionsIfAny()} on that object
+   * An {@link CUncaughtExceptionHandler} object is used internally to record
+   * uncaught exceptions and the engine calls {@link CUncaughtExceptionHandler#rethrowExceptionsIfAny()} on that object
    * at this point.
    * </p>
    * @see CUncaughtExceptionHandler#rethrowExceptionsIfAny()
@@ -118,7 +119,7 @@ public class CScheduler extends Thread {
 
 
   /**
-   * Tell the scheduler to start a new thread.
+   * Tell the engine to start a new thread.
    * @param r A {@link Runnable} instance to be used by the new thread.
    * @param excHandler Custom exception handler (internal scheduler handler used otherwise).
    * @return The {@link CThread} object that was created. On exit the thread will not have been started.
@@ -231,7 +232,7 @@ public class CScheduler extends Thread {
         }
 
         if (readySet.size() > 0) {
-          running = _coveragePolicy.decision(readySet);
+          running = (CThread) _scheduler.decision(readySet);
           if (running != lastRunning)
             _virtualPreemptions++;
           _schedulingSteps++;

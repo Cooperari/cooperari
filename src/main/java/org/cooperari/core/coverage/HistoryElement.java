@@ -12,7 +12,7 @@ public class HistoryElement {
 
   public HistoryElement(CThread t, ProgramStateAbstraction state) {
     if (FULL_ABS)
-      _choice = t.getLocation();
+      _choice = t.location();
     else
       _choice = new Integer(t.getCID());
     _state = state;

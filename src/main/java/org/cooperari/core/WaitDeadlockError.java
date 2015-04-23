@@ -3,6 +3,7 @@ package org.cooperari.core;
 import java.util.Collection;
 
 import org.cooperari.errors.CDeadlockError;
+import org.cooperari.scheduling.CThreadLocation;
 
 
 /**
@@ -29,7 +30,7 @@ public class WaitDeadlockError extends CDeadlockError {
     sb.append("Alive threads waiting indefinitely : {");
     for (CThread t : threads) {
       if (! t.isTerminated()) {
-        CThreadLocation pc = t.getLocation();
+        CThreadLocation pc = t.location();
         sb.append(' ')
           .append(t.getName())
           .append('/')

@@ -1,5 +1,7 @@
 package org.cooperari.core;
 
+import org.cooperari.scheduling.CThreadLocation;
+
 /**
  * Base class for cooperative operations.
  * 

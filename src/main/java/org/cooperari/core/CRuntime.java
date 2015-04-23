@@ -146,14 +146,14 @@ public class CRuntime {
   }
 
   /**
-   * Shortcut for calling {@link CScheduler#getThread(int)} on the scheduler instance
+   * Shortcut for calling {@link CEngine#getThread(int)} on the scheduler instance
    * associated to this runtime.
    * 
    * @param index Thread index.
    * @return A {@link CThread} instance.
    */
   public static CThread getThread(int index) {
-    return getRuntime().get(CScheduler.class).getThread(index);
+    return getRuntime().get(CEngine.class).getThread(index);
   }
 
   /**

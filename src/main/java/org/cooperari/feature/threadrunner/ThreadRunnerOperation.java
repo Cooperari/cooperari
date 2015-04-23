@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 import org.cooperari.core.COperation;
 import org.cooperari.core.CRuntime;
-import org.cooperari.core.CScheduler;
+import org.cooperari.core.CEngine;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CThreadState;
 import org.cooperari.core.CUncaughtExceptionHandler;
@@ -60,7 +60,7 @@ final class ThreadRunnerOperation extends COperation<Void> {
    */
   private ThreadRunnerOperation(Runnable[] runnables) {
     CRuntime rt = CRuntime.getRuntime();
-    CScheduler s = rt.get(CScheduler.class);
+    CEngine s = rt.get(CEngine.class);
     for (int i = 0; i < runnables.length; i++) {
       _threadList.add(s.createNewThread(runnables[i], _excHandler));
     }

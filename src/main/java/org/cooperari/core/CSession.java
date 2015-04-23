@@ -18,6 +18,7 @@ import org.cooperari.errors.CConfigurationError;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;
+import org.cooperari.scheduling.CScheduler;
 
 /**
  * Test session executor.
@@ -81,11 +82,11 @@ public final class CSession {
     CCoverage coverage = runtime.getConfiguration(CCoverage.class);
     CTraceOptions traceOptions = runtime.getConfiguration(CTraceOptions.class);
 
-    CoveragePolicy cHandler;
+    CScheduler scheduler;
     try {
-      Constructor<? extends CoveragePolicy> c = coverage.value()
+      Constructor<? extends CScheduler> c = coverage.value()
           .getImplementation().getConstructor(CRuntime.class);
-      cHandler = c.newInstance(runtime);
+      scheduler = c.newInstance(runtime);
     } catch (Exception e) {
       throw new CInternalError(e);
     }
@@ -116,8 +117,8 @@ public final class CSession {
       trials++;
       trace.clear();
       hHandler.startTestTrial();
-      cHandler.onTestStarted();
-      CScheduler s = new CScheduler(runtime, cHandler, test);
+      scheduler.onTestStarted();
+      CEngine s = new CEngine(runtime, scheduler, test);
       s.start();
       try {
         s.join();
@@ -125,7 +126,7 @@ public final class CSession {
         throw new CInternalError(e);
       }
 
-      cHandler.onTestFinished();
+      scheduler.onTestFinished();
       try {
         s.rethrowExceptionsIfAny();
         hHandler.endTestTrial();
@@ -144,7 +145,7 @@ public final class CSession {
         saveTrace(test, trials, trace);
       }
       done = failure != null
-          || cHandler.done()
+          || scheduler.continueTrials()
           || trials >= maxTrials.value()
           || (timeLimit > 0 && System.currentTimeMillis() - startTime >= timeLimit);
     } while (!done);

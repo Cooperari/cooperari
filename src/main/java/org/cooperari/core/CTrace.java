@@ -5,9 +5,10 @@ import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cooperari.CYieldPoint;
 import org.cooperari.config.CTraceOptions;
 import org.cooperari.core.util.CReport;
+import org.cooperari.scheduling.CThreadLocation;
+import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Cooperative execution trace.
@@ -114,7 +115,7 @@ public final class CTrace {
    * @param type event type
    */
   public void record(CThread t, EventType type) {
-    CYieldPoint yp = t.getLocation().getYieldPoint();
+    CYieldPoint yp = t.location().getYieldPoint();
     if (yp.getSourceFile() != CYieldPointImpl.INTERNAL) {
       _clog.markAsCovered(yp);
     }
@@ -243,7 +244,7 @@ public final class CTrace {
       this._threadId = t.getCID();
       this._threadStep = t.getStep();
       this._eventMarker = type != null ? type.getTraceMarker() : '-';
-      this._location = t.getLocation();
+      this._location = t.location();
     }
     
     /**

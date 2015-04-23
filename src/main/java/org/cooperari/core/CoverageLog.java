@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.cooperari.CYieldPoint;
 import org.cooperari.CoverageInfo;
 import org.cooperari.core.util.CReport;
+import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Coverage log.

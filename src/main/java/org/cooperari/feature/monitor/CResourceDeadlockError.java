@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cooperari.core.CThread;
-import org.cooperari.core.CThreadLocation;
 import org.cooperari.errors.CDeadlockError;
+import org.cooperari.scheduling.CThreadLocation;
 
 /**
  * Exception thrown due to a deadlock error.
@@ -40,7 +40,7 @@ public class CResourceDeadlockError extends CDeadlockError {
 
   @SuppressWarnings("javadoc")
   private static void format(CThread t, Monitor m, StringBuilder sb) {
-    CThreadLocation pc = t.getLocation();
+    CThreadLocation pc = t.location();
     sb.append('L').append(m.getId()).append('/').append(t.getName())
         .append('/').append(pc.getYieldPoint().getSourceFile()).append(':')
         .append(pc.getYieldPoint().getSourceLine());

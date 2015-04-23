@@ -8,12 +8,12 @@ import java.util.regex.Pattern;
 
 import org.aspectj.bridge.IMessage;
 import org.aspectj.lang.JoinPoint;
-import org.cooperari.CYieldPoint;
 import org.cooperari.CoverageInfo;
 import org.cooperari.core.CWorkspace;
 import org.cooperari.core.CYieldPointImpl;
 import org.cooperari.core.CoverageLog;
 import org.cooperari.core.util.CLog;
+import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Facade for the load-time weaving agent.

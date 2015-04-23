@@ -12,15 +12,17 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.locks.LockSupport;
 
 import org.aspectj.lang.JoinPoint;
-import org.cooperari.CYieldPoint;
 import org.cooperari.errors.CInternalError;
+import org.cooperari.scheduling.CThreadHandle;
+import org.cooperari.scheduling.CThreadLocation;
+import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Cooperative thread.
  * 
  * @since 0.2
  */
-public final class CThread extends Thread {
+public final class CThread extends Thread implements CThreadHandle {
 
   // CLASS CONSTANTS
   /**
@@ -74,9 +76,9 @@ public final class CThread extends Thread {
   private final Runnable _runnable;
 
   /**
-   * Scheduler handle.
+   * Engine reference.
    */
-  private final CScheduler _scheduler;
+  private final CEngine _engine;
 
   /**
    * Association to explicitly started thread instance (if any).
@@ -137,22 +139,22 @@ public final class CThread extends Thread {
   /**
    * Constructs a new cooperative thread.
    * 
-   * @param s Cooperative scheduler.
+   * @param e Cooperative execution engine.
    * @param r Runnable to be executed by the thread.
    * @param cid Cooperative execution id for the thread.
    */
-  public CThread(CScheduler s, final Runnable r, int cid) {
+  public CThread(CEngine e, final Runnable r, int cid) {
     setDaemon(true);
     _cid = cid;
     _operation = INIT;
     _location = new CThreadLocation(CYieldPointImpl.THREAD_INITIALIZATION);
-    _scheduler = s;
+    _engine = e;
     _runnable = r;
     _virtualizedThread = r instanceof Thread ? (Thread) r : null;
     if (_virtualizedThread == null) {
       setName("<" + _cid + ">");
     } else {
-      s.getRuntime().get(ThreadMappings.class).associate(_virtualizedThread, this);
+      e.getRuntime().get(ThreadMappings.class).associate(_virtualizedThread, this);
       setName(_virtualizedThread.getName());
     }
   }
@@ -163,7 +165,7 @@ public final class CThread extends Thread {
    */
   @Override
   public void run() {
-    _scheduler.getRuntime().join();
+    _engine.getRuntime().join();
     try {
       _location = new CThreadLocation(CYieldPointImpl.THREAD_STARTED_YIELD_POINT);
       cYield(START);
@@ -176,7 +178,7 @@ public final class CThread extends Thread {
     } finally {
       _operation = TERMINATED;
       _location = new CThreadLocation(CYieldPointImpl.THREAD_TERMINATED_YIELD_POINT);
-      _scheduler.getRuntime().leave();
+      _engine.getRuntime().leave();
     }
   }
 
@@ -185,6 +187,7 @@ public final class CThread extends Thread {
    * 
    * @return The thread's ID.
    */
+  @Override
   public int getCID() {
     return _cid;
   }
@@ -198,21 +201,22 @@ public final class CThread extends Thread {
   }
   
   /**
-   * Get thread's yield point.
+   * Get the thread's current location.
    * 
-   * @return The current yield point.
+   * @return The current thread location.
    */
-  public CThreadLocation getLocation() {
+  @Override
+  public CThreadLocation location() {
     return _location;
   }
 
   /**
-   * Get scheduler that governs the execution of this thread.
+   * Get engine that governs the execution of this thread.
    * 
-   * @return A {@link CScheduler} instance.
+   * @return A {@link CEngine} instance.
    */
-  public CScheduler getScheduler() {
-    return _scheduler;
+  public CEngine getEngine() {
+    return _engine;
   }
 
   /**
@@ -372,7 +376,7 @@ public final class CThread extends Thread {
     assert CWorkspace.debug("yielding - %s", toString());
 
     // Yield.
-    _scheduler.wakeup();
+    _engine.wakeup();
     _atYieldPoint = true;
     do {
       assert CWorkspace.debug("parking");
@@ -406,7 +410,7 @@ public final class CThread extends Thread {
       throw new CInternalError(e);
     }
 
-    assert CWorkspace.debug("fully resumed [%s]", getLocation());
+    assert CWorkspace.debug("fully resumed [%s]", location());
 
     // Return sequence.
     if (rtExc != null) {
@@ -420,7 +424,8 @@ public final class CThread extends Thread {
 
   /**
    * Resume the thread after a cooperative yield. This is executed by the
-   * cooperative scheduler only. The thread will be allowed to resume and
+   * cooperative execution engine only. 
+   * The thread will be allowed to resume and
    * complete the operation for the current yield point.
    */
   public void cResume() {

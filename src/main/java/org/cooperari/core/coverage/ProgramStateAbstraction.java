@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.cooperari.core.CThread;
-import org.cooperari.core.CThreadLocation;
 import org.cooperari.core.CWorkspace;
+import org.cooperari.scheduling.CThreadLocation;
 
 
 public class ProgramStateAbstraction {
@@ -19,7 +19,7 @@ public class ProgramStateAbstraction {
     _tPC = new LinkedHashMap<>(readyThreads.size());
     int h = 0;
     for (int i=0; i < readyThreads.size(); i++) {
-      CThreadLocation pc = readyThreads.get(i).getLocation();
+      CThreadLocation pc = readyThreads.get(i).location();
       Integer count = _tPC.get(pc);
       if (count == null) {
         count = 1;
