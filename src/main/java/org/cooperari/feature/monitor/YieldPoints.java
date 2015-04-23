@@ -10,7 +10,8 @@ import org.cooperari.core.CThread;
 
 /**
  * AspectJ instrumentation for monitor operations.
- * @author Eduardo Marques, DI/FCUL, 2014-15
+ * 
+ * @since 0.2
  */
 @Aspect
 public final class YieldPoints {
@@ -22,7 +23,6 @@ public final class YieldPoints {
    */
   @Before("lock() && args(o)")
   public void beforeMonitorEnter(JoinPoint thisJoinPoint, Object o) {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Enter.execute(t, o);
@@ -36,7 +36,6 @@ public final class YieldPoints {
    */
   @Before("unlock() && args(o)")
   public void beforeMonitorExit(JoinPoint thisJoinPoint, Object o) {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Exit.execute(t, o);
@@ -52,7 +51,6 @@ public final class YieldPoints {
    */
   @Around("call(boolean Thread.holdsLock(Object)) && args(o)")
   public boolean aroundThreadHoldsLock(ProceedingJoinPoint thisJoinPoint, Object o) throws Throwable {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
      return ThreadHoldsLock.execute(t, o);
@@ -69,7 +67,6 @@ public final class YieldPoints {
    */
   @Around("call(void Object.wait()) && target(o)")
   public void aroundWait(ProceedingJoinPoint thisJoinPoint, Object o) throws InterruptedException, Throwable {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Wait.execute(t, o, 0L);
@@ -108,7 +105,6 @@ public final class YieldPoints {
    */
   @Around("call(void Object.wait(long,int)) && target(o) && args(millis,nano)")
   public void aroundWait(ProceedingJoinPoint thisJoinPoint, Object o, long millis, int nano) throws InterruptedException, Throwable {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Wait.execute(t, o, millis * 1000000L + nano);
@@ -124,8 +120,7 @@ public final class YieldPoints {
    * @throws Throwable In accordance to <code>ProceedingJoinPoint.proceed()</code>.
    */
   @Around("call(void Object.notify()) && target(o)")
-  public void aroundNotify(ProceedingJoinPoint thisJoinPoint, Object o) throws Throwable {
-    
+  public void aroundNotify(ProceedingJoinPoint thisJoinPoint, Object o) throws Throwable { 
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
      Notify.execute(t, o);
@@ -142,7 +137,6 @@ public final class YieldPoints {
    */
   @Around("call(void Object.notifyAll()) && target(o)")
   public void aroundNotifyAll(ProceedingJoinPoint thisJoinPoint, Object o) throws Throwable {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       NotifyAll.execute(t, o);
