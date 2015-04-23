@@ -26,7 +26,6 @@ public class YieldPoints {
    */
   @Before("get(static * *.*)")
   public void beforeGetStaticField(JoinPoint thisJoinPoint) {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Read.before(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
@@ -39,8 +38,7 @@ public class YieldPoints {
    */
   @After("get(static * *.*)")
   public void afterGetStaticField(JoinPoint thisJoinPoint) {
-    
-    CThread t = CThread.intercept(thisJoinPoint);
+    CThread t = CThread.self();
     if (t != null) {
       Read.after(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
     }
@@ -53,7 +51,6 @@ public class YieldPoints {
    */
   @Before("get(* *.*) && target(o)")
   public void beforeGetField(JoinPoint thisJoinPoint, Object o) {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Read.before(t, o, thisJoinPoint.getSignature().getName());
@@ -67,8 +64,7 @@ public class YieldPoints {
    */
   @After("get(* *.*) && target(o)")
   public void afterGetField(JoinPoint thisJoinPoint, Object o) {
-    
-    CThread t = CThread.intercept(thisJoinPoint);
+    CThread t = CThread.self();
     if (t != null) {
       Read.after(t, o, thisJoinPoint.getSignature().getName());
     }
@@ -80,7 +76,6 @@ public class YieldPoints {
    */
   @Before("set(static * *.*)")
   public void beforeSetStaticField(JoinPoint thisJoinPoint) {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Write.before(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
@@ -93,8 +88,7 @@ public class YieldPoints {
    */
   @After("set(static * *.*)")
   public void afterSetStaticField(JoinPoint thisJoinPoint) {
-    
-    CThread t = CThread.intercept(thisJoinPoint);
+    CThread t = CThread.self();
     if (t != null) {
       Write.after(t, STATIC_FIELD, thisJoinPoint.getSignature().getName());
     }
@@ -106,7 +100,6 @@ public class YieldPoints {
    */
   @Before("set(* *.*) && target(o)")
   public void beforeSetField(JoinPoint thisJoinPoint, Object o) {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Write.before(t, o, thisJoinPoint.getSignature().getName());
@@ -120,8 +113,7 @@ public class YieldPoints {
    */
   @After("set(* *.*) && target(o)")
   public void afterSetField(JoinPoint thisJoinPoint, Object o) {
-    
-    CThread t = CThread.intercept(thisJoinPoint);
+    CThread t = CThread.self();
     if (t != null) {
       Write.after(t, o, thisJoinPoint.getSignature().getName());
     }
@@ -137,8 +129,6 @@ public class YieldPoints {
    */
   @Before("call(* org.cooperari.CArray.cRead(*,int)) && args(array,index)")
   public void beforeArrayRead(JoinPoint thisJoinPoint, Object array, int index) {
-    
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Read.before(t, array, index);
@@ -153,8 +143,7 @@ public class YieldPoints {
    */
   @After("call(* org.cooperari.CArray.cRead(*,int)) && args(array,index)")
   public void afterArrayRead(JoinPoint thisJoinPoint, Object array, int index) {
-    
-    CThread t = CThread.intercept(thisJoinPoint);
+    CThread t = CThread.self();
     if (t != null) {
       Read.after(t, array, index);
     }
@@ -169,7 +158,6 @@ public class YieldPoints {
    */
   @Before("call(* org.cooperari.CArray.cWrite(*,int,*)) && args(array,index,value)")
   public void beforeArrayWrite(JoinPoint thisJoinPoint, Object array, int index, Object value) {
-    
     CThread t = CThread.intercept(thisJoinPoint);
     if (t != null) {
       Write.before(t, array, index);
@@ -185,8 +173,7 @@ public class YieldPoints {
    */
   @After("call(* org.cooperari.CArray.cWrite(*,int,*)) && args(array,index,value)")
   public void afterArrayWrite(JoinPoint thisJoinPoint, Object array, int index, Object value) {
-    
-    CThread t = CThread.intercept(thisJoinPoint);
+    CThread t = CThread.self();
     if (t != null) {
       Write.after(t, array, index);
     }
