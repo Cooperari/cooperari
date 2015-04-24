@@ -150,7 +150,7 @@ public final class CSession {
         saveTrace(test, trials, trace);
       }
       done = failure != null
-          || scheduler.continueTrials()
+          || !scheduler.continueTrials()
           || trials >= maxTrials.value()
           || (timeLimit > 0 && System.currentTimeMillis() - startTime >= timeLimit);
     } while (!done);

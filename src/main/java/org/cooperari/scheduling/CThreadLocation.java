@@ -159,4 +159,9 @@ public final class CThreadLocation {
     }
   }
 
+  public Object getCID() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

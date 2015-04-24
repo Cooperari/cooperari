@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-import org.cooperari.config.CScheduling;
 import org.cooperari.errors.CInternalError;
-import org.cooperari.scheduling.CProgramState;
-import org.cooperari.scheduling.CProgramStateFactory;
 import org.cooperari.scheduling.CScheduler;
 
 
@@ -37,13 +34,14 @@ public class CEngine extends Thread {
   private final CScheduler _scheduler;
 
   /**
-   *  Map representing all alive threads.
+   *  Map representing all  threads.
    *  Each thread has an unique cooperative identifier that is used as a key to this map
-   *  for the sole purpose of serving the {@link #getThread(int)} utility method.
+   *  by the {@link #getThread(int)} utility method.
    *  @see #_cid
    *  @see #_newThreads
    */
   private final LinkedHashMap<Integer,CThread> _threads = new LinkedHashMap<>();
+
 
   /**
    * Cooperative thread id counter. It gets incremented every time a new thread is created.
@@ -176,12 +174,11 @@ public class CEngine extends Thread {
     // Setup stage
     assert CWorkspace.debug("Scheduler started.");
     _runtime.join();
-    
+
     handleNewThreads(); // handle initial thread
 
-    boolean useStateAbstraction = _runtime.get(CScheduling.class).useStateAbstraction();
-    
     ArrayList<CThread> readySet = new ArrayList<>();
+    ArrayList<CThread> blockedSet = new ArrayList<>();
 
     CThread running = null, lastRunning = null;
 
@@ -194,7 +191,7 @@ public class CEngine extends Thread {
         }
       }
       if (running != null && !running.isRunning()) {
-        // Running thread either (1) blocked or (2) terminated
+        // Running thread either (1) yielded or (2) terminated
         _trace.recordStep(running);
         handleNewThreads();
         if (running.isTerminated()) {
@@ -206,39 +203,42 @@ public class CEngine extends Thread {
       }
 
       if (running == null && _threads.size() > 0) {
-   
         readySet.clear();
-        int waitCount = 0, aliveCount = _threads.size(), blockedCount = 0;
+        blockedSet.clear();
+        int cannotProgressCount = 0;
         for (CThread t : _threads.values()) {
           assert CWorkspace.debug(t.toString());
-          switch (t.getCState()) {
-            case CTERMINATED:
-              aliveCount--; break;
+          CThreadState s = t.getCState();
+          switch (s) {
             case CREADY:
-              readySet.add(t); break;
-            case CBLOCKED:
-              blockedCount ++; break;
-            case CWAITING:
-              waitCount ++; break;
-            default:
+              readySet.add(t); 
               break;
+            case CBLOCKED:
+            case CWAITING:
+              cannotProgressCount ++;
+            case CTIMED_WAITING:
+              blockedSet.add(t);
+              break;
+            default:
+              throw new CInternalError("Unexpected thread state: " + t.getName() + " -> " + s + " -- " + t.location());
           }
         }
+
         //assert debug("A = %d B = %d W =%d", aliveCount, blockedCount, waitCount);
-        if (aliveCount > 0 && waitCount + blockedCount == aliveCount) {
+        if (cannotProgressCount == _threads.size()) {
           WaitDeadlockError e = new WaitDeadlockError(_threads.values());
           for (CThread t : _threads.values()) {
-            if (t.isWaiting() || t.isBlocked()) {
-              assert CWorkspace.debug("Stopping "+ t.getName());
-              _trace.record(t, CTrace.EventType.DEADLOCK);
-              t.cStop(e); 
-            }
+            assert CWorkspace.debug("Stopping "+ t.getName());
+            _trace.record(t, CTrace.EventType.DEADLOCK);
+            t.cStop(e); 
           }
         }
 
         if (readySet.size() > 0) {
-          CProgramState ps = CProgramStateFactory.create(useStateAbstraction, readySet);
-          running = (CThread) _scheduler.decision(ps);
+          running = (CThread) _scheduler.decision(readySet, blockedSet);
+          if (running == null || !running.isReady()) {
+            throw new CInternalError("Scheduler made a wrong decision!");
+          }
           if (running != lastRunning)
             _virtualPreemptions++;
           _schedulingSteps++;

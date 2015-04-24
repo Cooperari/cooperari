@@ -6,9 +6,9 @@ import static org.cooperari.core.CThreadState.CREADY;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import org.cooperari.core.CEngine;
 import org.cooperari.core.COperation;
 import org.cooperari.core.CRuntime;
-import org.cooperari.core.CEngine;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CThreadState;
 import org.cooperari.core.CUncaughtExceptionHandler;

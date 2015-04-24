@@ -3,7 +3,6 @@ import java.util.List;
 
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
-import org.cooperari.core.CThread;
 
 /**
  * Base abstract class for scheduler.
@@ -14,10 +13,13 @@ public abstract class CScheduler {
   
   /**
    * Decide which thread should run next.
-   * @param state  Program state.
+   * @param readyThreads  Program state.
+   * @param blockedThreads  Program state.
    * @return A thread handle corresponding to the decision.
    */
-  public abstract CThreadHandle decision(CProgramState state);
+  public abstract CThreadHandle 
+  decision(List<? extends CThreadHandle> readyThreads,
+           List<? extends CThreadHandle> blockedThreads);
   
   /**
    * Query method to determine if further test trials are necessary.
