@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+import org.cooperari.config.CScheduling;
 import org.cooperari.errors.CInternalError;
 import org.cooperari.scheduling.CProgramStateFactory;
 import org.cooperari.scheduling.CScheduler;
@@ -180,7 +181,7 @@ public class CEngine extends Thread {
 
     ArrayList<CThread> readyThreads = new ArrayList<>();
     ArrayList<CThread> blockedThreads = new ArrayList<>();
-
+    CProgramStateFactory stateFac = _runtime.getConfiguration(CScheduling.class).stateFactory();
     CThread running = null, lastRunning = null;
 
     while (_threads.size() > 0) {
@@ -236,7 +237,7 @@ public class CEngine extends Thread {
         }
 
         if (readyThreads.size() > 0) {
-          running = (CThread) _scheduler.decision(CProgramStateFactory.RAW.create(readyThreads, blockedThreads));
+          running = (CThread) _scheduler.decision(stateFac.create(readyThreads, blockedThreads));
           if (running == null || !running.isReady()) {
             throw new CInternalError("Scheduler made a wrong decision!");
           }
