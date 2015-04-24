@@ -91,48 +91,22 @@ class CRawProgramState implements CProgramState {
    * @return Signature for the state.
    */
   public CProgramState.Signature getSignature() {
-    return new Signature(_readyThreads, _blockedThreads);
-  }
-  
-  @SuppressWarnings("javadoc")
-  private static class Signature implements CProgramState.Signature {
-    final Object[] _signature;
-    final int _hash;
-    Signature(List<? extends CThreadHandle> readyThreads, List<? extends CThreadHandle> blockedThreads) {
-      assert readyThreads instanceof RandomAccess;
-      assert blockedThreads instanceof RandomAccess;
-      final int rLen = readyThreads.size();
-      final int bLen = blockedThreads.size();
+      final int rLen = _readyThreads.size();
+      final int bLen = _blockedThreads.size();
       int[] rIds = new int[rLen];
       int[] bIds = new int[bLen];
       CThreadLocation[] locations = new CThreadLocation[rLen + bLen];
       for (int pos = 0; pos != rLen; pos++) {
-        CThreadHandle h = readyThreads.get(pos);
+        CThreadHandle h = _readyThreads.get(pos);
         rIds[pos] = h.getCID();
         locations[pos] = h.getLocation();
       }
       for (int pos = 0; pos != bLen; pos++) {
-        CThreadHandle h = readyThreads.get(pos);
+        CThreadHandle h = _blockedThreads.get(pos);
         bIds[pos] = h.getCID();
         locations[rLen + pos] = h.getLocation();
       }
-      _signature = new Object[]{ bIds, rIds, locations };
-      _hash = Arrays.deepHashCode(_signature);
+      return new CSignatureImpl(rIds, bIds, locations);
     }
-    @Override
-    public int hashCode() {
-      return _hash;
-    }
-    @Override
-    public boolean equals(Object o) {
-      if (o == this) {
-        return true;
-      }
-      if (o.getClass() != Signature.class) {
-          return false;
-      }
-      Signature other = (Signature) o;
-      return _hash == other._hash && Arrays.deepEquals(_signature, other._signature);
-    }
-  }
+  
 }

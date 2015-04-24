@@ -20,13 +20,13 @@ class CGroupProgramState implements CProgramState {
 
 
   @SuppressWarnings("javadoc")
-  private static class Element implements CProgramState.CElement {
+  private static class Group implements CProgramState.CElement {
 
     private final int _index;
     private final CThreadLocation _location;
     private final ArrayList<CThreadHandle> _threads = new ArrayList<>();
 
-    Element(int index, CThreadLocation location) {
+    Group(int index, CThreadLocation location) {
       _index = index;
       _location = location;
     }
@@ -47,15 +47,15 @@ class CGroupProgramState implements CProgramState {
   /**
    * Ready thread groups.
    */
-  private final ArrayList<Element> _rElements = new ArrayList<>();
+  private final ArrayList<Group> _rGroups = new ArrayList<>();
 
   /**
    * Blocked thread groups.
    */
-  private final ArrayList<Element> _bElements = new ArrayList<>();
+  private final ArrayList<Group> _bGroups = new ArrayList<>();
 
   /**
-   * Cached thread count.
+   * Thread count.
    */
   private final int _threadCount;
 
@@ -67,19 +67,19 @@ class CGroupProgramState implements CProgramState {
    */
   public CGroupProgramState(List<? extends CThreadHandle> readyThreads, List<? extends CThreadHandle> blockedThreads)  {
     _threadCount = readyThreads.size() + blockedThreads.size(); 
-    init(readyThreads, _rElements);
-    init(blockedThreads, _bElements);
+    init(readyThreads, _rGroups);
+    init(blockedThreads, _bGroups);
   }
 
   @SuppressWarnings("javadoc")
   private void
-  init(List<? extends CThreadHandle> list, List<Element> elemList) {
-    HashMap<CThreadLocation, Element> map = new HashMap<>();
+  init(List<? extends CThreadHandle> list, List<Group> elemList) {
+    HashMap<CThreadLocation, Group> map = new HashMap<>();
     for (CThreadHandle th : list ) {
-      Element g = map.get(th.getLocation());
+      Group g = map.get(th.getLocation());
       if (g == null) {
         int index = elemList.size();
-        g = new Element(index, th.getLocation());
+        g = new Group(index, th.getLocation());
         map.put(th.getLocation(), g);
         elemList.add(g);
       } 
@@ -93,7 +93,7 @@ class CGroupProgramState implements CProgramState {
    */
   @Override
   public int size() {
-    return _rElements.size() + _bElements.size();
+    return _rGroups.size() + _bGroups.size();
   }
 
   /**
@@ -109,14 +109,14 @@ class CGroupProgramState implements CProgramState {
    */
   @Override
   public List<? extends CElement> readyElements() {
-    return _rElements;
+    return _rGroups;
   }
   /**
    * @{inheritDoc}
    */
   @Override
   public List<? extends CElement> blockedElements() {
-    return _bElements;
+    return _bGroups;
   }
   /**
    * Select a random ready thread.
@@ -124,7 +124,7 @@ class CGroupProgramState implements CProgramState {
    */
   @Override
   public CThreadHandle select(Random rng) {
-    return select(rng.nextInt(_rElements.size()), rng);
+    return select(rng.nextInt(_rGroups.size()), rng);
   }
   /**
    * Select specific thread from state.
@@ -132,7 +132,7 @@ class CGroupProgramState implements CProgramState {
    */
   @Override
   public CThreadHandle select(int index, Random rng) {
-    ArrayList<CThreadHandle> list = _rElements.get(index)._threads;
+    ArrayList<CThreadHandle> list = _rGroups.get(index)._threads;
     return list.get(rng.nextInt(list.size()));
   }
 
@@ -141,49 +141,29 @@ class CGroupProgramState implements CProgramState {
    * @return Signature for the state.
    */
   public CProgramState.Signature getSignature() {
-    return null;
+   final Object[] rSig = new Object[_rGroups.size()];
+   final Object[] bSig = new Object[_bGroups.size()];
+   for (int i=0; i < rSig.length; i++) {
+     rSig[i] = toArray(_rGroups.get(i));
+   }
+   for (int i=0; i < bSig.length; i++) {
+     bSig[i] = toArray(_bGroups.get(i));
+   }
+   return new CSignatureImpl(rSig, bSig);
   }
-  /*
+
   @SuppressWarnings("javadoc")
-  private static class Signature implements CProgramState.Signature {
-    final Object[] _signature;
-    final int _hash;
-    Signature(List<? extends CThreadHandle> readyThreads, List<? extends CThreadHandle> blockedThreads) {
-      assert readyThreads instanceof RandomAccess;
-      assert blockedThreads instanceof RandomAccess;
-      final int rLen = readyThreads.size();
-      final int bLen = blockedThreads.size();
-      int[] rIds = new int[rLen];
-      int[] bIds = new int[bLen];
-      CThreadLocation[] locations = new CThreadLocation[rLen + bLen];
-      for (int pos = 0; pos != rLen; pos++) {
-        CThreadHandle h = readyThreads.get(pos);
-        rIds[pos] = h.getCID();
-        locations[pos] = h.getLocation();
-      }
-      for (int pos = 0; pos != bLen; pos++) {
-        CThreadHandle h = readyThreads.get(pos);
-        bIds[pos] = h.getCID();
-        locations[rLen + pos] = h.getLocation();
-      }
-      _signature = new Object[]{ bIds, rIds, locations };
-      _hash = Arrays.deepHashCode(_signature);
+  private Object[] toArray(Group g) {
+    ArrayList<CThreadHandle> threads = g._threads;
+    Object[] r = new Object[threads.size() * 2];
+    int i = 0, j = 0;
+    while (i < r.length) {
+      CThreadHandle t = threads.get(j++);
+      r[i++] = t.getCID();
+      r[i++] = t.getLocation();
     }
-    @Override
-    public int hashCode() {
-      return _hash;
-    }
-    @Override
-    public boolean equals(Object o) {
-      if (o == this) {
-        return true;
-      }
-      if (o.getClass() != Signature.class) {
-          return false;
-      }
-      Signature other = (Signature) o;
-      return _hash == other._hash && Arrays.deepEquals(_signature, other._signature);
-    }
-   */
+    return r;
+  }
+
 }
 
