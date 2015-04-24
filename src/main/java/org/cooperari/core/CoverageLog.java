@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.cooperari.CoverageInfo;
+import org.cooperari.CCoverage;
 import org.cooperari.core.util.CReport;
 import org.cooperari.scheduling.CYieldPoint;
 
@@ -21,7 +21,7 @@ import org.cooperari.scheduling.CYieldPoint;
  * @since 0.2
  *
  */
-public final class CoverageLog implements CoverageInfo {
+public final class CoverageLog implements CCoverage {
 
   /**
    * The actual log.

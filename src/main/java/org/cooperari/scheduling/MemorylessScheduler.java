@@ -40,12 +40,10 @@ public final class MemorylessScheduler extends CScheduler {
   
   /**
    * Pick a random thread to run next.
-   * The returned thread is a random one from the ready list.
-   * @see CScheduler#decision(List, List)
    */
   @Override
-  public CThreadHandle decision(List<? extends CThreadHandle> ready, List<? extends CThreadHandle> blocked) {
-    return ready.get(_rng.nextInt(ready.size()));
+  public CThreadHandle decision(CProgramState state) {
+    return state.select(_rng);
   }
  
 }

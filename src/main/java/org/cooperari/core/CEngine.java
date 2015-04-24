@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import org.cooperari.errors.CInternalError;
+import org.cooperari.scheduling.CProgramStateFactory;
 import org.cooperari.scheduling.CScheduler;
 
 
@@ -177,8 +178,8 @@ public class CEngine extends Thread {
 
     handleNewThreads(); // handle initial thread
 
-    ArrayList<CThread> readySet = new ArrayList<>();
-    ArrayList<CThread> blockedSet = new ArrayList<>();
+    ArrayList<CThread> readyThreads = new ArrayList<>();
+    ArrayList<CThread> blockedThreads = new ArrayList<>();
 
     CThread running = null, lastRunning = null;
 
@@ -203,24 +204,24 @@ public class CEngine extends Thread {
       }
 
       if (running == null && _threads.size() > 0) {
-        readySet.clear();
-        blockedSet.clear();
+        readyThreads.clear();
+        blockedThreads.clear();
         int cannotProgressCount = 0;
         for (CThread t : _threads.values()) {
           assert CWorkspace.debug(t.toString());
           CThreadState s = t.getCState();
           switch (s) {
             case CREADY:
-              readySet.add(t); 
+              readyThreads.add(t); 
               break;
             case CBLOCKED:
             case CWAITING:
               cannotProgressCount ++;
             case CTIMED_WAITING:
-              blockedSet.add(t);
+              blockedThreads.add(t);
               break;
             default:
-              throw new CInternalError("Unexpected thread state: " + t.getName() + " -> " + s + " -- " + t.location());
+              throw new CInternalError("Unexpected thread state: " + t.getName() + " -> " + s + " -- " + t.getLocation());
           }
         }
 
@@ -234,8 +235,8 @@ public class CEngine extends Thread {
           }
         }
 
-        if (readySet.size() > 0) {
-          running = (CThread) _scheduler.decision(readySet, blockedSet);
+        if (readyThreads.size() > 0) {
+          running = (CThread) _scheduler.decision(CProgramStateFactory.RAW.create(readyThreads, blockedThreads));
           if (running == null || !running.isReady()) {
             throw new CInternalError("Scheduler made a wrong decision!");
           }

@@ -30,7 +30,7 @@ public class WaitDeadlockError extends CDeadlockError {
     sb.append("Alive threads waiting indefinitely : {");
     for (CThread t : threads) {
       if (! t.isTerminated()) {
-        CThreadLocation pc = t.location();
+        CThreadLocation pc = t.getLocation();
         sb.append(' ')
           .append(t.getName())
           .append('/')

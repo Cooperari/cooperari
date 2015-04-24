@@ -115,7 +115,7 @@ public final class CTrace {
    * @param type event type
    */
   public void record(CThread t, EventType type) {
-    CYieldPoint yp = t.location().getYieldPoint();
+    CYieldPoint yp = t.getLocation().getYieldPoint();
     if (yp.getSourceFile() != CYieldPointImpl.INTERNAL) {
       _clog.markAsCovered(yp);
     }
@@ -244,7 +244,7 @@ public final class CTrace {
       this._threadId = t.getCID();
       this._threadStep = t.getStep();
       this._eventMarker = type != null ? type.getTraceMarker() : '-';
-      this._location = t.location();
+      this._location = t.getLocation();
     }
     
     /**

@@ -40,7 +40,7 @@ public class CResourceDeadlockError extends CDeadlockError {
 
   @SuppressWarnings("javadoc")
   private static void format(CThread t, Monitor m, StringBuilder sb) {
-    CThreadLocation pc = t.location();
+    CThreadLocation pc = t.getLocation();
     sb.append('L').append(m.getId()).append('/').append(t.getName())
         .append('/').append(pc.getYieldPoint().getSourceFile()).append(':')
         .append(pc.getYieldPoint().getSourceLine());

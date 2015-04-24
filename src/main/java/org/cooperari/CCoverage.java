@@ -5,7 +5,7 @@ package org.cooperari;
  *
  * @since 0.2
  */
-public interface CoverageInfo {
+public interface CCoverage {
  
   /**
    * Get number of yield points covered.
@@ -28,7 +28,7 @@ public interface CoverageInfo {
    * 
    * <p>
    * The default method takes the {@link #getCoveredYieldPoints()} / {@link #getTotalYieldPoints()}
-   * ratio. It should not be redefined unless there is a (very) good reason to do so.
+   * ratio. 
    * </p>
    * @return A value between <code>0</code> and <code>100</code>.
    */

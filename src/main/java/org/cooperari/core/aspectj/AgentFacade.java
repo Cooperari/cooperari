@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 import org.aspectj.bridge.IMessage;
 import org.aspectj.lang.JoinPoint;
-import org.cooperari.CoverageInfo;
+import org.cooperari.CCoverage;
 import org.cooperari.core.CWorkspace;
 import org.cooperari.core.CYieldPointImpl;
 import org.cooperari.core.CoverageLog;
@@ -201,7 +201,7 @@ public enum AgentFacade {
    * Get global coverage log.
    * @return The global coverage log.
    */
-  public CoverageInfo getGlobalCoverageLog() {
+  public CCoverage getGlobalCoverageLog() {
     return _globalCoverageLog;
   }
 

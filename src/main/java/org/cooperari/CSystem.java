@@ -98,9 +98,9 @@ public final class CSystem {
 
   /**
    * Get global coverage information for all tests executed so far.
-   * @return An instance of {@link CoverageInfo}.
+   * @return An instance of {@link CCoverage}.
    */
-  public static CoverageInfo getGlobalCoverageInfo() {
+  public static CCoverage getGlobalCoverageInfo() {
     return AgentFacade.INSTANCE.getGlobalCoverageLog();
   }
 

@@ -4,30 +4,34 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Representation of program state.
+ * AbstRepresentation of program state.
  * 
  * <p>
- * The program state represents the alive threads of the program, in
- * abstract or flat form. In abstract form, elements in the program 
- * stated are groups of threads at a common location 
- * (a "program counter" represented by {@link CThreadLocation}). 
- * In flat form, elements in the program state are individual threads.
+ * A program state represents the state of the threads of the program in some form, comprising
+ * both ready and blocked threads. Elements in the state must implements {@link CElement} and
+ * may represent information for a single thread or groups of threads. 
+ * </p>
+ * <p>
+ * <b>Note:</b>
+ * Implementations of this interface must appropriately should define 
+ * {@link Object#clone()}, {@link Object#equals(Object)}, and {@link Object#hashCode()}, 
+ * in addition to the other abstract methods declared in the interface.
  * </p>
  * 
  * @since 0.2
  */
 public interface CProgramState {
 
+
+  
   /**
    * Program state element.
    * 
-   * It either represents a group of threads
-   * in the same location ({@link CThreadGroupHandle} or a single thread ({@link CThreadHandle}), 
-   * depending on whether program state abstraction is in use or not.
+   * It may represents a group of threads or a single thread ({@link CThreadHandle}).
    *
    * @since 0.2
    */
-  public interface CElement { 
+  interface CElement { 
     /**
      * Get id.
      * @return An unique identifier for the element.
@@ -38,59 +42,79 @@ public interface CProgramState {
      * Get location.
      * @return A {@link CThreadLocation} object.
      */
-    CThreadLocation location();
+    CThreadLocation getLocation();
   }
 
   /**
-   * Indicate if program state abstraction is used.
-   * @return <code>true</code> if elements are group of threads.
+   * Marker interface for program state signatures.
+   * The signature of a program state can be obtained using {@link #getSignature}.
+   *  
+   * <p>
+   * A signature is an unique and compact identification for a program state
+   * that can be used by schedulers to do some form of book-keeping.
+   * </p>
+   * 
+   * <p>
+   * Implementations of this interface should be immutable, have a low memory footprint
+   * and appropriately define {@link Object#equals(Object)} and {@link Object#hashCode()}.
+   * </p>
+   * @since 0.2
    */
-  public boolean usesAbstraction();
+  interface Signature {
+    
+  }
+  
+  
 
   /**
+   * Get program state signature.
+   * @return The signature of the program state.
+   */
+  Signature getSignature();
+  
+  /**
    * Get the number of state elements.
-   * This will be equal to {@link #threads()} if program state
-   * abstraction is disabled. Otherwise it yields the number
-   * of thread groups represented by the state.
-   * @return The number of elements represented by the program state.
+   *
+   * @return Element count.
    */
   int size();
 
   /**
-   * Get the number of threads represented by the state.
-   * This will be equal to {{@link #size()} if program state
-   * abstraction is disabled.
-   * @return The number of threads represented by the program state.
+   * Get the number of threads represented by the program state.
+   *
+   * @return Thread count.
    */
   int threads();
+  
 
   /**
-   * Get all elements in the program state. 
+   * Get all ready elements in the program state. 
    * @return A set view of the state's elements.
-   */
-  List<? extends CElement> elements();
+   */ 
+  List<? extends CElement> readyElements();
 
   /**
-   * Select a random element from a program state.
-   * The default implementation should not require overriding.
-   * @param rng Random number generator to use.
-   * @return A program state element.
-   */
-  default CElement selectAny(Random rng) {
-    return elements().get(rng.nextInt(size()));
-  }
+   * Get all blocked elements in the program state. 
+   * @return A set view of the state's elements.
+   */ 
+  List<? extends CElement> blockedElements();
 
   /**
-   * Select a random thread from a program state.
+   * Select a random ready thread from a program state.
    * The default implementation should not require overriding.
    * @param rng Random number generator to use.
-   * @return A program state element.
+   * @return A thread handle.
    */
-  default CThreadHandle selectAnyThread(Random rng) {
-    CElement elem = selectAny(rng);
-    return usesAbstraction() ? 
-        ((CThreadGroupHandle) elem).selectAny(rng)
-        : 
-          (CThreadHandle) elem;
-  }
+  CThreadHandle select(Random rng);
+ 
+  
+  /**
+   * Select a ready thread corresponding to a given element in the program state.
+   * @param index Element index.
+   * @param rng Random number generator to use (in case state elements are thread groups and 
+   *        the method applies some kind of randomized logic to select the thread to returns).
+   * @return A program state element.
+   * @throws IndexOutOfBoundsException if index is not in the <code>[0, size()-1]</code> range.
+   */
+  CThreadHandle select(int index, Random rng) throws IndexOutOfBoundsException;
 }

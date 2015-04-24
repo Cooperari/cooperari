@@ -5,6 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.cooperari.scheduling.CProgramStateFactory;
 import org.cooperari.scheduling.CScheduler;
 import org.cooperari.scheduling.MemorylessScheduler;
 
@@ -17,9 +18,9 @@ import org.cooperari.scheduling.MemorylessScheduler;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface CScheduling {
   /**
-   * @return Boolean value enabling the use of program state abstraction.
+   * @return Program state factory to use.
    */
-  boolean useStateAbstraction() default true;
+  CProgramStateFactory stateFactory() default CProgramStateFactory.RAW;
   
   /**
    * @return Type of scheduler to use.

@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import org.cooperari.CSystem;
 import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
-import org.cooperari.CoverageInfo;
+import org.cooperari.CCoverage;
 import org.cooperari.junit.CTestResultPool;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -73,7 +73,7 @@ class CJUnitRunListener extends RunListener {
         result.getFailureCount(),
         result.getRunTime());
     _out.println("== Global coverage ==");
-    CoverageInfo ci = CSystem.getGlobalCoverageInfo();
+    CCoverage ci = CSystem.getGlobalCoverageInfo();
 
     _out.printf("Coverage rate: %4.1f %% (%d / %d yp)\n", 
         ci.getCoverageRate(),

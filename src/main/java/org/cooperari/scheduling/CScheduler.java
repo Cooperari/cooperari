@@ -13,13 +13,10 @@ public abstract class CScheduler {
   
   /**
    * Decide which thread should run next.
-   * @param readyThreads  Program state.
-   * @param blockedThreads  Program state.
+   * @param state Program state.
    * @return A thread handle corresponding to the decision.
    */
-  public abstract CThreadHandle 
-  decision(List<? extends CThreadHandle> readyThreads,
-           List<? extends CThreadHandle> blockedThreads);
+  public abstract CThreadHandle decision(CProgramState state);
   
   /**
    * Query method to determine if further test trials are necessary.

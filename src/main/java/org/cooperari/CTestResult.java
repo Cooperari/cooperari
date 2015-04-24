@@ -9,7 +9,7 @@ import org.cooperari.config.CSometimes;
  *  
  * @since 0.2
  */
-public interface CTestResult extends CoverageInfo {
+public interface CTestResult extends CCoverage {
   /**
    * Obtain failure status.
    * @return <code>true</code> if test failed.

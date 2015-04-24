@@ -206,7 +206,7 @@ public final class CThread extends Thread implements CThreadHandle {
    * @return The current thread location.
    */
   @Override
-  public CThreadLocation location() {
+  public CThreadLocation getLocation() {
     return _location;
   }
 
@@ -410,7 +410,7 @@ public final class CThread extends Thread implements CThreadHandle {
       throw new CInternalError(e);
     }
 
-    assert CWorkspace.debug("fully resumed [%s]", location());
+    assert CWorkspace.debug("fully resumed [%s]", getLocation());
 
     // Return sequence.
     if (rtExc != null) {
