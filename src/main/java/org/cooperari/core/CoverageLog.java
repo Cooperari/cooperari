@@ -88,7 +88,7 @@ public final class CoverageLog implements CCoverage {
     if ( b == null) { 
       _coveredYieldPoints++;
       _sourceFiles.add(yp.getSourceFile());
-      CWorkspace.log("COVERED %s", yp);
+      assert CWorkspace.debug("COVERED %s", yp);
     } else if (b == false) {
       _coveredYieldPoints++;
       assert CWorkspace.debug("COVERED %s", yp);
