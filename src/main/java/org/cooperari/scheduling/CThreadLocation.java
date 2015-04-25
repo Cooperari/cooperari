@@ -131,15 +131,6 @@ public final class CThreadLocation {
    */
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    if (_yieldPoint instanceof JoinPoint.StaticPart) {
-      JoinPoint.StaticPart jpsp = (JoinPoint.StaticPart) _yieldPoint;
-      sb.append(jpsp.getSignature()).append(':').append(_stage).append("@")
-      .append(jpsp.getSourceLocation().getFileName()).append(':')
-      .append(jpsp.getSourceLocation().getLine());
-    } else {
-      sb.append(_yieldPoint).append(':').append(_stage);
-    }
-    return sb.toString();
+    return new StringBuilder().append(_yieldPoint).append(':').append(_stage).toString();
   }
 }
