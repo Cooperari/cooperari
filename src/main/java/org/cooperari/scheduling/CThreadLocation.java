@@ -42,11 +42,6 @@ public final class CThreadLocation {
   private final int _stage;
 
   /**
-   * Computed hash code at construction for efficiency reasons.
-   */
-  private final int _hash;
-
-  /**
    * Constructs location related to a special system event.
    * @param id Event id.
    */
@@ -73,7 +68,6 @@ public final class CThreadLocation {
   public CThreadLocation(CYieldPoint yp, int stage) {
     _yieldPoint = yp;
     _stage = stage;
-    _hash = _yieldPoint.hashCode() ^ _stage;
   }
 
   /**
@@ -117,7 +111,7 @@ public final class CThreadLocation {
       return false;
 
     CThreadLocation other = (CThreadLocation) o;
-    return _hash == other._hash && _stage == other._stage && _yieldPoint.compareTo(other._yieldPoint) == 0;  
+    return hashCode() == other.hashCode() && _stage == other._stage && _yieldPoint.compareTo(other._yieldPoint) == 0;  
   }
 
   /**
@@ -127,7 +121,7 @@ public final class CThreadLocation {
    */
   @Override
   public int hashCode() {
-    return _hash;
+    return _yieldPoint.hashCode() ^  _stage;
   }
 
   /**
@@ -138,17 +132,6 @@ public final class CThreadLocation {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    toString(sb);
-    return sb.toString();
-  }
-
-  /**
-   * Append textual representation onto a {@link StringBuilder} instance. (used
-   * for debugging).
-   * 
-   * @param sb {@link StringBuilder} instance.
-   */
-  private void toString(StringBuilder sb) {
     if (_yieldPoint instanceof JoinPoint.StaticPart) {
       JoinPoint.StaticPart jpsp = (JoinPoint.StaticPart) _yieldPoint;
       sb.append(jpsp.getSignature()).append(':').append(_stage).append("@")
@@ -157,6 +140,6 @@ public final class CThreadLocation {
     } else {
       sb.append(_yieldPoint).append(':').append(_stage);
     }
+    return sb.toString();
   }
-
 }
