@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 import org.cooperari.scheduling.CProgramStateFactory;
 import org.cooperari.scheduling.CScheduler;
+import org.cooperari.scheduling.CSchedulerFactory;
 import org.cooperari.scheduling.MemorylessScheduler;
 
 /**
@@ -25,6 +26,6 @@ public @interface CScheduling {
   /**
    * @return Type of scheduler to use.
    */
-  Class<? extends CScheduler> scheduler() default MemorylessScheduler.class;
+  CSchedulerFactory schedulerFactory() default CSchedulerFactory.RECORDOR;
   
 }

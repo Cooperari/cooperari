@@ -83,19 +83,8 @@ public final class CSession {
     CScheduling schConfig = runtime.getConfiguration(CScheduling.class);
     CTraceOptions traceOptions = runtime.getConfiguration(CTraceOptions.class);
 
-    CScheduler scheduler;
-    try {
-      Constructor<? extends CScheduler> c = 
-          schConfig.scheduler().getConstructor(CRuntime.class);
-      scheduler = c.newInstance(runtime);
-    }
-    catch (CError e) {
-      throw e;
-    }
-    catch (Throwable e) {
-      throw new CInternalError(e);
-    }
-
+    CScheduler scheduler = schConfig.schedulerFactory().create();
+    
     CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class);
 
     if (maxTrials.value() < 0) {
