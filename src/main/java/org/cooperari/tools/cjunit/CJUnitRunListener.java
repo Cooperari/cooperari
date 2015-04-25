@@ -3,10 +3,10 @@ package org.cooperari.tools.cjunit;
 import java.io.File;
 import java.io.PrintStream;
 
+import org.cooperari.CCoverage;
 import org.cooperari.CSystem;
 import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
-import org.cooperari.CCoverage;
 import org.cooperari.junit.CTestResultPool;
 import org.junit.runner.Description;
 import org.junit.runner.Result;

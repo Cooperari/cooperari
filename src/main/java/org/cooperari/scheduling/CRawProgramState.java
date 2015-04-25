@@ -1,9 +1,7 @@
 package org.cooperari.scheduling;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.RandomAccess;
 
 /**
  * Program state representation returned by {@link CProgramStateFactory#RAW}.

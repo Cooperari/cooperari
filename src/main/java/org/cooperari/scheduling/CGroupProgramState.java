@@ -1,13 +1,9 @@
 package org.cooperari.scheduling;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.RandomAccess;
 
 /**
  * Program state representation returned by {@link CProgramStateFactory#GROUP}.

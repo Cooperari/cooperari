@@ -1,6 +1,4 @@
 package org.cooperari.scheduling;
-import java.util.List;
-
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
 

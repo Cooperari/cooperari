@@ -1,11 +1,6 @@
 package org.cooperari.scheduling;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
-
-import org.cooperari.core.CWorkspace;
 
 /**
  * Program state factory.
