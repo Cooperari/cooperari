@@ -91,11 +91,13 @@ CWorkspace.log("history: %d -> %d", _prevLogSize, _log.size());
     int tries = 0;
     CRawTuple d;
     CThreadHandle t;
+    
     do {
       t = state.select(choice, _rng);
-      d = new CRawTuple(sig, possibleChoices.get(choice));
+      d = new CRawTuple(sig, choice);
       choice = (choice + 1) % n;
       tries++;
+      CWorkspace.log(d.toString());
     } while (!_log.add(d) && tries < possibleChoices.size());
     return t;
   }

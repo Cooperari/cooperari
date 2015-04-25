@@ -21,7 +21,7 @@ public @interface CScheduling {
   /**
    * @return Program state factory to use.
    */
-  CProgramStateFactory stateFactory() default CProgramStateFactory.GROUP;
+  CProgramStateFactory stateFactory() default CProgramStateFactory.RAW;
   
   /**
    * @return Type of scheduler to use.
