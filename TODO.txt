@@ -2,6 +2,7 @@
 
 Features left to implement:
 - Revise Coverage/CoveragePolicy code
+- Make sure yield points marked as unreached are not false negatives
 - cjava utility
 - javadoc / source / deploy maven targets
 - update scripts to disable assertions in org.cooperari 
