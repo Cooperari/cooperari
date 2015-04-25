@@ -47,7 +47,7 @@ public final class CYieldPointImpl implements CYieldPoint {
   private final int _line;
 
   /**
-   * Precomputed hash.
+   * Hash computed at construction time.
    */
   private final int _hash;
 

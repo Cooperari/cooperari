@@ -1,7 +1,5 @@
 package org.cooperari.scheduling;
 
-import org.aspectj.lang.JoinPoint;
-import org.cooperari.core.CYieldPointImpl;
 
 /**
  * Thread location information.
@@ -28,7 +26,7 @@ import org.cooperari.core.CYieldPointImpl;
  * 
  * @since 0.2
  */
-public final class CThreadLocation {
+public final class CThreadLocation implements Comparable<CThreadLocation> {
 
   /**
    * Yield point.
@@ -40,14 +38,6 @@ public final class CThreadLocation {
    * 
    */
   private final int _stage;
-
-  /**
-   * Constructs location related to a special system event.
-   * @param id Event id.
-   */
-  public CThreadLocation(String id) {
-    this(new CYieldPointImpl(id, "<system>", 0), 0);
-  }
   
   /**
    * Constructs location based on yield point. 
@@ -132,5 +122,18 @@ public final class CThreadLocation {
   @Override
   public String toString() {
     return new StringBuilder().append(_yieldPoint).append(':').append(_stage).toString();
+  }
+
+  /**
+   * Compare with given thread location.
+   * @return The integer comparison value.
+   */
+  @Override
+  public int compareTo(CThreadLocation other) {
+    int cmp = _yieldPoint.compareTo(other._yieldPoint);
+    if (cmp == 0) {
+      cmp = _stage - other._stage;
+    }
+    return cmp;
   }
 }

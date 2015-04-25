@@ -1,10 +1,13 @@
 package org.cooperari.scheduling;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.cooperari.core.CWorkspace;
 import org.cooperari.core.util.CRawTuple;
 
 /**
@@ -40,6 +43,9 @@ class CGroupProgramState implements CProgramState {
     }
 
   }
+
+
+
 
 
   /**
@@ -139,29 +145,38 @@ class CGroupProgramState implements CProgramState {
    * @return Signature for the state.
    */
   public Object getSignature() {
-   final Object[] rSig = new Object[_rGroups.size()];
-   final Object[] bSig = new Object[_bGroups.size()];
+   final Object[][] rSig = new Object[_rGroups.size()][];
+   final Object[][] bSig = new Object[_bGroups.size()][];
    for (int i=0; i < rSig.length; i++) {
      rSig[i] = toArray(_rGroups.get(i));
    }
    for (int i=0; i < bSig.length; i++) {
      bSig[i] = toArray(_bGroups.get(i));
    }
-   return new CRawTuple(rSig, bSig);
+   Arrays.sort(rSig, GCOMPARATOR);
+   Arrays.sort(bSig, GCOMPARATOR);
+   return new CRawTuple(rSig, bSig); 
   }
 
   @SuppressWarnings("javadoc")
   private Object[] toArray(Group g) {
-    ArrayList<CThreadHandle> threads = g._threads;
-    Object[] r = new Object[threads.size() * 2];
-    int i = 0, j = 0;
-    while (i < r.length) {
-      CThreadHandle t = threads.get(j++);
-      r[i++] = t.getCID();
-      r[i++] = t.getLocation();
-    }
-    return r;
+    return new Object[] { g._threads.size(), g._location };
   }
+  
+  private static final Comparator<Object[]> GCOMPARATOR = new Comparator<Object[]>() {
+
+    @Override
+    public int compare(Object[] o1, Object[] o2) {
+      CThreadLocation l1 = (CThreadLocation) o1[1];
+      CThreadLocation l2 = (CThreadLocation) o2[1];
+      int cmp = l1.compareTo(l2);
+      if (cmp == 0) {
+        cmp = ((Integer) o1[0]) - ((Integer) o2[0]);
+      }
+      return cmp;
+    }
+    
+  };
 
 }
 

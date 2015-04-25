@@ -28,44 +28,49 @@ public final class HDScheduler extends CScheduler {
   /**
    * Pseudo-random number generator.
    */
-  private Random _rng;
+  private Random _rng = new Random(0);
 
   /**
    * Log of previous decisions.
    */
   private final HashSet<CRawTuple> _log = new HashSet<>();
 
+  /**
+   * Count of a log size when a trial starts.
+   */
   private int _prevLogSize = 0;
 
   /**
    * Constructor.
    */
   public HDScheduler() {
-    _rng = new Random(0); // a fixed seed is used for repeatable tests
-    CWorkspace.log("HDSCH");
 
   }
+  /**
+   * @{inheritDoc}
+   */
   @Override
   public void onTestStarted() {
     _prevLogSize = _log.size();
   }
 
-
+  /**
+   * @{inheritDoc}
+   */
   @Override
   public void onTestFailure(Throwable failure) {
-CWorkspace.log("history: %d -> %d", _prevLogSize, _log.size());
+    assert CWorkspace.debug("history: %d -> %d", _prevLogSize, _log.size());
   }
 
-  /*
-   * (non-Javadoc)
-   * @see org.cooperari.core.CoveragePolicy#onTestFinished()
+  /**
+   * @{inheritDoc}
    */
   @Override
   public void onTestFinished() {
-    CWorkspace.log("history: %d -> %d", _prevLogSize, _log.size());
+    assert CWorkspace.debug("history: %d -> %d", _prevLogSize, _log.size());
   }
-  
-  
+
+
   /**
    * Check if further trials are necessary.
    * Further trials will be required if new decisions were recorded for the last one.
@@ -73,10 +78,10 @@ CWorkspace.log("history: %d -> %d", _prevLogSize, _log.size());
    */
   @Override
   public boolean continueTrials() {
-    CWorkspace.log("history: %d -> %d", _prevLogSize, _log.size());
+    assert CWorkspace.debug("history: %d -> %d", _prevLogSize, _log.size());
     return  _prevLogSize != _log.size();
   }
-  
+
   /**
    * Select the next thread to run.
    * @param state Program state.
@@ -91,14 +96,16 @@ CWorkspace.log("history: %d -> %d", _prevLogSize, _log.size());
     int tries = 0;
     CRawTuple d;
     CThreadHandle t;
-    
+
     do {
       t = state.select(choice, _rng);
-      d = new CRawTuple(sig, choice);
+      d = new CRawTuple(choice, sig);
       choice = (choice + 1) % n;
       tries++;
-      CWorkspace.log(d.toString());
+      assert CWorkspace.debug(_log.contains(d) + " " + d.toString());
     } while (!_log.add(d) && tries < possibleChoices.size());
+    assert CWorkspace.debug("D"+d.toString());
+
     return t;
   }
 }
