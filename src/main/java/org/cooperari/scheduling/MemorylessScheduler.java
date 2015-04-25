@@ -31,7 +31,6 @@ public final class MemorylessScheduler extends CScheduler {
   
   /**
    * Constructor.
-   * @param runtime Runtime handle.
    */
   public MemorylessScheduler() {
     _rng = new Random(0); // a fixed seed is used for repeatable tests

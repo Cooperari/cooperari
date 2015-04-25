@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import org.cooperari.core.util.CRawTuple;
+
 /**
  * Program state representation returned by {@link CProgramStateFactory#GROUP}.
  * 
@@ -136,7 +138,7 @@ class CGroupProgramState implements CProgramState {
    * Get signature.
    * @return Signature for the state.
    */
-  public CProgramState.Signature getSignature() {
+  public Object getSignature() {
    final Object[] rSig = new Object[_rGroups.size()];
    final Object[] bSig = new Object[_bGroups.size()];
    for (int i=0; i < rSig.length; i++) {
@@ -145,7 +147,7 @@ class CGroupProgramState implements CProgramState {
    for (int i=0; i < bSig.length; i++) {
      bSig[i] = toArray(_bGroups.get(i));
    }
-   return new CSignatureImpl(rSig, bSig);
+   return new CRawTuple(rSig, bSig);
   }
 
   @SuppressWarnings("javadoc")

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import org.cooperari.core.CWorkspace;
+import org.cooperari.core.util.CRawTuple;
 
 
 /**
@@ -32,7 +33,7 @@ public final class HDScheduler extends CScheduler {
   /**
    * Log of previous decisions.
    */
-  private final HashSet<Decision> _log = new HashSet<>();
+  private final HashSet<CRawTuple> _log = new HashSet<>();
 
   private int _prevLogSize = 0;
 
@@ -82,51 +83,20 @@ CWorkspace.log("history: %d -> %d", _prevLogSize, _log.size());
    */
   @Override
   public CThreadHandle decision(CProgramState state) {
-    final CProgramState.Signature sig = state.getSignature();
+    final Object sig = state.getSignature();
     final List<? extends CProgramState.CElement> possibleChoices = state.readyElements();
     final int n = possibleChoices.size();
     final int firstChoice = _rng.nextInt(n);
     int choice = firstChoice;
     int tries = 0;
-    Decision d;
+    CRawTuple d;
     CThreadHandle t;
     do {
       t = state.select(choice, _rng);
-      d = new Decision(sig, possibleChoices.get(choice));
+      d = new CRawTuple(sig, possibleChoices.get(choice));
       choice = (choice + 1) % n;
       tries++;
     } while (!_log.add(d) && tries < possibleChoices.size());
     return t;
-  }
-
-
-  @SuppressWarnings("javadoc")
-  private static final class Decision {
-    private final CProgramState.Signature _signature;
-    private final CProgramState.CElement _element;
-    private final int _hash;
-
-    public Decision(CProgramState.Signature sig, CProgramState.CElement element) {
-      _signature = sig;
-      _element = element;
-      _hash = _signature.hashCode() ^ _element.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o)
-        return true;
-      if (!(o instanceof Decision))
-        return false;
-      Decision other = (Decision) o;
-      return   _hash == other._hash 
-          && _element.equals(other._element) 
-          && _signature.equals(other._signature);
-    }
-
-    @Override
-    public int hashCode() {
-      return _hash;
-    }
   }
 }

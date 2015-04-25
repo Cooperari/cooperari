@@ -46,31 +46,20 @@ public interface CProgramState {
   }
 
   /**
-   * Marker interface for program state signatures.
-   * The signature of a program state can be obtained using {@link #getSignature}.
-   *  
+   * Get signature.
+   * 
    * <p>
    * A signature is an unique and compact identification for a program state
    * that can be used by schedulers to do some form of book-keeping.
    * </p>
    * 
    * <p>
-   * Implementations of this interface should be immutable, have a low memory footprint
+   * Signature objects should be immutable, have a low memory footprint,
    * and appropriately define {@link Object#equals(Object)} and {@link Object#hashCode()}.
    * </p>
-   * @since 0.2
-   */
-  interface Signature {
-    
-  }
-  
-  
-
-  /**
-   * Get program state signature.
    * @return The signature of the program state.
    */
-  Signature getSignature();
+  Object getSignature();
   
   /**
    * Get the number of state elements.

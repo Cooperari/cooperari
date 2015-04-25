@@ -1,19 +1,20 @@
-package org.cooperari.scheduling;
+package org.cooperari.core.util;
 
 import java.util.Arrays;
 
 
 /**
- * Generic implementation of program state signatures.
- * @since 0.2 edrdo
+ * Raw tuple data.
+ * 
+ * @since 0.2 
  *
  */
-final class CSignatureImpl implements CProgramState.Signature {
+public final class CRawTuple {
   
   /**
    * Array of objects defining the signature.
    */
-  private final Object[] _sig;
+  private final Object[] _data;
   
   /**
    * Cached hash code (computed at construction time).
@@ -24,9 +25,17 @@ final class CSignatureImpl implements CProgramState.Signature {
    * Constructs a new signature.
    * @param args Signature arguments.
    */
-  CSignatureImpl(Object ...args) {
-    _sig = args;
+  public CRawTuple(Object ...args) {
+    _data = args;
     _hash = Arrays.deepHashCode(args);
+  }
+  
+  /**
+   * Get tuple data.
+   * @return The data associated to this tuple.
+   */
+  public Object[] data() {
+    return _data;
   }
   
   /**
@@ -47,11 +56,20 @@ final class CSignatureImpl implements CProgramState.Signature {
     if (o == this) {
       return true;
     }
-    if (o.getClass() != CSignatureImpl.class) {
+    if (o.getClass() != CRawTuple.class) {
         return false;
     }
-    CSignatureImpl other = (CSignatureImpl) o;
-    return _hash == other._hash && Arrays.deepEquals(_sig, other._sig);
+    CRawTuple other = (CRawTuple) o;
+    return _hash == other._hash && Arrays.deepEquals(_data, other._data);
   }
-
+  
+  /**
+   * Get string representation.
+   * @return String obtained using {@link Arrays#deepToString(Object[])} over the tuple's data.
+   */
+  @Override
+  public String toString() {
+    return Arrays.deepToString(_data);
+  }
+ 
 }

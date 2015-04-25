@@ -3,6 +3,8 @@ package org.cooperari.scheduling;
 import java.util.List;
 import java.util.Random;
 
+import org.cooperari.core.util.CRawTuple;
+
 /**
  * Program state representation returned by {@link CProgramStateFactory#RAW}.
  * 
@@ -88,7 +90,7 @@ class CRawProgramState implements CProgramState {
    * Get signature.
    * @return Signature for the state.
    */
-  public CProgramState.Signature getSignature() {
+  public Object getSignature() {
       final int rLen = _readyThreads.size();
       final int bLen = _blockedThreads.size();
       int[] rIds = new int[rLen];
@@ -104,7 +106,7 @@ class CRawProgramState implements CProgramState {
         bIds[pos] = h.getCID();
         locations[rLen + pos] = h.getLocation();
       }
-      return new CSignatureImpl(rIds, bIds, locations);
+      return new CRawTuple(rIds, bIds, locations);
     }
   
 }
