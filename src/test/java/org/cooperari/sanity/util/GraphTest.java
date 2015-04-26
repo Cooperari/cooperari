@@ -31,20 +31,25 @@ public class GraphTest {
   @Test
   public final void testEdgeAdition() {
     assertTrue(_graph.addEdge(0,1));
+    assertEquals(1, _graph.edges());
     assertTrue(_graph.addEdge(0,2));
     assertEquals(2, _graph.edges());
     assertTrue(_graph.hasEdge(0,1));
     assertTrue(_graph.hasEdge(0,2));
     assertFalse(_graph.addEdge(0,1));
+    assertEquals(2, _graph.edges());
     assertFalse(_graph.addEdge(0,2));
+    assertEquals(2, _graph.edges());
   }
   
   @Test
   public final void testEdgeRemoval() {
     testEdgeAdition();
-    _graph.removeEdge(0,1);
+    assertTrue(_graph.removeEdge(0,1));
     assertEquals(1, _graph.edges());
-    _graph.removeEdge(0,2);
+    assertTrue(_graph.removeEdge(0,2));
+    assertEquals(0, _graph.edges());
+    assertFalse(_graph.removeEdge(0,2));
     assertEquals(0, _graph.edges());
   }
 
