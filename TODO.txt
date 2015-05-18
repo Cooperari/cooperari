@@ -1,6 +1,6 @@
 == 0.2.1. final ==
 
-Features left to implement:e
+Features left to implement:
 - Make sure yield points marked as unreached are not false negatives
 - cjava utility
 - maven parent project
