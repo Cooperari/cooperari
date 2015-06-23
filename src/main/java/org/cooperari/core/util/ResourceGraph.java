@@ -21,7 +21,7 @@ import java.util.Set;
  * @since 0.2
  *
  */
-public final class Graph<T> {
+public final class ResourceGraph<T> {
 
   /**
    * Sucessor list. 

@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @SuppressWarnings("javadoc")
 @RunWith(Suite.class)
-@SuiteClasses({ GraphTest.class, UnsafeVMOperationsTest.class })
+@SuiteClasses({ CResourceGraphTest.class, UnsafeVMOperationsTest.class })
 public class UtilityTestSuite {
 
 }

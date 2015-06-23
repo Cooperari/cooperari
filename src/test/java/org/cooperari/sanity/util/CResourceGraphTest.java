@@ -6,21 +6,22 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.cooperari.core.util.Graph;
+import org.cooperari.core.util.ResourceGraph;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+// TODO: revise tests.
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings("javadoc")
-public class GraphTest {
+public class CResourceGraphTest {
 
-  private Graph<Integer> _graph;
+  private ResourceGraph<Integer> _graph;
   
   @Before
   public void createGraph() {
-    _graph = new Graph<>();
+    _graph = new ResourceGraph<>();
   }
   
   @Test

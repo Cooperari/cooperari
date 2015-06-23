@@ -8,7 +8,7 @@ import org.cooperari.config.CDetectResourceDeadlocks;
 import org.cooperari.core.CRuntime;
 import org.cooperari.core.CThread;
 import org.cooperari.core.CTrace;
-import org.cooperari.core.util.Graph;
+import org.cooperari.core.util.ResourceGraph;
 
 
 /**
@@ -21,7 +21,7 @@ public class DeadlockDetector {
   /**
    * Resource graph.
    */
-  private final Graph<Monitor> _graph = new Graph<>();
+  private final ResourceGraph<Monitor> _graph = new ResourceGraph<>();
 
   /**
    * Lock chain per thread.
