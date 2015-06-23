@@ -31,8 +31,6 @@ public enum CSchedulerFactory {
   };
   /**
    * Create a new program state.
-   * @param readyThreads List of ready threads.
-   * @param blockedThreads List of blocked threads.
    * @return A new program state.
    */
   public abstract CScheduler create();

@@ -145,24 +145,25 @@ class CGroupProgramState implements CProgramState {
    * @return Signature for the state.
    */
   public Object getSignature() {
-   final Object[][] rSig = new Object[_rGroups.size()][];
-   final Object[][] bSig = new Object[_bGroups.size()][];
-   for (int i=0; i < rSig.length; i++) {
-     rSig[i] = toArray(_rGroups.get(i));
-   }
-   for (int i=0; i < bSig.length; i++) {
-     bSig[i] = toArray(_bGroups.get(i));
-   }
-   Arrays.sort(rSig, GCOMPARATOR);
-   Arrays.sort(bSig, GCOMPARATOR);
-   return new CRawTuple(rSig, bSig); 
+    final Object[][] rSig = new Object[_rGroups.size()][];
+    final Object[][] bSig = new Object[_bGroups.size()][];
+    for (int i=0; i < rSig.length; i++) {
+      rSig[i] = toArray(_rGroups.get(i));
+    }
+    for (int i=0; i < bSig.length; i++) {
+      bSig[i] = toArray(_bGroups.get(i));
+    }
+    Arrays.sort(rSig, GCOMPARATOR);
+    Arrays.sort(bSig, GCOMPARATOR);
+    return new CRawTuple(rSig, bSig); 
   }
 
   @SuppressWarnings("javadoc")
   private Object[] toArray(Group g) {
     return new Object[] { g._threads.size(), g._location };
   }
-  
+
+  @SuppressWarnings("javadoc")
   private static final Comparator<Object[]> GCOMPARATOR = new Comparator<Object[]>() {
 
     @Override
@@ -175,7 +176,7 @@ class CGroupProgramState implements CProgramState {
       }
       return cmp;
     }
-    
+
   };
 
 }

@@ -2,9 +2,6 @@ package org.cooperari.scheduling;
 
 import java.util.Random;
 
-import org.cooperari.core.CRuntime;
-
-
 /**
  * Memoryless scheduler.
  * 
