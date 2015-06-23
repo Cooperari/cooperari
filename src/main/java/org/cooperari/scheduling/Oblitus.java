@@ -19,7 +19,7 @@ import java.util.Random;
  * 
  * @since 0.2
  */
-public final class MemorylessScheduler extends CScheduler {
+final class Oblitus extends CScheduler {
   
   /**
    * Pseudo-random number generator.
@@ -29,7 +29,7 @@ public final class MemorylessScheduler extends CScheduler {
   /**
    * Constructor.
    */
-  public MemorylessScheduler() {
+  public Oblitus() {
     _rng = new Random(0); // a fixed seed is used for repeatable tests
   }
   

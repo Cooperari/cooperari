@@ -12,21 +12,23 @@ import org.cooperari.config.CScheduling;
 public enum CSchedulerFactory {
 
   /**
-   * Memory-less scheduler factory.
+   * Oblitus ("I forgot" in latin), a factory that creates memoryless schedulers .
+   * 
    */
-  OBLIVISCI {
+  OBLITUS {
     @Override
     public CScheduler create() {
-      return new MemorylessScheduler();
+      return new Oblitus();
     }
   },
   /**
-   * An improvement over {@link #OBLIVISCI}, which tries to avoid repeat scheduling decisions.
+   * Memini ("I remember" in latin), a factory that creates schedulers that 
+   * remember past scheduling decisions for a given program state. 
    */
-  RECORDOR {
+  MEMINI {
     @Override
     public CScheduler create() {
-      return new HDScheduler();
+      return new Memini();
     }
   };
   /**

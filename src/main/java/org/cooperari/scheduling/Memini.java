@@ -23,7 +23,7 @@ import org.cooperari.core.util.CRawTuple;
  * 
  * @since 0.2
  */
-public final class HDScheduler extends CScheduler {
+final class Memini extends CScheduler {
 
   /**
    * Pseudo-random number generator.
@@ -43,7 +43,7 @@ public final class HDScheduler extends CScheduler {
   /**
    * Constructor.
    */
-  public HDScheduler() {
+  public Memini() {
 
   }
   /**

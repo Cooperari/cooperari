@@ -6,9 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import org.cooperari.scheduling.CProgramStateFactory;
-import org.cooperari.scheduling.CScheduler;
 import org.cooperari.scheduling.CSchedulerFactory;
-import org.cooperari.scheduling.MemorylessScheduler;
 
 /**
  * Configure thread scheduling.
@@ -26,6 +24,6 @@ public @interface CScheduling {
   /**
    * @return Type of scheduler to use.
    */
-  CSchedulerFactory schedulerFactory() default CSchedulerFactory.RECORDOR;
+  CSchedulerFactory schedulerFactory() default CSchedulerFactory.MEMINI;
   
 }
