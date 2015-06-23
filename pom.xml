@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<name>Cooperari</name>
-	<description>Cooperari is a cooperative testing tool for multithreaded Java code.</description>
+	<description>Cooperari is a cooperative testing tool for multithreaded Java software.</description>
 	<url>http://cooperari.org</url>
 	<properties>
 		<required.maven>3.2</required.maven>
