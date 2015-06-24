@@ -56,7 +56,7 @@ public final class CRawTuple {
     if (o == this) {
       return true;
     }
-    if (o.getClass() != CRawTuple.class) {
+    if (o == null || o.getClass() != CRawTuple.class) {
         return false;
     }
     CRawTuple other = (CRawTuple) o;
