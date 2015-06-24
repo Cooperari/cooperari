@@ -18,10 +18,9 @@ public final class AgentLoader {
    * @see VirtualMachine#loadAgent(String, String)
    */
   public static void load(String jarFilePath, String agentOptions) throws Throwable {
-    String nameOfRunningVM = ManagementFactory.getRuntimeMXBean().getName();
-    String pid = nameOfRunningVM.substring(0, nameOfRunningVM.indexOf('@'));
-   
-    VirtualMachine vm = VirtualMachine.attach(pid);
+    String vmName = ManagementFactory.getRuntimeMXBean().getName();
+    String vmId = vmName.substring(0, vmName.indexOf('@'));
+    VirtualMachine vm = VirtualMachine.attach(vmId);
     vm.loadAgent(jarFilePath, agentOptions);
     vm.detach();
   }
