@@ -39,16 +39,21 @@ public class CRawTupleTest {
   }
   
   @Test 
-  public void testEqualsNonEquivalent() {
-    CRawTuple t = new CRawTuple(DATA_1);
-    CRawTuple t2 = new CRawTuple(DATA_1_CLONE);
-    assertTrue("equals to equivalent", t.equals(t2));
-  }
-  
-  @Test 
   public void testEqualsToNonEquivalent() {
     CRawTuple t = new CRawTuple(DATA_1);
     CRawTuple t2 = new CRawTuple(DATA_2);
     assertFalse("not equal", t.equals(t2));
+  }
+  
+  @Test 
+  public void testEqualsToNull() {
+    CRawTuple t = new CRawTuple(DATA_1);
+    assertFalse("not equal", t.equals(null));
+  }
+  
+  @Test 
+  public void testEqualsToDifferentTypedObject() {
+    CRawTuple t = new CRawTuple(DATA_1);
+    assertFalse("not equal", t.equals("a string"));
   }
 }
