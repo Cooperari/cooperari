@@ -3,7 +3,7 @@ import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
 
 /**
- * Base abstract class for scheduler.
+ * Abstract class for scheduler implementations.
  * 
  * @since 0.2
  */

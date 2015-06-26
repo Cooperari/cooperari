@@ -2,7 +2,6 @@ package org.cooperari.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
@@ -15,7 +14,6 @@ import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.core.util.CReport;
 import org.cooperari.errors.CCheckedExceptionError;
 import org.cooperari.errors.CConfigurationError;
-import org.cooperari.errors.CError;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;

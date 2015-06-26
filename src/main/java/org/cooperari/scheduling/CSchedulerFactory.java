@@ -1,11 +1,8 @@
 package org.cooperari.scheduling;
 
-import java.util.List;
-
-import org.cooperari.config.CScheduling;
 
 /**
- * Program state factory.
+ * Scheduler factory enumeration.
  * 
  * @since 0.2
  */

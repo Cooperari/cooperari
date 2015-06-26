@@ -9,10 +9,7 @@ import java.util.Random;
  * This type of scheduler simply makes a random choice of thread at
  * every scheduling step. It maintains no information whatsoever 
  * of past scheduling  decisions.
- * </p>
- * 
- * <p>
- * The scheduler's decisions are <b>deterministic</b> however.
+ * The scheduler's decisions are deterministic however.
  * The pseudo-random number generator that is employed internally 
  * is always initialized with a fixed seed at construction time.
  * </p>
@@ -20,19 +17,20 @@ import java.util.Random;
  * @since 0.2
  */
 final class Oblitus extends CScheduler {
-  
+
   /**
    * Pseudo-random number generator.
    */
   private Random _rng;
-  
+
   /**
    * Constructor.
    */
   public Oblitus() {
-    _rng = new Random(0); // a fixed seed is used for repeatable tests
+    // A fixed seed (0) is used for repeatable tests.
+    _rng = new Random(0); 
   }
-  
+
   /**
    * Pick a random thread to run next.
    */
@@ -40,5 +38,5 @@ final class Oblitus extends CScheduler {
   public CThreadHandle decision(CProgramState state) {
     return state.select(_rng);
   }
- 
+
 }

@@ -1,7 +1,7 @@
 package org.cooperari.scheduling;
 
-import java.util.List;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 import org.cooperari.core.CWorkspace;
@@ -12,7 +12,7 @@ import org.cooperari.core.util.CRawTuple;
  * History-dependent scheduler.
  * 
  * <p>
- * This scheduler is an improvement over the memoryless scheduler.
+ * This scheduler is an improvement over the memoryless scheduler ({@link Oblitus}).
  * It tries to avoid repeated scheduling decisions whenever possible. 
  * It starts by trying a random choice and checks if it corresponds
  * to a previous decision for the same program state. 

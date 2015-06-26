@@ -1,6 +1,7 @@
 package org.cooperari.core.util;
 
 import java.lang.management.ManagementFactory;
+
 import com.sun.tools.attach.VirtualMachine;
 
 /**

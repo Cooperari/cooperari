@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import org.cooperari.core.CWorkspace;
 import org.cooperari.core.util.CRawTuple;
 
 /**
