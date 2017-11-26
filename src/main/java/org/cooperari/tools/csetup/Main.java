@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import org.cooperari.config.CBaseConfiguration;
 import org.cooperari.config.CInstrument;
-import org.cooperari.core.aspectj.Compiler;
+import org.cooperari.core.aspectj.AspectCompiler;
 import org.cooperari.core.aspectj.WeavingConfiguration;
 
 /**
@@ -133,20 +133,20 @@ public final class Main {
             wc.print(out);
           } 
           if (!dryRun) {
-            File abcInpFile = new File(outDir, className
+            File ajcInpFile = new File(outDir, className
                 + "_uncompiled_aspects.jar");
-            File abcOutFile = new File(outDir, className
+            File ajcOutFile = new File(outDir, className
                 + "_compiled_aspects.jar");
             if (!keepTempFiles) {
-              abcInpFile.deleteOnExit();
-              abcOutFile.deleteOnExit();
+              ajcInpFile.deleteOnExit();
+              ajcOutFile.deleteOnExit();
             }
             ArrayList<String> ajcMsgs = new ArrayList<>();
             if (verbose) {
               out.println("Calling AspectJ compiler ...");
             }
-            boolean cResult = Compiler.compile(wc.getAspectClasses(),
-                verbose ? "-verbose" : "", abcInpFile, abcOutFile, ajcMsgs);
+            boolean cResult = AspectCompiler.compile(wc.getAspectClasses(),
+                verbose ? "-verbose" : "", ajcInpFile, ajcOutFile, ajcMsgs);
             
             if (!cResult || verbose) {
               for (String msg : ajcMsgs) {
@@ -160,13 +160,13 @@ public final class Main {
             }
           
             if (verbose) {
-              out.printf("%s - %d bytes\n", abcInpFile.getCanonicalPath(), abcInpFile.length());
-              out.printf("%s - %d bytes\n", abcOutFile.getCanonicalPath(), abcOutFile.length());
+              out.printf("%s - %d bytes\n", ajcInpFile.getCanonicalPath(), ajcInpFile.length());
+              out.printf("%s - %d bytes\n", ajcOutFile.getCanonicalPath(), ajcOutFile.length());
               out.println("Saving to final JAR file ...");
             }
             
             File jarFile = new File(outDir, className + "-cooperari.jar");
-            wc.saveAsJAR(abcOutFile, jarFile);
+            wc.saveAsJAR(ajcOutFile, jarFile);
             if (!quiet) {
               out.printf("JAR file for '%s' saved to '%s'\n", className,
                   jarFile);

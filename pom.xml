@@ -304,6 +304,11 @@
                     <failOnError>true</failOnError>
                     <includeDependencySources>false</includeDependencySources>
                 </configuration>
+                <executions>
+                  <execution>
+                   <goal>javadoc</goal>
+                  </execution>
+                </executions>
             </plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
