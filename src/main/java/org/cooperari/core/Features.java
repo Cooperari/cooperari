@@ -21,7 +21,8 @@ public final class Features {
               new org.cooperari.feature.monitor.Feature(),
               new org.cooperari.feature.hotspots.Feature(),
               new org.cooperari.feature.thread.Feature(),
-              new org.cooperari.feature.threadrunner.Feature()
+              new org.cooperari.feature.threadrunner.Feature(),
+              new org.cooperari.feature.unsafe.Feature()
               )
           );
 
