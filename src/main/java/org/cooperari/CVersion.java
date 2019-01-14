@@ -15,7 +15,7 @@ public class CVersion {
   /**
    * Java version used for building current version.
    */
-  public static final String JAVA_BUILD_VERSION = "1.8.0_20";
+  public static final String JAVA_BUILD_VERSION = "1.8.0_181";
   
   /**
    * Java VM name used for building current version.
@@ -30,7 +30,7 @@ public class CVersion {
   /**
    * Operating system for building current version.
    */
-  public static final String OS_BUILD_VERSION = "Mac OS X 10.9.5 x86_64";
+  public static final String OS_BUILD_VERSION = "Mac OS X 10.14.2 x86_64";
   
   /**
    * Private constructor to avoid instantiation.
