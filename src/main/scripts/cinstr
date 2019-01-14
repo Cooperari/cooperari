@@ -6,7 +6,7 @@ COOPERARI_JAR=$COOPERARI_HOME/lib/cooperari-$COOPERARI_VERSION.jar
 
 ASPECTJRT_JAR=$(find "$COOPERARI_HOME/lib" -name 'aspectjrt*.jar')
 
-java -cp "$ASPECTJRT_JAR:$COOPERARI_JAR:$CLASSPATH" org.cooperari.tools.csetup $*
+java -cp "$ASPECTJRT_JAR:$COOPERARI_JAR:$CLASSPATH" org.cooperari.tools.csetup.Main $*
 
 
 
