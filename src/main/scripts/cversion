@@ -1,5 +1,5 @@
 #! /bin/sh
-echo 0.2.1-SNAPSHOT
+echo 0.2-SNAPSHOT
 
 
 

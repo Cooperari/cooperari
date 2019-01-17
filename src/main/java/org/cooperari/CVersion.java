@@ -10,7 +10,7 @@ public class CVersion {
   /**
    * Cooperari version.
    */
-  public static final String ID = "0.2.1-SNAPSHOT";
+  public static final String ID = "0.2-SNAPSHOT";
   
   /**
    * Java version used for building current version.
