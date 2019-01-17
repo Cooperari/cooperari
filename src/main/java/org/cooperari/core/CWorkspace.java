@@ -89,6 +89,20 @@ public enum CWorkspace {
   }
 
   /**
+   * Initialize only if not already initialized.
+   * The call is ignored if the workspace has already been initialized.
+   *
+   * @param root Root directory.
+   * @param options Workspace options.
+   * @throws IOException If an I/O error occurs.
+   */
+  public synchronized void initializeIfNecessary(File root, Option... options) throws IOException, CConfigurationError {
+    if (!isInitialized()) {
+      initialize(root, options);
+    }
+  }
+  
+  /**
    * Initialize the workspace using supplied directory as root.
    * 
    * This method should be called once to initialize the workspace.

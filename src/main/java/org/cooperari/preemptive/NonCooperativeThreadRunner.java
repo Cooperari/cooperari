@@ -1,4 +1,4 @@
-package org.cooperari.attic;
+package org.cooperari.preemptive;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-import org.cooperari.CDeadlockError;
-import org.cooperari.CInternalError;
+import org.cooperari.errors.CDeadlockError;
+import org.cooperari.errors.CInternalError;
 import org.cooperari.core.CWorkspace;
 
 /**

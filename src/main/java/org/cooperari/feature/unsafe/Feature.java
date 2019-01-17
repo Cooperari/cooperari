@@ -15,6 +15,7 @@ public class Feature implements FeatureHandler {
   /**
    * @{inheritDoc}
    */
+  @SuppressWarnings("restriction")
   @Override
   public void getCustomYieldPoints(List<CustomYieldPoint> list) {
     list.add(new CustomYieldPoint(sun.misc.Unsafe.class));

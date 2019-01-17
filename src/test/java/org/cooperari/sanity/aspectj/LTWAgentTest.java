@@ -20,6 +20,7 @@ public class LTWAgentTest {
   }
 
 
+  @SuppressWarnings("unused")
   private static void compile(Class<?>... aspects) throws IOException, Error {
     File a = File.createTempFile(LTWAgentTest.class.getSimpleName(), ".jar");
     File b = File.createTempFile(LTWAgentTest.class.getSimpleName(), ".jar");

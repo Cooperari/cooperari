@@ -69,6 +69,10 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
     }
   };
 
+  /**
+   * Fall-back workspace dir.
+   */
+  private static final String FALLBACK_WORSPACE_DIR = "cooperari-test-data";
 
   /**
    * Constructs a new runner.
@@ -78,12 +82,10 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
   public CJUnitRunner(Class<?> testClass) throws InitializationError {
     super(testClass);
     super.setScheduler(JRUNNER_SCHEDULER);
-    if (! CWorkspace.INSTANCE.isInitialized()) {
-      try {
-        CWorkspace.INSTANCE.initialize(new File("cooperari"));
-      } catch (IOException e) {
-        throw new CInternalError(e);
-      }
+    try {
+      CWorkspace.INSTANCE.initializeIfNecessary(new File(FALLBACK_WORSPACE_DIR));
+    } catch (IOException e) {
+      throw new CInternalError(e);
     }
   }
 
@@ -161,7 +163,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
      * Method.
      */
     private final Method _method;
-    
+
     /**
      * Expected exception.
      */
@@ -188,7 +190,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
     public String getSuiteName() {
       return CJUnitRunner.this.getTestClass().getJavaClass().getCanonicalName();
     }
-    
+
     /**
      * Configuration hook.
      * @return The JUnit method at stake as configuration source.
@@ -197,7 +199,7 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
     public AnnotatedElement getConfiguration() {
       return _method;
     }
-    
+
     /**
      * Normal completion hook.
      * @see CTest#onNormalCompletion()

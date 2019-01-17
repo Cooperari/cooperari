@@ -13,6 +13,7 @@ import org.cooperari.core.aspectj.AgentFacade;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CNonCooperativeModeError;
 import org.cooperari.feature.hotspots.HotspotHandler;
+import org.cooperari.preemptive.NonCooperativeThreadRunner;
 
 /**
  * Cooperari system facade.
@@ -38,15 +39,19 @@ public final class CSystem {
   }
 
   /**
-   * Start some threads and wait until they are finished.
-   * The threads will execute cooperatively.
+   * Start some threads and wait until they are finished ("fork and join").
+   * 
+   * The threads will execute cooperatively if cooperative semantics
+   * are enabled, otherwise execution will run under normal (preemptive
+   * semantics). 
+   *  
    * @param runnables Runnable instances.
    * @throws IllegalThreadStateException if any of the runnable instances is
    *          an already alive {@link Thread} object.
    * @throws CNonCooperativeModeError If the method is invoked by a non-cooperative thread.
    */
   public static void forkAndJoin(Runnable... runnables) {
-    throw new CNonCooperativeModeError();
+    new NonCooperativeThreadRunner(runnables);
   }
 
   /**

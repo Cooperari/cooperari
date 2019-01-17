@@ -167,7 +167,7 @@ public final class Monitor {
    * @param wait Indicates that calling thread will be on the wait set. 
    * @return Current owner lock count of the thread.
    */
-  @SuppressWarnings("restriction")
+  @SuppressWarnings({ "restriction", "deprecation" })
   public int relinquish(CThread t, boolean wait) {
     if (_owner != t) {
       throw new CInternalError();
@@ -187,7 +187,7 @@ public final class Monitor {
    * @param t Thread that will reacquire ownership.
    * @param lockCount Lock count to re-establish.
    */
-  @SuppressWarnings("restriction")
+  @SuppressWarnings({ "restriction", "deprecation" })
   public void reacquire(CThread t, int lockCount) {
     if (_owner != null) {
       throw new CInternalError();
