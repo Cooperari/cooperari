@@ -10,8 +10,10 @@
   <name>Cooperari</name>
   <description>Cooperari is a cooperative testing tool for multithreaded Java software.</description>
   <url>http://cooperari.org</url>
+  <prerequisites>
+    <maven>3.0</maven>
+  </prerequisites>
   <properties>
-    <required.maven>3.2</required.maven>
     <required.java>1.8</required.java>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -65,12 +67,6 @@
               <fail>true</fail>
               <failFast>true</failFast>
               <rules>
-                <requireMavenVersion>
-                  <message>Maven version ${required.maven} or higher is required!
-                    Maven version ${maven.version} detected ...
-                  </message>
-                  <version>${required.maven}</version>
-                </requireMavenVersion>
                 <requireJavaVersion>
                   <message>Java version ${required.java} or higher is required!
                     Version ${java.version} detected ...
