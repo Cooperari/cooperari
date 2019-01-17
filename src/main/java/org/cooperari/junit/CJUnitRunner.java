@@ -1,12 +1,15 @@
 package org.cooperari.junit;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
 import org.cooperari.core.CSession;
+import org.cooperari.core.CWorkspace;
 import org.cooperari.errors.CCheckedExceptionError;
 import org.cooperari.errors.CConfigurationError;
 import org.cooperari.errors.CInternalError;
@@ -75,6 +78,13 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
   public CJUnitRunner(Class<?> testClass) throws InitializationError {
     super(testClass);
     super.setScheduler(JRUNNER_SCHEDULER);
+    if (! CWorkspace.INSTANCE.isInitialized()) {
+      try {
+        CWorkspace.INSTANCE.initialize(new File("cooperari"));
+      } catch (IOException e) {
+        throw new CInternalError(e);
+      }
+    }
   }
 
   /**

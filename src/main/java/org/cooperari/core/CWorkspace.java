@@ -84,7 +84,7 @@ public enum CWorkspace {
    * @return <code>true</code> if the workspace has been initialized before.
    * @see #initialize(File,Option...)
    */
-  public boolean isInitialized() {
+  public synchronized boolean isInitialized() {
     return _root != null; 
   }
 
@@ -98,7 +98,7 @@ public enum CWorkspace {
    * @throws IOException If an I/O error occurs.
    * @throws CConfigurationError If the workspace has already been initialized or some other error occurs.
    */
-  public void initialize(File root, Option... options) throws IOException, CConfigurationError {
+  public synchronized void initialize(File root, Option... options) throws IOException, CConfigurationError {
     if (isInitialized()) {
       throw new CConfigurationError("Workspace already initialized.");
     }
