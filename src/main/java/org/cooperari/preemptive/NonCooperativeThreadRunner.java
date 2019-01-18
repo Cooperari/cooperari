@@ -82,7 +82,6 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
       } 
       assert CWorkspace.debug("A %d B %d W %d CTR %d", aliveThreads, blockedThreads, waitingThreads, ldCtr);
       if (aliveThreads > 0) { 
-        assert CWorkspace.debug("A %d B %d W %d CTR %d", aliveThreads, blockedThreads, waitingThreads, ldCtr);
         if (blockedThreads + waitingThreads == aliveThreads) {
           assert CWorkspace.debug("POSSIBLE DEADLOCK");
 
@@ -95,7 +94,6 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
         } else {
           ldCtr = 0;
         }
-        assert CWorkspace.debug("WTF SLEEP");
         try { Thread.sleep(1); } catch(Throwable e) { }
       }
       

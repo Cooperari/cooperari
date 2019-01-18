@@ -3,7 +3,7 @@ package org.cooperari.sanity.misc;
 import static org.junit.Assert.fail;
 
 import org.cooperari.CSystem;
-import org.cooperari.core.WaitDeadlockError;
+import org.cooperari.errors.CWaitDeadlockError;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -17,7 +17,7 @@ import org.junit.runners.MethodSorters;
 public class NonCooperativeThreadRunnerTest {
 
   // TODO: reconvert test
-  @Test(expected = WaitDeadlockError.class) @Ignore
+  @Test(expected = CWaitDeadlockError.class) @Ignore
   public final void testWaitDealock() {
     CSystem.forkAndJoin(new Runnable() {
       public void run() {

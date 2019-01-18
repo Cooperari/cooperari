@@ -69,4 +69,14 @@ public interface FeatureHandler {
   default void getCustomYieldPoints(List<CustomYieldPoint> list) {
 
   }
+  
+  /**
+   * Indicates if the feature should be activated only
+   * when cooperative semantics are enabled.
+   * 
+   * @return <code>true</code> by default.
+   */
+  default boolean cooperativeSemanticsRequired() {
+    return true;
+  }
 }

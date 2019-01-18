@@ -6,7 +6,7 @@ import static org.junit.Assert.fail;
 
 import org.cooperari.CSystem;
 import org.cooperari.config.CAlways;
-import org.cooperari.core.WaitDeadlockError;
+import org.cooperari.errors.CWaitDeadlockError;
 import org.cooperari.junit.CJUnitRunner;
 import org.cooperari.sanity.feature.Data;
 import org.junit.FixMethodOrder;
@@ -21,7 +21,7 @@ import org.junit.runners.MethodSorters;
 @RunWith(CJUnitRunner.class) 
 public class ThreadJoinTest {
 
-  @Test(expected=WaitDeadlockError.class)
+  @Test(expected=CWaitDeadlockError.class)
   public void testSelfJoin() {
     try {
       Thread.currentThread().join();

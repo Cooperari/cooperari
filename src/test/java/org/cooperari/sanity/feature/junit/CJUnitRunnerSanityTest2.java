@@ -3,7 +3,7 @@ package org.cooperari.sanity.feature.junit;
 import static org.junit.Assert.assertEquals;
 
 import org.cooperari.config.CMaxTrials;
-import org.cooperari.junit.CIgnore;
+import org.cooperari.junit.CPreemptive;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -38,13 +38,13 @@ public class CJUnitRunnerSanityTest2 {
   }
   
   @Test
-  @CIgnore
+  @CPreemptive
   @CMaxTrials(2) 
   public void testNC1() {
     
   }
   @Test
-  @CIgnore
+  @CPreemptive
   @CMaxTrials(2)
   public void testNC2() {
     

@@ -10,11 +10,20 @@ import org.cooperari.core.FeatureHandler;
  */
 public final class Feature implements FeatureHandler {
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public Class<?> getInstrumentationAspect() {
+    return YieldPoints.class;
+  }
+  
 
   /**
    * {@inheritDoc}
    */
-  public Class<?> getInstrumentationAspect() {
-    return YieldPoints.class;
+  @Override
+  public boolean cooperativeSemanticsRequired() {
+    return false;
   }
 }

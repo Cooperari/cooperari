@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
+import org.cooperari.CSystem;
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
 import org.cooperari.core.CSession;
@@ -24,12 +25,6 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.RunnerScheduler;
 import org.junit.runners.model.Statement;
 
-// TODO: document
-// - fresh thread per trial test, test trial ends only when all spawned threads terminate
-// - hotspots + CMaxTrials honored even in preemptive mode
-// - timeout attribute not honored
-// - setup + teardown + expected are honored
-// - CIgnore annotation
 /**
  * JUnit cooperative test runner.
  * 
@@ -47,7 +42,7 @@ import org.junit.runners.model.Statement;
  * }
  * </pre>
  * 
- * @see CIgnore
+ * @see CPreemptive
  * @since 0.2
  */
 public final class CJUnitRunner extends BlockJUnit4ClassRunner {
@@ -103,9 +98,15 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       return;
     }
 
-    if (fm.getAnnotation(CIgnore.class) != null) {
+    if (fm.getAnnotation(CPreemptive.class) != null) {
       // Run test only once using the standard runner and preemptive semantics
       super.runChild(fm, notifier);
+      return;
+    }
+    
+    if (!CSystem.inCooperativeMode() && fm.getAnnotation(CNonPreemptive.class) != null) {
+      // @Ignore annotation for method
+      notifier.fireTestIgnored(desc); 
       return;
     }
 

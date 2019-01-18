@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 
 import org.cooperari.config.CScheduling;
 import org.cooperari.errors.CInternalError;
+import org.cooperari.errors.CWaitDeadlockError;
 import org.cooperari.scheduling.CProgramStateFactory;
 import org.cooperari.scheduling.CScheduler;
 
@@ -228,7 +229,7 @@ public class CEngine extends Thread {
 
         //assert debug("A = %d B = %d W =%d", aliveCount, blockedCount, waitCount);
         if (cannotProgressCount == _threads.size()) {
-          WaitDeadlockError e = new WaitDeadlockError(_threads.values());
+          CWaitDeadlockError e = new CWaitDeadlockError(_threads.values());
           for (CThread t : _threads.values()) {
             assert CWorkspace.debug("Stopping "+ t.getName());
             _trace.record(t, CTrace.EventType.DEADLOCK);

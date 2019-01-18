@@ -4,6 +4,7 @@ package org.cooperari.core;
 import java.lang.annotation.Annotation;
 import java.util.IdentityHashMap;
 
+import org.cooperari.CSystem;
 import org.cooperari.core.util.CLog;
 import org.cooperari.errors.CConfigurationError;
 
@@ -239,9 +240,12 @@ public class CRuntime {
    * @see FeatureHandler
    */
   public void initFeatures() {
+    boolean cMode = CSystem.inCooperativeMode();
     for (FeatureHandler fh : Features.getFeatureHandlers()) {
-      assert CWorkspace.debug("initializating feature handler " + fh.getClass());
-      fh.init(this);
+      if (cMode || !fh.cooperativeSemanticsRequired()) {
+        assert CWorkspace.debug("initializating feature handler " + fh.getClass());
+        fh.init(this);
+      }
     }
   }
 
@@ -252,9 +256,12 @@ public class CRuntime {
    * @see FeatureHandler
    */
   public void shutdownFeatures() {
+    boolean cMode = CSystem.inCooperativeMode();
     for (FeatureHandler fh : Features.getFeatureHandlers()) {
-      assert CWorkspace.debug("shuting down feature handler " + fh.getClass());
-      fh.shutdown(this);
+      if (cMode || !fh.cooperativeSemanticsRequired()) {
+        assert CWorkspace.debug("shuting down feature handler " + fh.getClass());
+        fh.shutdown(this);
+      }
     }
   }
 }
