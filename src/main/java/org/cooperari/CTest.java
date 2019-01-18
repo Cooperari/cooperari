@@ -35,6 +35,7 @@ public interface CTest extends Runnable {
   /**
    * Execution method.
    */
+  @Override
   void run();
   
   /**
