@@ -11,7 +11,7 @@ public enum CProgramStateFactory {
 
   /**
    * Raw program-state factory.
-   * This creates program states whose elements are individual threads.
+   * This creates program states associated to individual threads.
    */
   RAW {
     @Override
@@ -22,8 +22,7 @@ public enum CProgramStateFactory {
   },
   /**
    * "Thread-group" program-state factory.
-   * This creates program states whose elements represent groups threads with the same
-   * location.
+   * This creates program states abstracting the state of threads in groups.
    */
   GROUP {
     @Override

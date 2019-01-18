@@ -22,7 +22,7 @@ import org.cooperari.config.CSometimes;
  * hotspot);</li>
  * <li>A {@link CSometimes}-specified hotspot for a test case IS NOT reached by ALL test trials
  * least one test trial (for for no failures, AT LEAST ONE test trial for the same test case should reach the
- * hotspot;</li>
+ * hotspot);</li>
  * 
  * @since 0.2
  */

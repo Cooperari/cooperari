@@ -3,7 +3,7 @@ package org.cooperari.errors;
 
 /**
  * Exception thrown when some functionality requires a cooperative execution
- * environment, and is used from outside one.
+ * environment, and is used outside one.
  * 
  * @since 0.2
  *
