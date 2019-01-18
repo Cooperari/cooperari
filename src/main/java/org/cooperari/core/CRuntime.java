@@ -7,7 +7,6 @@ import java.util.IdentityHashMap;
 import org.cooperari.core.util.CLog;
 import org.cooperari.errors.CConfigurationError;
 
-// TODO document configuration scheme
 /**
  * Cooperari runtime.
  * 
@@ -90,8 +89,6 @@ public class CRuntime {
     _config = config;
     initFeatures();
   }
-
-
 
   /**
    * Get configuration given by an annotation of a certain type.

@@ -4,11 +4,11 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.cooperari.errors.CDeadlockError;
 import org.cooperari.errors.CInternalError;
+import org.cooperari.core.CSession;
 import org.cooperari.core.CWorkspace;
 
 /**
@@ -33,7 +33,7 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
   /**
    * Initialization barrier.
    */
-  private final CyclicBarrier _barrier;
+  private final AtomicBoolean _sync;
 
   /**
    * Uncaught exception. 
@@ -47,7 +47,7 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
    */
   public NonCooperativeThreadRunner(Runnable[] rv) {
     _threads = new Thread[rv.length];
-    _barrier = new CyclicBarrier(rv.length + 1);
+    _sync = new AtomicBoolean(false);
     _uncaughtException = null;
     for (int i = 0; i < rv.length; i++) {
       Thread t = new NCThread(i, rv[i]);
@@ -55,21 +55,22 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
       t.start();
       _threads[i] = t;
     }
-    assert CWorkspace.debug("waiting for all threads to join");
-    try {
-      _barrier.await();
-    } catch (InterruptedException | BrokenBarrierException e) {
-      throw new CInternalError(e);
-    }
+
+
     HashSet<Thread> set = new HashSet<>();
-    for (Thread t : _threads) set.add(t);
+    for (Thread t : _threads) {
+      set.add(t); 
+    }
     int ldCtr = 0;
+    _sync.set(true);
+    assert CWorkspace.debug("waiting for all threads to join");
     while(!set.isEmpty()) { 
       int aliveThreads = set.size();
       int waitingThreads = 0, blockedThreads = 0;
       Iterator<Thread> itr = set.iterator();
       while (itr.hasNext()) {
         Thread t = itr.next();
+        assert CWorkspace.debug("%s %s", t.getName(), t.getState());
         if (!t.isAlive()) {
           --aliveThreads;
           itr.remove();
@@ -79,20 +80,22 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
           blockedThreads++;
         }
       } 
-      // assert debug("A %d B %d W %d CTR %d", aliveThreads, blockedThreads, waitingThreads, ldCtr);
+      assert CWorkspace.debug("A %d B %d W %d CTR %d", aliveThreads, blockedThreads, waitingThreads, ldCtr);
       if (aliveThreads > 0) { 
         if (blockedThreads + waitingThreads == aliveThreads) {
           ThreadMXBean bean = ManagementFactory.getThreadMXBean();
           long[] threadIds = bean.findDeadlockedThreads(); 
           ldCtr++;
-          if (threadIds == null || ldCtr == 100) {
+          if (threadIds == null && ldCtr == 10) {
             throw new CDeadlockError("All threads deadlocked.");
           }
-          try { Thread.sleep(1); } catch(Throwable e) { }
         } else {
           ldCtr = 0;
         }
-      } 
+      }
+      assert CWorkspace.debug("SLEEP");
+
+      try { Thread.sleep(100); } catch(Throwable e) { }
     }
     if (_uncaughtException != null) {
       if (_uncaughtException instanceof Error)
@@ -141,13 +144,16 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
     @SuppressWarnings("javadoc")
     @Override
     public void run() {
-      try {
-        // Initialization barrier.
-        _barrier.await();
-      } catch (InterruptedException | BrokenBarrierException e) {
-        throw new CInternalError(e);
+      CWorkspace.debug("%s starting!", getName());
+
+      // Initialization barrier.
+      CSession.getRuntime().join();
+      while (! _sync.get()) {
+        Thread.yield();
       }
+      CWorkspace.debug("%s passed sync. barrier!", getName());
       _runnable.run();
+      CWorkspace.debug("%s done!", getName());
     }
   };
 }

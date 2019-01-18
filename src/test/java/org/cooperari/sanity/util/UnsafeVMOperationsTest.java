@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({ "javadoc", "restriction" })
+@SuppressWarnings({ "javadoc", "restriction", "deprecation" })
 public class UnsafeVMOperationsTest {
 
   @Test

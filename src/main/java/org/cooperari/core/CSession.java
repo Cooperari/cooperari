@@ -3,6 +3,7 @@ package org.cooperari.core;
 import java.io.File;
 import java.io.IOException;
 
+import org.cooperari.CSystem;
 import org.cooperari.CTest;
 import org.cooperari.CTestResult;
 import org.cooperari.config.CGenerateCoverageReports;
@@ -49,6 +50,21 @@ public final class CSession {
   }
 
   /**
+   * Current test (workaround).
+   */
+  private static CTest _currentTest = null;
+  
+  /**
+   * Current runtime (workaround).
+   */
+  private static CRuntime runtime = null;
+
+  /**
+   * Test mutex (workaround).
+   */
+  private static final Object TEST_EXEC_MUTEX = new Object();
+
+  /**
    * Execute a test session.
    * 
    * *
@@ -76,16 +92,43 @@ public final class CSession {
    * @return An instance of {@link CTestResult}.
    */
   public static CTestResult executeTest(CTest test) {
-    assert CWorkspace.debug("== STARTED %s ==", test.getName());
-    CRuntime runtime = new CRuntime(new CConfiguration(test.getConfiguration()));
+    synchronized(TEST_EXEC_MUTEX) {
+      assert CWorkspace.debug("== PREPARING  %s ==", test.getName());
+      CTestResult r;
+      try {
+        _currentTest = test;
+        runtime = new CRuntime(new CConfiguration(test.getConfiguration()));
+        if (CSystem.inCooperativeMode()) {
+          r = executeTestCooperatively(test);
+        } else {
+          r = executeTestPreemptively(test);
+        }
+        return r;
+      } finally {
+        _currentTest = null;
+      }
+    }
+  }
+
+  public static CTest getCurrentTest() {
+    return _currentTest;
+  }
+  
+  public static CRuntime getRuntime() {
+    return runtime;
+  }
+  
+  private static CTestResult executeTestCooperatively(CTest test) {
+    assert CWorkspace.debug("== STARTED %s (cooperatively) ==", test.getName());
+  
     CScheduling schConfig = runtime.getConfiguration(CScheduling.class);
     CTraceOptions traceOptions = runtime.getConfiguration(CTraceOptions.class);
 
     CScheduler scheduler = schConfig.schedulerFactory().create();
-    
+
     CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class);
 
-    if (maxTrials.value() < 0) {
+    if (maxTrials.value() < 1) {
       throw new CConfigurationError("Invalid @CMaxTrials configuration: "
           + maxTrials.value());
     }
@@ -167,7 +210,7 @@ public final class CSession {
     }
 
     AgentFacade.INSTANCE.complementCoverageInfo(clog);
-    
+
     if (runtime.getConfiguration(CGenerateCoverageReports.class).value()) {
       try {
         clog.produceCoverageReport(test.getSuiteName(), test.getName());
@@ -177,6 +220,72 @@ public final class CSession {
       }
     }
     return new CTestResultImpl(trials, timeElapsed, clog, failure, traceFile);
+  }
+
+
+
+
+  private static CTestResult executeTestPreemptively(CTest test) {
+    assert CWorkspace.debug("== STARTED %s (preemptively) ==", test.getName());
+    _currentTest = test;
+    CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class);
+
+    if (maxTrials.value() < 1) {
+      throw new CConfigurationError("Invalid @CMaxTrials configuration: "
+          + maxTrials.value());
+    }
+
+    int trials = 0;
+    Throwable failure;
+    long timeLimit = runtime.getConfiguration(CTimeLimit.class).value() * 1000L;
+
+    HotspotHandler hHandler = new HotspotHandler(runtime);
+    runtime.register(hHandler);
+
+    // Main loop
+    long startTime = System.currentTimeMillis();
+    boolean done = false;
+
+    do {
+      assert CWorkspace.debug("== TRIAL %d of %s ==", trials, test.getName());
+      failure = null;
+      trials++;
+      hHandler.startTestTrial();
+
+      try {
+        test.run();
+        hHandler.endTestTrial();
+        try {
+          test.onNormalCompletion();
+        } catch (Throwable e) {
+          failure = e;
+        }
+      } catch (Throwable e) {
+        assert CWorkspace.debug(Thread.currentThread(), e);
+        if (test.ignoreException(e) == false) {
+          failure = e;
+        }
+      }
+
+      done = failure != null
+          || trials >= maxTrials.value()
+          || (timeLimit > 0 && System.currentTimeMillis() - startTime >= timeLimit);
+    } while (!done);
+
+
+    long timeElapsed = System.currentTimeMillis() - startTime;
+
+    assert CWorkspace.debug("== TERMINATED %s ==", test.getName());
+
+    CWorkspace.log("%s: executed %d trials in %d ms [%s]", test.getName(),
+        trials, timeElapsed, failure == null ? "passed" : "failed : "
+            + failure.getClass().getCanonicalName());
+
+    if (failure instanceof CCheckedExceptionError) {
+      failure = failure.getCause();
+    }
+
+    return new CTestResultImpl(trials, timeElapsed, null, failure, null);
   }
 
   @SuppressWarnings("javadoc")
@@ -212,8 +321,8 @@ public final class CSession {
         Throwable failure, File failureTrace) {
       _trials = trials;
       _executionTime = timeElapsed;
-      _yieldPoints = clog.getTotalYieldPoints();
-      _yieldPointsCovered = clog.getCoveredYieldPoints();
+      _yieldPoints = clog != null ? clog.getTotalYieldPoints() : 0;
+      _yieldPointsCovered = clog != null ? clog.getCoveredYieldPoints() : 0;
       _failure = failure;
       _failureTrace = failureTrace;
     }

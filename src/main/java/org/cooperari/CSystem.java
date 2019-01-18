@@ -118,6 +118,14 @@ public final class CSystem {
     return AgentFacade.INSTANCE.produceCoverageReport();
   }
 
+  /**
+   * Check if the system is in cooperative mode.
+   * @return <code>true</code> if cooperative semantics are enabled.
+   */
+  public static boolean inCooperativeMode() {
+    return AgentFacade.INSTANCE.isActive();
+  }
+  
   @SuppressWarnings("javadoc")
   private CSystem() {
 

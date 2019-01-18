@@ -59,5 +59,4 @@ public interface CTest extends Runnable {
     return false;
   }
 
-
 }
