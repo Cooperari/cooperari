@@ -3,7 +3,6 @@ import static org.cooperari.CSystem.hotspot;
 import static org.junit.Assert.assertEquals;
 
 import org.cooperari.CSystem;
-import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CNever;
 import org.cooperari.config.CSometimes;
 import org.cooperari.junit.CJUnitRunner;

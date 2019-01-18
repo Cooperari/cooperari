@@ -98,7 +98,7 @@ public class WaitAndNotifyTest  {
 
   @Test(expected=WaitDeadlockError.class) @CNever({"INT","DONE"})
   public final void testBlockingWait() {
-    WAIT_FOREVER.run();
+    CSystem.forkAndJoin(WAIT_FOREVER);
   }
 
   @Test(expected=WaitDeadlockError.class) @CNever({"INT","DONE"})

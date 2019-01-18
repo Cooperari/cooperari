@@ -21,11 +21,13 @@ import org.junit.runners.MethodSorters;
 public class MonitorLockingTest  {
 
   private static void assertLockCount(Object o, int expected) {
-    Monitor m = getRuntime().get(MonitorPool.class).get(o);
-    if (m == null) 
-      assertEquals("lock count", expected, 0);
-    else 
-      assertEquals("lock count", expected, m.getOwnerLockCount());
+    if (CSystem.inCooperativeMode()) {
+      Monitor m = getRuntime().get(MonitorPool.class).get(o);
+      if (m == null) 
+        assertEquals("lock count", expected, 0);
+      else 
+        assertEquals("lock count", expected, m.getOwnerLockCount());
+    }
   }
 
 
@@ -100,7 +102,7 @@ public class MonitorLockingTest  {
 
   private static Data SD1 = new Data();
   private static final Data SD2 = new Data();
-  
+
   private static final Runnable 
   SHARE_DATA_RUNNABLE =  
   new Runnable() {
@@ -123,13 +125,13 @@ public class MonitorLockingTest  {
     }
   };
 
-  
+
   @Test
   public final void test3() {
     CSystem.forkAndJoin(SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE);
   }
 
-  
+
   @Test
   public final void test4() {
     CSystem.forkAndJoin(SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE, SHARE_DATA_RUNNABLE);

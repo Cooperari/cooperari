@@ -82,20 +82,23 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
       } 
       assert CWorkspace.debug("A %d B %d W %d CTR %d", aliveThreads, blockedThreads, waitingThreads, ldCtr);
       if (aliveThreads > 0) { 
+        assert CWorkspace.debug("A %d B %d W %d CTR %d", aliveThreads, blockedThreads, waitingThreads, ldCtr);
         if (blockedThreads + waitingThreads == aliveThreads) {
+          assert CWorkspace.debug("POSSIBLE DEADLOCK");
+
           ThreadMXBean bean = ManagementFactory.getThreadMXBean();
           long[] threadIds = bean.findDeadlockedThreads(); 
           ldCtr++;
-          if (threadIds == null && ldCtr == 10) {
+          if (threadIds != null || ldCtr >= 1000) {
             throw new CDeadlockError("All threads deadlocked.");
           }
         } else {
           ldCtr = 0;
         }
+        assert CWorkspace.debug("WTF SLEEP");
+        try { Thread.sleep(1); } catch(Throwable e) { }
       }
-      assert CWorkspace.debug("SLEEP");
-
-      try { Thread.sleep(100); } catch(Throwable e) { }
+      
     }
     if (_uncaughtException != null) {
       if (_uncaughtException instanceof Error)
@@ -149,7 +152,7 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
       // Initialization barrier.
       CSession.getRuntime().join();
       while (! _sync.get()) {
-        Thread.yield();
+        try { Thread.sleep(1); } catch(Throwable e) { }
       }
       CWorkspace.debug("%s passed sync. barrier!", getName());
       _runnable.run();
