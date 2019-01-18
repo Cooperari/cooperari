@@ -19,11 +19,8 @@ public final class NotifyAll extends MonitorOperation<Void> {
     super(t, m);
   }
 
-  /*
-   * (non-Javadoc)
-   * @see cooperari.core.COperation#complete()
-   */
-  @SuppressWarnings("javadoc")
+
+  @Override
   public void execute() {
     if (_monitor == Monitor.NULL) {
       throw new NullPointerException();

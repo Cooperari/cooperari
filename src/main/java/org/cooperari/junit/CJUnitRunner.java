@@ -42,7 +42,7 @@ import org.junit.runners.model.Statement;
  * }
  * </pre>
  * 
- * @see CPreemptive
+ * @see CPreemptiveOnly
  * @since 0.2
  */
 public final class CJUnitRunner extends BlockJUnit4ClassRunner {
@@ -98,13 +98,13 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       return;
     }
 
-    if (fm.getAnnotation(CPreemptive.class) != null) {
+    if (fm.getAnnotation(CPreemptiveOnly.class) != null) {
       // Run test only once using the standard runner and preemptive semantics
       super.runChild(fm, notifier);
       return;
     }
     
-    if (!CSystem.inCooperativeMode() && fm.getAnnotation(CNonPreemptive.class) != null) {
+    if (!CSystem.inCooperativeMode() && fm.getAnnotation(CCooperativeOnly.class) != null) {
       // @Ignore annotation for method
       notifier.fireTestIgnored(desc); 
       return;

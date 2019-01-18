@@ -65,10 +65,8 @@ public class Main {
       }
       
       JUnitCore juc = new JUnitCore();
-
       juc.addListener(new CJUnitRunListener(System.out));
-      Result r = juc.run(classes);
-           
+      Result r = juc.run(classes);   
       return r.getFailureCount() == 0 ? 0 : 1;
     } catch (Throwable e) {
       e.printStackTrace(out);

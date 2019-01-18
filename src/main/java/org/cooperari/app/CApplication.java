@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import org.cooperari.CTest;
 import org.cooperari.errors.CInternalError;
 
+@SuppressWarnings("javadoc")
 public class CApplication implements CTest {
 
   private final Class<?> _clazz;
@@ -16,12 +17,13 @@ public class CApplication implements CTest {
     _clazz = clazz;
     _args = args;
     try {
-      _mainMethod = _clazz.getDeclaredMethod("main", String.class);
+      _mainMethod = _clazz.getDeclaredMethod("main");
     } catch (NoSuchMethodException | SecurityException e) {
       throw new CInternalError(e);
     }
-    int mod = _mainMethod.getModifiers();
-    int mask = Method.PUBLIC | Method.DECLARED;
+ 
+//    int mod = _mainMethod.getModifiers();
+//    int mask = Method.PUBLIC | Method.DECLARED;
     
               
     

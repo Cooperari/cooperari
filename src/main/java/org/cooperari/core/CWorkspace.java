@@ -95,6 +95,7 @@ public enum CWorkspace {
    * @param root Root directory.
    * @param options Workspace options.
    * @throws IOException If an I/O error occurs.
+   * @throws CConfigurationError If a configuration error occurs.
    */
   public synchronized void initializeIfNecessary(File root, Option... options) throws IOException, CConfigurationError {
     if (!isInitialized()) {

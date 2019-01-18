@@ -128,6 +128,7 @@ public final class CommandLineOptions {
   }
   
   
+  @SuppressWarnings("javadoc")
   public static void main(String[] args) {
     new CommandLineOptions(CommandLineOptions.class).printUsage("x", System.out, "file1 ... filen");
   }

@@ -271,7 +271,7 @@ public final class Monitor {
    * (non-Javadoc)
    * @see java.lang.Object#toString()
    */
-  @SuppressWarnings("javadoc")
+  @Override
   public String toString() {
     return new StringBuilder()
     .append('#')

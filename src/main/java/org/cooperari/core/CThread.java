@@ -591,7 +591,6 @@ public final class CThread extends Thread implements CThreadHandle {
         _interruptTime, _dying);
   }
 
-  @SuppressWarnings("javadoc")
   @Override
   protected void finalize() {
     assert CWorkspace.debug(_cid + " collected by GC");

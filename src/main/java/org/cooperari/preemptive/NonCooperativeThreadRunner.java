@@ -31,7 +31,7 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
   private final Thread[] _threads;
 
   /**
-   * Initialization barrier.
+   * Initialization flag.
    */
   private final AtomicBoolean _sync;
 
@@ -142,7 +142,6 @@ public class NonCooperativeThreadRunner implements UncaughtExceptionHandler {
      * (non-Javadoc)
      * @see java.lang.Thread#run()
      */
-    @SuppressWarnings("javadoc")
     @Override
     public void run() {
       CWorkspace.debug("%s starting!", getName());

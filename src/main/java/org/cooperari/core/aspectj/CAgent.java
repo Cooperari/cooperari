@@ -6,8 +6,7 @@ import java.lang.instrument.Instrumentation;
  * Cooperari agent.
  * 
  * The agent is loaded programmatically at runtime to perform load-time
- * weaving. In fact, the agent starts and wraps up the AspectJ 
- * load-time weaving agent.
+ * weaving. It is a wrapper to the AspectJ load-time weaving agent.
  * 
  * @since 0.2
  * @see org.cooperari.core.util.AgentLoader
@@ -35,6 +34,9 @@ public final class CAgent {
  
     
   }
+  /**
+   * Private constructor to prevent instantiation.
+   */
   private CAgent() {
     
   }

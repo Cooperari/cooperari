@@ -7,8 +7,10 @@ import org.junit.runner.Description;
 /**
  * Test result pool that provides a map from alive {@link org.junit.runner.Description} objects
  * to {@link org.cooperari.CTestResult} objects.
+ * 
  * <p>
- * This helps classes like {@link org.cooperari.tools.cjunit.CJUnitRunListener}.
+ * This is a helper class to JUnit execution listeners
+ * like {@link org.cooperari.tools.cjunit.CJUnitRunListener}.
  * </p>
  * 
  * <p>

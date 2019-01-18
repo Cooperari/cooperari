@@ -57,7 +57,7 @@ public final class CSession {
   /**
    * Current runtime (workaround).
    */
-  private static CRuntime runtime = null;
+  private static CRuntime _currentRuntime = null;
 
   /**
    * Test mutex (workaround).
@@ -71,7 +71,7 @@ public final class CSession {
    * <p>
    * The test class parameter identifies the application code at stake in some
    * client-dependent manner. The class will be used as a source of
-   * configuration annotations (those defined in the <code>org.cooperari</code>
+   * configuration annotations (those defined in the <code>org.cooperari.config</code>
    * package).
    * </p>
    * 
@@ -88,7 +88,7 @@ public final class CSession {
    * </p>
    * 
    * 
-   * @param test Test.
+   * @param test The test.
    * @return An instance of {@link CTestResult}.
    */
   public static CTestResult executeTest(CTest test) {
@@ -97,7 +97,7 @@ public final class CSession {
       CTestResult r;
       try {
         _currentTest = test;
-        runtime = new CRuntime(new CConfiguration(test.getConfiguration()));
+        _currentRuntime = new CRuntime(new CConfiguration(test.getConfiguration()));
         if (CSystem.inCooperativeMode()) {
           r = executeTestCooperatively(test);
         } else {
@@ -106,27 +106,41 @@ public final class CSession {
         return r;
       } finally {
         _currentTest = null;
+        _currentRuntime = null;
       }
     }
   }
 
+  /**
+   * Get current test being executed.
+   * @return The current test being executed.
+   */
   public static CTest getCurrentTest() {
     return _currentTest;
   }
   
+  /**
+   * Get runtime environment for current test.
+   * @return The current runtime environment.
+   */
   public static CRuntime getRuntime() {
-    return runtime;
+    return _currentRuntime;
   }
   
+  /**
+   * Execute a test with cooperative semantics.
+   * @param test The test.
+   * @return The test result.
+   */
   private static CTestResult executeTestCooperatively(CTest test) {
     assert CWorkspace.debug("== STARTED %s (cooperatively) ==", test.getName());
   
-    CScheduling schConfig = runtime.getConfiguration(CScheduling.class);
-    CTraceOptions traceOptions = runtime.getConfiguration(CTraceOptions.class);
+    CScheduling schConfig = _currentRuntime.getConfiguration(CScheduling.class);
+    CTraceOptions traceOptions = _currentRuntime.getConfiguration(CTraceOptions.class);
 
     CScheduler scheduler = schConfig.schedulerFactory().create();
 
-    CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class);
+    CMaxTrials maxTrials = _currentRuntime.getConfiguration(CMaxTrials.class);
 
     if (maxTrials.value() < 1) {
       throw new CConfigurationError("Invalid @CMaxTrials configuration: "
@@ -135,17 +149,17 @@ public final class CSession {
 
     int trials = 0;
     Throwable failure;
-    long timeLimit = runtime.getConfiguration(CTimeLimit.class).value() * 1000L;
+    long timeLimit = _currentRuntime.getConfiguration(CTimeLimit.class).value() * 1000L;
 
-    HotspotHandler hHandler = new HotspotHandler(runtime);
-    runtime.register(hHandler);
+    HotspotHandler hHandler = new HotspotHandler(_currentRuntime);
+    _currentRuntime.register(hHandler);
 
     // Main loop
     long startTime = System.currentTimeMillis();
     boolean done = false;
     CoverageLog clog = new CoverageLog();
     CTrace trace = new CTrace(clog, traceOptions);
-    runtime.register(trace);
+    _currentRuntime.register(trace);
 
     do {
       failure = null;
@@ -153,7 +167,7 @@ public final class CSession {
       trace.clear();
       hHandler.startTestTrial();
       scheduler.onTestStarted();
-      CEngine s = new CEngine(runtime, scheduler, test);
+      CEngine s = new CEngine(_currentRuntime, scheduler, test);
       s.start();
       try {
         s.join();
@@ -211,7 +225,7 @@ public final class CSession {
 
     AgentFacade.INSTANCE.complementCoverageInfo(clog);
 
-    if (runtime.getConfiguration(CGenerateCoverageReports.class).value()) {
+    if (_currentRuntime.getConfiguration(CGenerateCoverageReports.class).value()) {
       try {
         clog.produceCoverageReport(test.getSuiteName(), test.getName());
       } 
@@ -222,13 +236,15 @@ public final class CSession {
     return new CTestResultImpl(trials, timeElapsed, clog, failure, traceFile);
   }
 
-
-
-
+  /**
+   * Execute a test with preemptive semantics.
+   * @param test The test.
+   * @return The test result.
+   */
   private static CTestResult executeTestPreemptively(CTest test) {
     assert CWorkspace.debug("== STARTED %s (preemptively) ==", test.getName());
     _currentTest = test;
-    CMaxTrials maxTrials = runtime.getConfiguration(CMaxTrials.class);
+    CMaxTrials maxTrials = _currentRuntime.getConfiguration(CMaxTrials.class);
 
     if (maxTrials.value() < 1) {
       throw new CConfigurationError("Invalid @CMaxTrials configuration: "
@@ -237,10 +253,10 @@ public final class CSession {
 
     int trials = 0;
     Throwable failure;
-    long timeLimit = runtime.getConfiguration(CTimeLimit.class).value() * 1000L;
+    long timeLimit = _currentRuntime.getConfiguration(CTimeLimit.class).value() * 1000L;
 
-    HotspotHandler hHandler = new HotspotHandler(runtime);
-    runtime.register(hHandler);
+    HotspotHandler hHandler = new HotspotHandler(_currentRuntime);
+    _currentRuntime.register(hHandler);
 
     // Main loop
     long startTime = System.currentTimeMillis();

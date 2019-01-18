@@ -7,14 +7,13 @@ import java.lang.annotation.Target;
 
 
 /**
- * Annotation to bypass cooperative execution for a JUnit test method.
+ * Annotation to indicate that cooperative semantics
+ * are required  JUnit test method to execute.
  * 
  * <p>
- * A running {@link CJUnitRunner} instance will bypass cooperative execution
- * for a test method marked with this annotation, delegating its execution
- * to the standard JUnit test runner. 
- * Thus, it will imply a standard one-shot execution for the test 
- * with preemptive semantics.
+ * A running {@link CJUnitRunner} instance will bypass execution
+ * for a test method marked with this annotation, if the execution
+ * is in preemptive mode.
  * </p>
  *
  * <p><b>Example use</b></p>
@@ -25,9 +24,10 @@ import java.lang.annotation.Target;
  * &#064;RunWith(CJUnitRunner.class)
  * public class MyTestClass {
  *   ...
- *   &#064;Test &#064;CIgnore
+ *   &#064;Test &#064;CRequire
  *   public void someTestMethod() { 
- *     // Standard JUnit runner will run this code preemptively and only once.
+ *     // Standard JUnit runner will run this test only 
+ *     // if cooperative semantics are enabled
  *     ...
  *   }
  * }
@@ -38,6 +38,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface CPreemptive {
+public @interface CCooperativeOnly {
 
 }

@@ -12,7 +12,7 @@ import org.cooperari.config.CSometimes;
 import org.cooperari.core.CRuntime;
 import org.cooperari.errors.CWaitDeadlockError;
 import org.cooperari.junit.CJUnitRunner;
-import org.cooperari.junit.CNonPreemptive;
+import org.cooperari.junit.CCooperativeOnly;
 import org.cooperari.sanity.feature.Data;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
@@ -97,29 +97,29 @@ public class WaitAndNotifyTest  {
     }
   };
 
-  @Test(expected=CWaitDeadlockError.class) @CNonPreemptive @CNever({"INT","DONE"})
+  @Test(expected=CWaitDeadlockError.class) @CCooperativeOnly @CNever({"INT","DONE"})
   public final void testBlockingWait() {
     CSystem.forkAndJoin(WAIT_FOREVER);
   }
 
-  @Test(expected=CWaitDeadlockError.class) @CNonPreemptive @CNever({"INT","DONE"})
+  @Test(expected=CWaitDeadlockError.class) @CCooperativeOnly @CNever({"INT","DONE"})
   public final void testBlockingWait2() {
     CSystem.forkAndJoin(WAIT_FOREVER, WAIT_FOREVER);
   }
 
-  @Test(expected=CWaitDeadlockError.class) @CNonPreemptive @CNever({"INT","DONE"})
+  @Test(expected=CWaitDeadlockError.class) @CCooperativeOnly @CNever({"INT","DONE"})
   public final void testBlockingWait4() {
     CSystem.forkAndJoin(WAIT_FOREVER, WAIT_FOREVER, WAIT_FOREVER, WAIT_FOREVER);
   }
   
-  @Test @CNonPreemptive @CAlways("INT") @CNever("DONE")
+  @Test @CCooperativeOnly @CAlways("INT") @CNever("DONE")
   public final void testInterruptDuringWait() {
     Thread t = new Thread(WAIT_FOREVER);
     t.start();
     t.interrupt();
   }
   
-  @Test @CNonPreemptive @CAlways("DONE") @CNever("INT")
+  @Test @CCooperativeOnly @CAlways("DONE") @CNever("INT")
   public final void testSpuriousWakeupDuringWait() {
     Thread t = new Thread(WAIT_FOREVER);
     t.start();
@@ -127,7 +127,7 @@ public class WaitAndNotifyTest  {
     CSystem.sendSpuriousWakeup(t);
   }
   
-  @Test @CNonPreemptive @CAlways("DONE") @CNever("INT")
+  @Test @CCooperativeOnly @CAlways("DONE") @CNever("INT")
   public final void testSpuriousWakeupAndInterruptDuringWaitCaseA() {
     Thread t = new Thread(WAIT_FOREVER);
     t.start();
@@ -136,7 +136,7 @@ public class WaitAndNotifyTest  {
     t.interrupt();
   }
 
-  @Test @CNonPreemptive @CAlways("INT") @CNever("DONE")
+  @Test @CCooperativeOnly @CAlways("INT") @CNever("DONE")
   public final void testSpuriousWakeupAndInterruptDuringWaitCaseB() {
     Thread t = new Thread(WAIT_FOREVER);
     t.start();

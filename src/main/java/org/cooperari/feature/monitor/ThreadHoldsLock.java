@@ -18,10 +18,7 @@ public final class ThreadHoldsLock extends MonitorOperation<Boolean> {
   ThreadHoldsLock(CThread t, Monitor m) {
     super(t, m);
   }
-  /* (non-Javadoc)
-   * @see cooperari.core.COperation#getResult()
-   */
-  @SuppressWarnings("javadoc")
+
   @Override
   public Boolean getResult() {
     if (_monitor == Monitor.NULL) {

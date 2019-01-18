@@ -180,7 +180,7 @@ public class RaceDetector {
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @SuppressWarnings("javadoc")
+    @Override
     public String toString() {
       return new StringBuilder()
       .append(_object.getClass())
@@ -196,7 +196,6 @@ public class RaceDetector {
      * (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    @SuppressWarnings("javadoc")
     @Override
     public boolean equals(Object o) {
       if (!(o instanceof Data))
@@ -211,7 +210,6 @@ public class RaceDetector {
      * (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
-    @SuppressWarnings("javadoc")
     @Override
     public int hashCode() {
       return _hash;
@@ -246,7 +244,6 @@ public class RaceDetector {
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
-    @SuppressWarnings("javadoc")
     @Override
     public String toString() {
       return new StringBuilder()
