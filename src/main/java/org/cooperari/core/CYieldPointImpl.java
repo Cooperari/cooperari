@@ -30,8 +30,6 @@ public final class CYieldPointImpl implements CYieldPoint {
    */
   public static final CYieldPoint THREAD_TERMINATED_YIELD_POINT = new CYieldPointImpl(CYieldPoint.THREAD_TERMINATED_SIGNATURE, INTERNAL, 0);
   
-
-  
   /**
    * Signature.
    */
@@ -127,6 +125,7 @@ public final class CYieldPointImpl implements CYieldPoint {
    * @param o Object reference.
    * @return <code>true</code> if the parameter represents an equivalent yield point.
    */
+  @Override
   public boolean equals(Object o) {
     return o == this || ((o instanceof CYieldPoint) && compareTo((CYieldPoint) o) == 0);
   }

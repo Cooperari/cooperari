@@ -55,12 +55,12 @@ public enum CWorkspace {
   /**
    * Log suffix.
    */
-  private static final String LOG_SUFFIX = ".log.txt";
+  private static final String LOG_SUFFIX = ".log";
 
   /**
    * Report suffix.
    */
-  private static final String REPORT_SUFFIX = ".report.txt";
+  private static final String REPORT_SUFFIX = ".log";
 
   /**
    * Main log. 

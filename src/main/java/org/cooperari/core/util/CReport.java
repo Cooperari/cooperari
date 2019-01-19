@@ -15,6 +15,7 @@ public class CReport {
    * Output file.
    */
   File _file;
+  
   /**
    * Output stream. 
    */
