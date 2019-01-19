@@ -1,9 +1,11 @@
 package org.cooperari.app;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.cooperari.CTest;
+import org.cooperari.errors.CCheckedExceptionError;
 import org.cooperari.errors.CInternalError;
 
 @SuppressWarnings("javadoc")
@@ -38,14 +40,28 @@ public class CApplication implements CTest {
     return _clazz.getName();
   }
 
+
+  @Override
+  public AnnotatedElement getConfiguration() {
+    return _mainMethod;
+  }
+  
   @Override
   public void run() {
     try {
-      _mainMethod.invoke(null, (Object[]) _args);
-    } catch (IllegalAccessException | IllegalArgumentException
-        | InvocationTargetException e) {
-      throw new CInternalError(e);
+      try {
+        _mainMethod.invoke(null, (Object[]) _args);
+      } catch (IllegalAccessException | IllegalArgumentException e) {
+        throw new CInternalError(e);
+      } catch (InvocationTargetException e) {
+        throw e.getCause();
+      }
+    }
+    catch(RuntimeException|Error e) {
+      throw e;
+    }
+    catch (Throwable e) {
+      throw new CCheckedExceptionError(e);
     }
   }
-
 }
