@@ -6,30 +6,47 @@ import java.lang.reflect.Method;
 
 import org.cooperari.CTest;
 import org.cooperari.errors.CCheckedExceptionError;
+import org.cooperari.errors.CConfigurationError;
 import org.cooperari.errors.CInternalError;
 
-@SuppressWarnings("javadoc")
+/**
+ * Cooperative test wrapper for Java applications.
+ * 
+ * @since 0.2
+ *
+ */
 public class CApplication implements CTest {
 
+  /**
+   * Class for the Java program.
+   */
   private final Class<?> _clazz;
-  private final Method _mainMethod;
+  
+  /**
+   * Main method handle.
+   */
+  private final Method _main;
+  
+  /**
+   * Program arguments.
+   */
   private String[] _args;
   
+  /**
+   * Constructor.
+   * @param clazz Application class.
+   * @param args Application arguments.
+   */
   public CApplication(Class<?> clazz, String[] args) {
     _clazz = clazz;
     _args = args;
     try {
-      _mainMethod = _clazz.getDeclaredMethod("main");
+      _main = _clazz.getDeclaredMethod("main", String[].class);
     } catch (NoSuchMethodException | SecurityException e) {
-      throw new CInternalError(e);
+      throw new CConfigurationError("No main method found in " + clazz.getName(), e);
     }
- 
-//    int mod = _mainMethod.getModifiers();
-//    int mask = Method.PUBLIC | Method.DECLARED;
-    
-              
-    
   }
+  
   @Override
   public String getName() {
     return _clazz.getName();
@@ -40,17 +57,16 @@ public class CApplication implements CTest {
     return _clazz.getName();
   }
 
-
   @Override
   public AnnotatedElement getConfiguration() {
-    return _mainMethod;
+    return _main;
   }
   
   @Override
   public void run() {
     try {
       try {
-        _mainMethod.invoke(null, (Object[]) _args);
+        _main.invoke(null, (Object) _args);
       } catch (IllegalAccessException | IllegalArgumentException e) {
         throw new CInternalError(e);
       } catch (InvocationTargetException e) {

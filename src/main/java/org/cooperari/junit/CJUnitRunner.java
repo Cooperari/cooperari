@@ -182,47 +182,28 @@ public final class CJUnitRunner extends BlockJUnit4ClassRunner {
       _expectedException = fm.getAnnotation(Test.class).expected();
     }
 
-
-    /**
-     * Suite name hook.
-     * @return Name of the test class.
-     */
     @Override
     public String getSuiteName() {
       return CJUnitRunner.this.getTestClass().getJavaClass().getCanonicalName();
     }
 
-    /**
-     * Configuration hook.
-     * @return The JUnit method at stake as configuration source.
-     */
     @Override
     public AnnotatedElement getConfiguration() {
       return _method;
     }
 
-    /**
-     * Normal completion hook.
-     * @see CTest#onNormalCompletion()
-     */
     @Override
     public void onNormalCompletion() throws Throwable {
       if (_expectedException != Test.None.class) {
         throw new AssertionError("Expected exception " + _expectedException.getCanonicalName());
       }
     }
-    /**
-     * Ignore-exception hook.
-     * @see CTest#ignoreException(Throwable)
-     */
+    
     @Override
     public boolean ignoreException(Throwable e)  {
       return e.getClass() == _expectedException;
     }
 
-    /** 
-     * Execution method. 
-     */
     @Override
     public void run () {
       try {
