@@ -42,7 +42,7 @@ public class CMultipleExceptionsError extends Error {
     for (Throwable t : list) {
       sb.append(' ')
         .append(t.toString())
-        .append('%n');
+        .append('\n');
     }
     return sb.toString();
   }
