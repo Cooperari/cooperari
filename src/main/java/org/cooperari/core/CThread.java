@@ -51,7 +51,7 @@ public final class CThread extends Thread implements CThreadHandle {
   /**
    * Operation constant to denote thread has finished
    */
-  private COperation<Void> TERMINATED = new COperation<Void>() {
+  private static COperation<Void> TERMINATED = new COperation<Void>() {
     @Override
     public CThreadState getState() {
       return CTERMINATED;

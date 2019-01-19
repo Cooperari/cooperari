@@ -32,7 +32,7 @@ public class Main {
     System.out.println(desc);
     TreeMap<Object, Object> orderedMap = new TreeMap<>(map);
     for (Map.Entry<?, ?> p : orderedMap.entrySet()) {
-      System.out.printf("%s: %s\n", p.getKey(), p.getValue());
+      System.out.printf("%s: %s%n", p.getKey(), p.getValue());
     }
   }
 
@@ -43,27 +43,27 @@ public class Main {
    */
   public static void main(String[] args) {
     System.out
-        .println("== Cooperari version ==\n"
+        .println("== Cooperari version ==%n"
             + CVersion.ID
-            + "\n== Build environment for this release =="
-            + "\nJava version: "
+            + "%n== Build environment for this release =="
+            + "%nJava version: "
             + CVersion.JAVA_BUILD_VERSION
-            + "\nJava VM: "
+            + "%nJava VM: "
             + CVersion.JAVA_VM_BUILD_VERSION
-            + "\nMaven version: "
+            + "%nMaven version: "
             + CVersion.MAVEN_BUILD_VERSION
-            + "\nOS: "
+            + "%nOS: "
             + CVersion.OS_BUILD_VERSION
-            + "\n== Runtime environment :: main settings and dependency versions ==\n"
+            + "%n== Runtime environment :: main settings and dependency versions ==%n"
             + "OS: " 
             + getOSInfo() 
-            + "\nJava version: " 
+            + "%nJava version: " 
             + getProperty("java.version") 
-            + "\nJava VM: " 
+            + "%nJava VM: " 
             + getProperty("java.vm.name") 
-            + "\nJUnit version: "
+            + "%nJUnit version: "
             + junit.runner.Version.id()
-            + "\nAspectJ version: "
+            + "%nAspectJ version: "
             + org.aspectj.bridge.Version.text);
     dump("== Runtime environment :: Java properties ==", System.getProperties());
     dump("== Runtime environment :: environment variables ==", System.getenv());

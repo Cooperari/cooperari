@@ -48,7 +48,6 @@ public interface CTest extends Runnable {
     
   }
     
- 
   /**
    * Callback method invoked in case test trial completes with an exception.
    * The default implementation returns <code>false</code>.

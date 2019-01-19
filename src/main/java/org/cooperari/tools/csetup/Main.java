@@ -59,7 +59,7 @@ public final class Main {
     while (index < args.length && args[index].charAt(0) == '-') {
       String arg = args[index++];
       if (arg.length() == 0) {
-        out.printf("Invalid argument '%s'.\n", arg);
+        out.printf("Invalid argument '%s'.%n", arg);
       }
       switch (arg.substring(1)) {
         case "h":
@@ -71,7 +71,7 @@ public final class Main {
           if (index < args.length) {
             outDir = new File(args[index++]);
           } else {
-            out.printf("Output directory not specified for '%s'.\n", arg);
+            out.printf("Output directory not specified for '%s'.%n", arg);
             return 1;
           }
           break;
@@ -95,7 +95,7 @@ public final class Main {
           break;
 
         default:
-          out.printf("Invalid argument '%s'.\n", arg);
+          out.printf("Invalid argument '%s'.%n", arg);
           return 1;
       }
     }
@@ -106,7 +106,7 @@ public final class Main {
       outDir.mkdirs();
     } catch (Throwable e) {
       e.printStackTrace(out);
-      out.printf("Error creating output directory '%s'.\n",
+      out.printf("Error creating output directory '%s'.%n",
           outDir.getAbsolutePath());
       return 1;
     }
@@ -114,7 +114,7 @@ public final class Main {
     while (index < args.length) {
       String className = args[index++];
       if (verbose) {
-        out.printf("Handling class '%s' ...\n", className);
+        out.printf("Handling class '%s' ...%n", className);
       }
       try {
         Class<?> clazz = Class.forName(className);
@@ -129,7 +129,7 @@ public final class Main {
         }
         try {
           if (dryRun || verbose) {
-            out.printf("== %s :: XML dump ==\n", className);
+            out.printf("== %s :: XML dump ==%n", className);
             wc.print(out);
           } 
           if (!dryRun) {
@@ -160,15 +160,15 @@ public final class Main {
             }
           
             if (verbose) {
-              out.printf("%s - %d bytes\n", ajcInpFile.getCanonicalPath(), ajcInpFile.length());
-              out.printf("%s - %d bytes\n", ajcOutFile.getCanonicalPath(), ajcOutFile.length());
+              out.printf("%s - %d bytes%n", ajcInpFile.getCanonicalPath(), ajcInpFile.length());
+              out.printf("%s - %d bytes%n", ajcOutFile.getCanonicalPath(), ajcOutFile.length());
               out.println("Saving to final JAR file ...");
             }
             
             File jarFile = new File(outDir, className + "-cooperari.jar");
             wc.saveAsJAR(ajcOutFile, jarFile);
             if (!quiet) {
-              out.printf("JAR file for '%s' saved to '%s'\n", className,
+              out.printf("JAR file for '%s' saved to '%s'%n", className,
                   jarFile);
             }
           }
@@ -180,7 +180,7 @@ public final class Main {
         }
       } catch (ClassNotFoundException e) {
         e.printStackTrace(out);
-        out.printf("'%s' not found on class-path.\n", className);
+        out.printf("'%s' not found on class-path.%n", className);
         return 1;
       }
     }
@@ -193,15 +193,15 @@ public final class Main {
    * @param out Output stream.
    */
   private static void displayUsage(PrintStream out) {
-    out.println("Usage:\n  java " + Main.class.getCanonicalName()
+    out.println("Usage:%n  java " + Main.class.getCanonicalName()
         + " [JVM options] [program options] class1 ... classn");
-    out.println("Program options:\n"
-        + "  -d <dir> | -dir <dir> : set output directory\n"
-        + "  -h | -help            : display this message and exit\n"
-        + "  -k | -keeptmp         : keep intermediate temporary files\n"
-        + "  -n | -dryrun          : dry run (just dump XML for weaving configurations)\n"
-        + "  -q | -quiet           : run silent (no output)\n"
-        + "  -v | -verbose         : be verbose (extra output)\n"
+    out.println("Program options:%n"
+        + "  -d <dir> | -dir <dir> : set output directory%n"
+        + "  -h | -help            : display this message and exit%n"
+        + "  -k | -keeptmp         : keep intermediate temporary files%n"
+        + "  -n | -dryrun          : dry run (just dump XML for weaving configurations)%n"
+        + "  -q | -quiet           : run silent (no output)%n"
+        + "  -v | -verbose         : be verbose (extra output)%n"
         );
 
   }

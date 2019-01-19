@@ -67,7 +67,7 @@ class CJUnitRunListener extends RunListener {
       }
     }
     _out.println("== Summary ==");
-    _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms\n", 
+    _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms%n", 
         result.getRunCount(), 
         result.getIgnoreCount(), 
         result.getFailureCount(),
@@ -75,13 +75,13 @@ class CJUnitRunListener extends RunListener {
     _out.println("== Global coverage ==");
     CCoverage ci = CSystem.getGlobalCoverageInfo();
 
-    _out.printf("Coverage rate: %4.1f %% (%d / %d yp)\n", 
+    _out.printf("Coverage rate: %4.1f %% (%d / %d yp)%n", 
         ci.getCoverageRate(),
         ci.getCoveredYieldPoints(),
         ci.getTotalYieldPoints());
     try {
       File report = CSystem.generateGlobalCoverageReport();
-      _out.printf("Global coverage report: '%s'\n", report.getAbsolutePath());
+      _out.printf("Global coverage report: '%s'%n", report.getAbsolutePath());
     }
     catch (Throwable e) {
       e.printStackTrace(_out);
