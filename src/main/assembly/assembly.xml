@@ -1,11 +1,10 @@
 <assembly>
-    <id>bin</id>
-    <!-- Specifies that our binary distribution is a zip package -->
+    <id>dist</id>
     <formats>
         <format>zip</format>
+        <format>tgz</format>
     </formats>
  
-    <!-- Adds the dependencies of our application to the lib directory -->
     <dependencySets>
         <dependencySet>
             <!--
@@ -18,6 +17,12 @@
         </dependencySet>
     </dependencySets>
  
+    <files>
+        <file>
+            <source>LICENSE.txt</source>
+            <outputDirectory>.</outputDirectory>
+        </file>
+    </files>
     <fileSets>
         <fileSet>
             <directory>${project.build.scriptSourceDirectory}</directory>
