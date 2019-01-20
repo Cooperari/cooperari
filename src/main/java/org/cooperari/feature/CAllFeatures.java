@@ -27,8 +27,8 @@ public final class CAllFeatures {
           );
 
   /**
-   * Get list of all feature handlers.
-   * @return A list of feature handler objects.
+   * Get list of all features.
+   * @return The list of all implemented features.
    */
   public static List<CFeature> getFeatures() {
     return ALL_FEATURES;
