@@ -1,9 +1,6 @@
 
 # Cooperari
 
-
-## What? Why? How?  
-
 *[Latin meaning: "to cooperate"](https://en.wiktionary.org/wiki/cooperari)*
 
 Bugs in multithreaded applications are elusive
@@ -21,33 +18,31 @@ Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each 
 
 # History and evolution 
 
-The first implementation of Cooperari was implemented in 2014 and is described in the following paper:
+The first implementation of Cooperari (archived [here](https://bitbucket.org/edrdo/cooperari/wiki/Home)) dates back to 2014 and is described by the following paper:
 
 * Eduardo R.B. Marques, F. Martins, and M. Simões, [**Cooperari: a tool for cooperative testing of multithreaded Java applications**](papers/pppj14.pdf), Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java platform: Virtual machines, Languages, and Tools (PPPJ'14), **DOI**: [10.1145/2647508.2647523](https://doi.org/10.1145/2647508.2647523)
 
 
-This repository contains a completely revamped and refactored version of the original Cooperari implementation (archived [here](https://bitbucket.org/edrdo/cooperari/wiki/Home)), even if the general design principles are the same.  After from refactoring and general improvements, 
+This repository contains a completely revamped and refactored version of the original Cooperari implementation, even if the general design principles are the same.  After from refactoring and general improvements, 
 the main differences to the original versions are as follows:
 
 - Yield point support improved and extended:
-
   - Monitor operations (acquisition and release, `wait`, `notify`, `nofityAll`, ...).
   - `java.lang.Thread` life-cycle methods.
   - Access to object data fields (and race detection). 
   - Calls to methods in `java.util.concurrent.AtomicXXX` classes. 
   - Calls to methods in the `sun.misc.Unsafe` class.
-  
-* Other features:
-  * Improved race condition and deadlock detection mechanisms.
-  * Tests can probe for the reachability of code "hotspots", asserting
+- Other features:
+  - Improved race condition and deadlock detection mechanisms.
+  - Tests can probe for the reachability of code "hotspots", asserting
 that certain "hotspots" are always, never, or sometimes reached.
-  * Specialized JUnit test suite runner.
-  * Yield point coverage reports are now generated.
-* Aspect-oriented code instrumentation:
-  * The standard [AspectJ](https://www.eclipse.org/aspectj/) runtime is used    instead of the [AspectBench](http://www.sable.mcgill.ca/abc/) compiler.
-Code does not need to weaved (instrumented) ahead-of-time any longer, 
+  - Custom command-line JUnit test suite runner.
+  - Yield point coverage reports are now generated.
+- Aspect-oriented code instrumentation:
+  - The standard [AspectJ](https://www.eclipse.org/aspectj/) runtime is used    instead of the [AspectBench](http://www.sable.mcgill.ca/abc/) compiler.
+  - Code does not need to weaved (instrumented) ahead-of-time any longer, 
 [load-time weaving](https://www.eclipse.org/aspectj/doc/released/devguide/ltw.html) is used instead. 
-  * It now works with Java 8 instead than Java 7. Future support for Java &gt; 8 code will depend on the availability and backward compability of internal JRE features in classes like `com.sun.misc.Unsafe` (this issue has not been analyzed yet, use Oracle's JDK 8 in conjunction with Cooperari).
+- Cooperari now works with Java 8 rather than Java 7. Future support for Java &gt; 8 code will depend on the availability and backward compability of internal JRE features in classes like `com.sun.misc.Unsafe` (this issue has not been analyzed yet, use Oracle's JDK 8 in conjunction with Cooperari).
 
 # License
 
