@@ -1,4 +1,4 @@
-package org.cooperari.scheduling;
+package org.cooperari.core.scheduling;
 
 /**
  * Yield point for a thread.

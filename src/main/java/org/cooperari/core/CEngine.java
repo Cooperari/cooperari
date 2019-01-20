@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import org.cooperari.config.CScheduling;
+import org.cooperari.core.scheduling.CProgramStateFactory;
+import org.cooperari.core.scheduling.CScheduler;
 import org.cooperari.errors.CInternalError;
 import org.cooperari.errors.CWaitDeadlockError;
-import org.cooperari.scheduling.CProgramStateFactory;
-import org.cooperari.scheduling.CScheduler;
 
 
 /**

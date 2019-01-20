@@ -1,4 +1,4 @@
-package org.cooperari.scheduling;
+package org.cooperari.core.scheduling;
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CTimeLimit;
 

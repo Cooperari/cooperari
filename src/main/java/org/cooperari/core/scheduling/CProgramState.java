@@ -1,4 +1,4 @@
-package org.cooperari.scheduling;
+package org.cooperari.core.scheduling;
 
 import java.util.List;
 import java.util.Random;

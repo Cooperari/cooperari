@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.cooperari.core.CThread;
+import org.cooperari.core.scheduling.CThreadLocation;
 import org.cooperari.errors.CDeadlockError;
-import org.cooperari.scheduling.CThreadLocation;
 
 /**
  * Exception thrown due to a deadlock error.

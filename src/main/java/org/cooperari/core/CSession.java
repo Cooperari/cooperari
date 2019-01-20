@@ -12,13 +12,13 @@ import org.cooperari.config.CScheduling;
 import org.cooperari.config.CTimeLimit;
 import org.cooperari.config.CTraceOptions;
 import org.cooperari.core.aspectj.AgentFacade;
+import org.cooperari.core.scheduling.CScheduler;
 import org.cooperari.core.util.CReport;
 import org.cooperari.errors.CCheckedExceptionError;
 import org.cooperari.errors.CConfigurationError;
 import org.cooperari.errors.CHotspotError;
 import org.cooperari.errors.CInternalError;
 import org.cooperari.feature.hotspots.HotspotHandler;
-import org.cooperari.scheduling.CScheduler;
 
 /**
  * Test session executor.

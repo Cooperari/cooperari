@@ -3,7 +3,7 @@ package org.cooperari.errors;
 import java.util.Collection;
 
 import org.cooperari.core.CThread;
-import org.cooperari.scheduling.CThreadLocation;
+import org.cooperari.core.scheduling.CThreadLocation;
 
 
 /**

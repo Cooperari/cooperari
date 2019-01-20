@@ -11,9 +11,9 @@ import org.aspectj.lang.JoinPoint;
 import org.cooperari.CCoverage;
 import org.cooperari.core.CWorkspace;
 import org.cooperari.core.CYieldPointImpl;
+import org.cooperari.core.scheduling.CYieldPoint;
 import org.cooperari.core.CCoverageLog;
 import org.cooperari.core.util.CLog;
-import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Facade for the load-time weaving agent.

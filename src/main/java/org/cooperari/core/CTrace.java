@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cooperari.config.CTraceOptions;
+import org.cooperari.core.scheduling.CThreadLocation;
+import org.cooperari.core.scheduling.CYieldPoint;
 import org.cooperari.core.util.CReport;
-import org.cooperari.scheduling.CThreadLocation;
-import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Cooperative execution trace.

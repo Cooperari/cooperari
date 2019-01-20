@@ -5,8 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.cooperari.scheduling.CProgramStateFactory;
-import org.cooperari.scheduling.CSchedulerFactory;
+import org.cooperari.core.scheduling.CProgramStateFactory;
+import org.cooperari.core.scheduling.CSchedulerFactory;
 
 /**
  * Configure thread scheduling.

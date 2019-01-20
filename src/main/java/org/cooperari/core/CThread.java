@@ -12,10 +12,10 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.locks.LockSupport;
 
 import org.aspectj.lang.JoinPoint;
+import org.cooperari.core.scheduling.CThreadHandle;
+import org.cooperari.core.scheduling.CThreadLocation;
+import org.cooperari.core.scheduling.CYieldPoint;
 import org.cooperari.errors.CInternalError;
-import org.cooperari.scheduling.CThreadHandle;
-import org.cooperari.scheduling.CThreadLocation;
-import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Cooperative thread.

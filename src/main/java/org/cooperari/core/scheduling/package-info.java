@@ -3,4 +3,4 @@
  *
  * @since 0.2
  */
-package org.cooperari.scheduling;
+package org.cooperari.core.scheduling;
