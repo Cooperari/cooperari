@@ -16,15 +16,15 @@ yield points and deterministically selects the next thread to run.
 Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each test case in a JUnit test suite runs multiple times, until it either fails or the state-space of schedules is deemed as covered by a configurable policy that is responsible for the scheduling decisions.  Beyond failed assertions in software tests, deadlocks and races are also detected as soon as they are exposed in the cooperative execution.
 
 
-# History and evolution 
+# Inception and evolution 
 
 The first implementation of Cooperari (archived [here](https://bitbucket.org/edrdo/cooperari/wiki/Home)) dates back to 2014 and is described by the following paper:
 
-* E. R.B. Marques, F. Martins, and M. Simões, [**Cooperari: a tool for cooperative testing of multithreaded Java applications**](papers/pppj14.pdf), Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java platform: Virtual machines, Languages, and Tools (PPPJ'14), **DOI**: [10.1145/2647508.2647523](https://doi.org/10.1145/2647508.2647523)
+* E. R. B. Marques, F. Martins, and M. Simões, [**Cooperari: a tool for cooperative testing of multithreaded Java applications**](papers/pppj14.pdf), Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java platform: Virtual machines, Languages, and Tools (PPPJ'14), **DOI**: [10.1145/2647508.2647523](https://doi.org/10.1145/2647508.2647523)
 
 
-This repository contains a completely revamped and refactored version of the original Cooperari implementation, even if the general design principles are the same.  After from refactoring and general improvements, 
-the main differences to the original versions are as follows:
+This repository contains a completely revamped and refactored version of the original Cooperari implementation, even if the general design principles are the same, along with important extensions.
+The main differences to the original versions are as follows:
 
 - Yield point support improved and extended:
   - Monitor operations (acquisition and release, `wait`, `notify`, `nofityAll`, ...).
@@ -35,7 +35,7 @@ the main differences to the original versions are as follows:
 - Other features:
   - Improved race condition and deadlock detection mechanisms.
   - Tests can probe for the reachability of code "hotspots", asserting
-that certain "hotspots" are always, never, or sometimes reached.
+that certain "hotspots" are always, never, or only sometimes reached.
   - Custom command-line JUnit test suite runner.
   - Yield point coverage reports are now generated.
 - Aspect-oriented code instrumentation:
