@@ -39,10 +39,10 @@ that certain "hotspots" are always, never, or sometimes reached.
   - Custom command-line JUnit test suite runner.
   - Yield point coverage reports are now generated.
 - Aspect-oriented code instrumentation:
-  - The standard [AspectJ](https://www.eclipse.org/aspectj/) runtime is used    instead of the [AspectBench](http://www.sable.mcgill.ca/abc/) compiler.
+  - The standard [AspectJ](https://www.eclipse.org/aspectj/) distribution is used, rather than the [AspectBench](http://www.sable.mcgill.ca/abc/) compiler.
   - Code does not need to weaved (instrumented) ahead-of-time any longer, 
 [load-time weaving](https://www.eclipse.org/aspectj/doc/released/devguide/ltw.html) is used instead. 
-- Cooperari now works with Java 8 rather than Java 7. Future support for Java &gt; 8 code will depend on the availability and backward compability of internal JRE features in classes like `com.sun.misc.Unsafe` (this issue has not been analyzed yet, use Oracle's JDK 8 in conjunction with Cooperari).
+- Cooperari now works with Java 8 rather than Java 7. Future support for Java &gt; 8 code will depend on the availability and backward compatibility of internal JRE features, e.g., classes like `com.sun.misc.Unsafe` (this issue has not been analyzed yet, use Oracle's JDK 8 in conjunction with Cooperari; see requirements below).
 
 # License
 
