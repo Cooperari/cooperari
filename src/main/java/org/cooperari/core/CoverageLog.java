@@ -149,10 +149,10 @@ public final class CoverageLog implements CCoverage {
    */
   public File produceCoverageReport(String dirName, String reportId) throws IOException {
     CReport r = CWorkspace.INSTANCE.createReport(dirName, reportId);
-    r.beginSection("GLOBAL STATISTICS", "TOTAL", "COVERED", "%");
+    r.beginSection("YIELD POINT COVERAGE", "TOTAL", "COVERED", "%");
     r.writeEntry(getTotalYieldPoints(), getCoveredYieldPoints(),
         getCoverageRate());
-    r.beginSection("YIELD POINTS", "C", "SOURCE FILE", "LINE", "SIGNATURE");
+    r.beginSection("YIELD POINTS", "COVERED", "SOURCE FILE", "LINE", "SIGNATURE");
     for (Entry<CYieldPoint, Boolean> e : _log.entrySet()) {
       r.writeEntry(e.getValue() ? 'Y' : 'N', 
                    e.getKey().getSourceFile(), 

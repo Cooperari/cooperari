@@ -72,7 +72,7 @@ class CJUnitRunListener extends RunListener {
         result.getIgnoreCount(), 
         result.getFailureCount(),
         result.getRunTime());
-    _out.println("== Global coverage ==");
+    _out.println("== Yield point coverage ==");
     CCoverage ci = CSystem.getGlobalCoverageInfo();
 
     _out.printf("Coverage rate: %4.1f %% (%d / %d yp)%n", 

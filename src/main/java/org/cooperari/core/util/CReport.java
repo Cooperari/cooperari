@@ -45,7 +45,7 @@ public class CReport {
    * @param columnHeaders Column headers.
    */
   public void beginSection(String title, Object... columnHeaders) {
-    _out.println("--- " + title +  "---") ;    
+    _out.println("--- " + title +  " ---") ;    
     write(columnHeaders);
   }
   
