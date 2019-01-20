@@ -42,6 +42,14 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
+        <fileSet>
+        	<directory>papers</directory>
+        	<outputDirectory>doc/papers</outputDirectory>
+        </fileSet>
+         <fileSet>
+        	<directory>${project.build.directory}/site/apidocs</directory>
+        	<outputDirectory>doc/javadoc</outputDirectory>
+        </fileSet>
     </fileSets>
 </assembly>
 
