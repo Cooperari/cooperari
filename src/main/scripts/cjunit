@@ -14,5 +14,5 @@ CLASSPATH="$ASPECTPATH:$AGENT_JAR:$COOPERARI_JAR:$CLASSPATH"
 java -classpath "$CLASSPATH" \
    "-javaagent:$AGENT_JAR" \
    "-Daj.class.path=$CLASSPATH" \
-   org.junit.runner.JUnitCore \
+   org.cooperari.tools.cjunit.Main \
    "$*"
