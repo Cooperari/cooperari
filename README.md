@@ -20,7 +20,7 @@ Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each 
 
 The first implementation of Cooperari (archived [here](https://bitbucket.org/edrdo/cooperari/wiki/Home)) dates back to 2014 and is described by the following paper:
 
-* Eduardo R.B. Marques, F. Martins, and M. Simões, [**Cooperari: a tool for cooperative testing of multithreaded Java applications**](papers/pppj14.pdf), Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java platform: Virtual machines, Languages, and Tools (PPPJ'14), **DOI**: [10.1145/2647508.2647523](https://doi.org/10.1145/2647508.2647523)
+* E. R.B. Marques, F. Martins, and M. Simões, [**Cooperari: a tool for cooperative testing of multithreaded Java applications**](papers/pppj14.pdf), Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java platform: Virtual machines, Languages, and Tools (PPPJ'14), **DOI**: [10.1145/2647508.2647523](https://doi.org/10.1145/2647508.2647523)
 
 
 This repository contains a completely revamped and refactored version of the original Cooperari implementation, even if the general design principles are the same.  After from refactoring and general improvements, 
