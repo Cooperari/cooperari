@@ -19,7 +19,7 @@
  
     <files>
         <file>
-            <source>LICENSE.txt</source>
+            <source>LICENSE.md</source>
             <outputDirectory>.</outputDirectory>
         </file>
     </files>
