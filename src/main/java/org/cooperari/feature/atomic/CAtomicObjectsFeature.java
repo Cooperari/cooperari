@@ -3,7 +3,7 @@ package org.cooperari.feature.atomic;
 import java.util.List;
 
 import org.cooperari.core.CustomYieldPoint;
-import org.cooperari.core.FeatureHandler;
+import org.cooperari.feature.CFeature;
 
 /**
  * Feature handler for yield points defined by calls to methods in the <code>java.util.concurrent.atomic</code> package.
@@ -11,10 +11,8 @@ import org.cooperari.core.FeatureHandler;
  * @since 0.2
  *
  */
-public class Feature implements FeatureHandler {
-  /**
-   * @{inheritDoc}
-   */
+public class CAtomicObjectsFeature implements CFeature {
+
   @Override
   public void getCustomYieldPoints(List<CustomYieldPoint> list) {
     Class<?>[] classes = {

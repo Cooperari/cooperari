@@ -1,5 +1,5 @@
 /**
- * Reachability monitoring features.
+ * Hotspot reachability feature.
  * 
  * @see org.cooperari.CSystem#hotspot(String)
  */

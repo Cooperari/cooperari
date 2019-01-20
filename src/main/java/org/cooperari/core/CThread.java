@@ -154,7 +154,7 @@ public final class CThread extends Thread implements CThreadHandle {
     if (_virtualizedThread == null) {
       setName("<" + _cid + ">");
     } else {
-      e.getRuntime().get(ThreadMappings.class).associate(_virtualizedThread, this);
+      e.getRuntime().get(CThreadMappings.class).associate(_virtualizedThread, this);
       setName(_virtualizedThread.getName());
     }
   }

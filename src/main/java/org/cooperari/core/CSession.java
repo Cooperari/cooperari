@@ -157,7 +157,7 @@ public final class CSession {
     // Main loop
     long startTime = System.currentTimeMillis();
     boolean done = false;
-    CoverageLog clog = new CoverageLog();
+    CCoverageLog clog = new CCoverageLog();
     CTrace trace = new CTrace(clog, traceOptions);
     _currentRuntime.register(trace);
 
@@ -333,7 +333,7 @@ public final class CSession {
     final Throwable _failure;
     final File _failureTrace;
 
-    CTestResultImpl(int trials, long timeElapsed, CoverageLog clog,
+    CTestResultImpl(int trials, long timeElapsed, CCoverageLog clog,
         Throwable failure, File failureTrace) {
       _trials = trials;
       _executionTime = timeElapsed;

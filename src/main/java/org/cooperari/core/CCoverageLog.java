@@ -13,15 +13,13 @@ import org.cooperari.scheduling.CYieldPoint;
 
 /**
  * Coverage log.
- * 
- * <p>
+ *
  * An object of this kind maintains a log of yield point coverage.
- * </p>
  * 
  * @since 0.2
  *
  */
-public final class CoverageLog implements CCoverage {
+public final class CCoverageLog implements CCoverage {
 
   /**
    * The actual log.
@@ -43,7 +41,7 @@ public final class CoverageLog implements CCoverage {
   /**
    * Constructs a new coverage log.
    */
-  public CoverageLog() { }
+  public CCoverageLog() { }
 
   /**
    * Get total number of yield points recorded.
@@ -98,7 +96,6 @@ public final class CoverageLog implements CCoverage {
   /**
    * Enrich this log with information from other log.
    * 
-   * <p>
    * The following contract applies:
    * <ul>
    * <li>This log is enriched only for yield points occurring
@@ -115,12 +112,11 @@ public final class CoverageLog implements CCoverage {
    * </li>
    * </ul>
    * </ul>
-   * </p>
    * 
    * @param otherLog The other log.
    * @param ignoreCoverageStatus Ignore coverage status from the other log.
    */
-  public void enrich(CoverageLog otherLog, boolean ignoreCoverageStatus) {
+  public void enrich(CCoverageLog otherLog, boolean ignoreCoverageStatus) {
     assert CWorkspace.debug("ENRICHING log %d %s :: %d %d", otherLog.getTotalYieldPoints(), ignoreCoverageStatus,  getTotalYieldPoints(), getCoveredYieldPoints());
     for (String sf : _sourceFiles) {
       CYieldPointImpl lowerBound = new CYieldPointImpl("", sf, -1);

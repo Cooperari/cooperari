@@ -36,6 +36,6 @@ public final class Interrupt extends ThreadOperation<Void> {
    * @param targetThread Thread to interrupt.
    */
   public static void execute(CThread thisThread, Thread targetThread) {
-    thisThread.cYield(new Interrupt(Feature.getCThread(targetThread)));
+    thisThread.cYield(new Interrupt(CThreadFeature.getCThread(targetThread)));
   }
 }

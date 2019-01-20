@@ -288,10 +288,10 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>2.10.4</version>
 				<configuration>
-					<show>protected</show>
-					<author>false</author>
+					<show>package</show>
+					<author>true</author>
 					<version>true</version>
-					<detectLinks>true</detectLinks>
+					<detectLinks>false</detectLinks>
 					<linksource>false</linksource>
 					<keywords>false</keywords>
 					<use>true</use>
@@ -305,13 +305,22 @@
 							<value>http://docs.oracle.com/javase/8/docs/api</value>
 						</property>
 					</javaApiLinks>
-					<excludePackageNames>org.cooperari.core:org.cooperari.feature</excludePackageNames>
 					<verbose>true</verbose>
 					<minmemory>32m</minmemory>
 					<maxmemory>128m</maxmemory>
 					<failOnError>true</failOnError>
 					<includeDependencySources>false</includeDependencySources>
+					<excludePackageNames>org.cooperari.app,org.cooperari.preemptive,org.cooperari.tools</excludePackageNames>
 				</configuration>
+				<executions>
+               		<execution>
+            			<phase>prepare-package</phase>
+                		<id>attach-javadocs</id>
+            			<goals>
+                			<goal>javadoc</goal>
+            			</goals>
+        			</execution>
+    			</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

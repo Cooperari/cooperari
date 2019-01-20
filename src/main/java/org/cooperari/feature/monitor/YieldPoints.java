@@ -46,7 +46,7 @@ public final class YieldPoints {
    * Around advice executed in place of <code>Thread.holdsLock()</code>.
    * @param thisJoinPoint Join point.
    * @param o Target object.
-   * @return <code>true<code> if and only calling thread holds lock over <code>o</code>.
+   * @return <code>true</code> if and only calling thread holds lock over <code>o</code>.
    * @throws Throwable In accordance to <code>ProceedingJoinPoint.proceed()</code>.
    */
   @Around("call(boolean Thread.holdsLock(Object)) && args(o)")

@@ -90,7 +90,7 @@ public class CEngine extends Thread {
     _runtime = runtime;
     _scheduler = scheduler;
     _runtime.register(this);
-    _runtime.register(new ThreadMappings());
+    _runtime.register(new CThreadMappings());
     _trace = _runtime.get(CTrace.class);
     setUncaughtExceptionHandler(_uncaughtExceptionHandler);
 

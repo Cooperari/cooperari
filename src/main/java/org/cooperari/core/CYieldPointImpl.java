@@ -87,52 +87,32 @@ public final class CYieldPointImpl implements CYieldPoint {
     }
     return kind + '(' + s + ')';
   }
-  /**
-   * @{inheritDoc}
-   */
+
   @Override
   public String getSignature() {
     return _signature;
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public String getSourceFile() {
     return _file;
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public int getSourceLine() {
     return _line;
   }
 
-  /**
-   * Get hash code.
-   * @return Hash code value.
-   */
   @Override
   public int hashCode() {
     return _hash;
   }
 
-  /**
-   * Test for equality.
-   * @param o Object reference.
-   * @return <code>true</code> if the parameter represents an equivalent yield point.
-   */
   @Override
   public boolean equals(Object o) {
     return o == this || ((o instanceof CYieldPoint) && compareTo((CYieldPoint) o) == 0);
   }
   
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public int compareTo(CYieldPoint o) {
     CYieldPointImpl other = (CYieldPointImpl) o;
@@ -146,9 +126,6 @@ public final class CYieldPointImpl implements CYieldPoint {
     return c;
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public String toString() {
     return new StringBuilder().append(getSourceFile()).append('|')

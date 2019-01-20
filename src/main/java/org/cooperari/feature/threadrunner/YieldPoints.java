@@ -7,7 +7,7 @@ import org.cooperari.core.CThread;
 
 
 /**
- * Yield points for calls to {@link org.cooperari.CSystem#forkAndJoin}</code>.
+ * Yield points for calls to {@link org.cooperari.CSystem#forkAndJoin}.
  *
  * @since 0.2
  */

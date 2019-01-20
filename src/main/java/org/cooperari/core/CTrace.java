@@ -73,7 +73,7 @@ public final class CTrace {
   /**
    * Coverage log to use.
    */
-  private final CoverageLog _clog;
+  private final CCoverageLog _clog;
   
 
   /**
@@ -86,7 +86,7 @@ public final class CTrace {
    * @param clog Set in which to record covered yield points.
    * @param options Options.
    */
-  public CTrace(CoverageLog clog, CTraceOptions options) {
+  public CTrace(CCoverageLog clog, CTraceOptions options) {
     _clog = clog;
     _sizeLimit = options.limit();
   }

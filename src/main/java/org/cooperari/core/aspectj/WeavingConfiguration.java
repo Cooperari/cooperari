@@ -30,10 +30,10 @@ import org.cooperari.CVersion;
 import org.cooperari.config.CInstrument;
 import org.cooperari.core.ACustomYieldPoint;
 import org.cooperari.core.CustomYieldPoint;
-import org.cooperari.core.FeatureHandler;
-import org.cooperari.core.Features;
 import org.cooperari.core.util.IO;
 import org.cooperari.errors.CInternalError;
+import org.cooperari.feature.CAllFeatures;
+import org.cooperari.feature.CFeature;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -290,7 +290,7 @@ public final class WeavingConfiguration {
     // Create configuration
     WeavingConfiguration wc = new WeavingConfiguration();
     // Handle aspects to use
-    for (FeatureHandler fh : Features.getFeatureHandlers()) {
+    for (CFeature fh : CAllFeatures.getFeatures()) {
       Class<?> aspectClass = fh.getInstrumentationAspect();
       if (aspectClass != null) {
         if (aspectClass.getAnnotation(org.aspectj.lang.annotation.Aspect.class) == null) {
@@ -303,7 +303,7 @@ public final class WeavingConfiguration {
     // Handle inline aspects 
     wc.declareAspect(ACustomYieldPoint.class);
     List<CustomYieldPoint> list = new ArrayList<>();
-    for (FeatureHandler fh : Features.getFeatureHandlers()) {
+    for (CFeature fh : CAllFeatures.getFeatures()) {
        list.clear();
        fh.getCustomYieldPoints(list);
        for (CustomYieldPoint cyp : list) {

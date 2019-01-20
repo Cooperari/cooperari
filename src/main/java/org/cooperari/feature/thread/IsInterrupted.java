@@ -51,6 +51,6 @@ public final class IsInterrupted extends ThreadOperation<Boolean> {
    * @return Interruption status for <code>otherThread</code>.
    */
   public static boolean execute(CThread thisThread, Thread otherThread) {
-    return thisThread.cYield(new IsInterrupted(Feature.getCThread(otherThread)));
+    return thisThread.cYield(new IsInterrupted(CThreadFeature.getCThread(otherThread)));
   }
 }

@@ -7,12 +7,12 @@ import org.aspectj.bridge.IMessageHandler;
 /**
  * Message handler instantiated by the load-time weaving agent.
  * 
- * <p>
+ * 
  * An instance of this object is created by the load-time weaver agent,
  * by setting the <code>-XmessageHandlerClass</code>
  * property to the name of this class, as described in the 
  * <a href="https://eclipse.org/aspectj/doc/next/devguide/ltw-configuration.html">load-time weaving configuration for AspectJ</a>.
- * </p>
+ * 
  * 
  * @since 0.2
  */

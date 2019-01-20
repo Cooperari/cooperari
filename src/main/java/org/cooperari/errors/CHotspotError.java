@@ -8,21 +8,26 @@ import org.cooperari.config.CNever;
 import org.cooperari.config.CSometimes;
 
 /**
- * Hotspot errors.
+ * Hotspot reachability error.
  * 
- * <p>
- * Hotspot errors are thrown in three cases:
- * </p>
- * <ul>
+ * 
+ * An error of this kind is thrown in one of the following cases:
+ * <ol>
+ * 
  * <li>A {@link CAlways}-specified hotspot for a test case IS NOT reached by a
  * test trial (for no failures, EVERY trial for the same test case must reach
  * the hotspot);</li>
+ * 
  * <li>A {@link CNever}-specified hotspot for a test case IS reached by a test
  * trial (for no failures, NO test trial for the same test case should reach the
  * hotspot);</li>
+ * 
  * <li>A {@link CSometimes}-specified hotspot for a test case IS NOT reached by ALL test trials
  * least one test trial (for for no failures, AT LEAST ONE test trial for the same test case should reach the
- * hotspot);</li>
+ * hotspot).</li>
+ * 
+ * </ol>
+ * 
  * 
  * @since 0.2
  */

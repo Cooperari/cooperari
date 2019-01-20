@@ -1,6 +1,6 @@
 package org.cooperari.feature.hotspots;
 
-import org.cooperari.core.FeatureHandler;
+import org.cooperari.feature.CFeature;
 
 /**
  * Hotspot reachibility feature.
@@ -8,20 +8,13 @@ import org.cooperari.core.FeatureHandler;
  * @since 0.2
  *
  */
-public final class Feature implements FeatureHandler {
+public final class CHotspotFeature implements CFeature {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public Class<?> getInstrumentationAspect() {
     return YieldPoints.class;
   }
-  
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean cooperativeSemanticsRequired() {
     return false;

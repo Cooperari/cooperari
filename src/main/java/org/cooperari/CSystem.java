@@ -21,8 +21,8 @@ import org.cooperari.preemptive.NonCooperativeThreadRunner;
  * <p>
  * Note that some methods can only be called from code that is already 
  * running cooperatively, for instance from a JUnit test method that is being executed
- * using Cooperari's custom JUnit runner ({@link org.cooperari.junit#CJUnitRunner}).
- * These methods will throw {@link org.cooperari.errors.CNonCooperativeModeError} otherwise.</p>.
+ * using Cooperari's custom JUnit runner ({@link org.cooperari.junit.CJUnitRunner}).
+ * These methods will throw {@link org.cooperari.errors.CNonCooperativeModeError} otherwise.
  * </p>
  * @since 0.2
  *

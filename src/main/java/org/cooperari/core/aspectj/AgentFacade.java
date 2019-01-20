@@ -11,7 +11,7 @@ import org.aspectj.lang.JoinPoint;
 import org.cooperari.CCoverage;
 import org.cooperari.core.CWorkspace;
 import org.cooperari.core.CYieldPointImpl;
-import org.cooperari.core.CoverageLog;
+import org.cooperari.core.CCoverageLog;
 import org.cooperari.core.util.CLog;
 import org.cooperari.scheduling.CYieldPoint;
 
@@ -35,7 +35,7 @@ public enum AgentFacade {
   /**
    * Global coverage log.
    */
-  private final CoverageLog _globalCoverageLog = new CoverageLog();
+  private final CCoverageLog _globalCoverageLog = new CCoverageLog();
 
   /**
    * Ignore set (a few methods are instrumented but should not be considered yield points).
@@ -162,7 +162,7 @@ public enum AgentFacade {
    * 
    * @param log Coverage log.
    */
-  public void complementCoverageInfo(CoverageLog log) {
+  public void complementCoverageInfo(CCoverageLog log) {
     synchronized(this) {
       if (log.getTotalYieldPoints() > 0) {
         _globalCoverageLog.enrich(log, false);

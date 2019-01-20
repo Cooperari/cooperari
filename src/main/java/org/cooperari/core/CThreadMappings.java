@@ -15,7 +15,7 @@ import org.cooperari.errors.CInternalError;
  * @since 0.2
  *
  */
-public final class ThreadMappings {
+public final class CThreadMappings {
 
   /**
    * {@link Thread}-to-{@link CThread} map.

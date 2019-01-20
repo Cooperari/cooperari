@@ -2,7 +2,7 @@ package org.cooperari.feature.data;
 
 import org.cooperari.config.CRaceDetection;
 import org.cooperari.core.CRuntime;
-import org.cooperari.core.FeatureHandler;
+import org.cooperari.feature.CFeature;
 
 
 /**
@@ -10,11 +10,8 @@ import org.cooperari.core.FeatureHandler;
  *
  * @since 0.2
  */
-public final class Feature implements FeatureHandler {
+public final class CDataAccessFeature implements CFeature {
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public void init(CRuntime env) {
     CRaceDetection config = env.getConfiguration(CRaceDetection.class);
@@ -23,9 +20,6 @@ public final class Feature implements FeatureHandler {
     } 
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public void shutdown(CRuntime env) {
     if (env.get(RaceDetector.class) != null) {
@@ -33,9 +27,6 @@ public final class Feature implements FeatureHandler {
     }
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public Class<?> getInstrumentationAspect() {
     return YieldPoints.class;

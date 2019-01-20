@@ -31,11 +31,10 @@ final class Oblitus extends CScheduler {
     _rng = new Random(0); 
   }
 
-  /**
-   * Pick a random thread to run next.
-   */
+
   @Override
   public CThreadHandle decision(CProgramState state) {
+    // Pick a random thread to run next.
     return state.select(_rng);
   }
 

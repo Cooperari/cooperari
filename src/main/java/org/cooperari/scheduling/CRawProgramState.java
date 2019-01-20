@@ -35,39 +35,26 @@ class CRawProgramState implements CProgramState {
     _blockedThreads = blockedThreads;
   }
   
-  
-
-
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public int size() {
     return threads();
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public int threads() {
     return _readyThreads.size() + _blockedThreads.size();
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public List<? extends CElement> readyElements() {
     return _readyThreads;
   }
-  /**
-   * @{inheritDoc}
-   */
+
   @Override
   public List<? extends CElement> blockedElements() {
     return _blockedThreads;
   }
+  
   /**
    * Select a random ready thread.
    * @return A thread from {@link #readyElements()}.

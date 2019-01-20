@@ -9,18 +9,16 @@ import org.junit.runner.Description;
  * to {@link org.cooperari.CTestResult} objects.
  * 
  * <p>
- * This is a helper class to JUnit execution listeners
- * like {@link org.cooperari.tools.cjunit.CJUnitRunListener}.
- * </p>
- * 
- * <p>
  * Implementation notes: 
  * <ul>
- * <li>A single-element enumeration scheme enforces the singleton pattern.</p>
+ * <li>A single-element enumeration scheme enforces the singleton pattern.</li>
  * <li>A {@link java.util.WeakHashMap} is used internally so that garbage entries 
  * for old tests can be automatically reclaimed by the JVM.</li>
  * </ul>
- * </p>
+ * 
+ * 
+ * @see org.cooperari.tools.cjunit.Main
+ * @see org.cooperari.tools.cjunit.CJUnitRunListener
  * @since 0.2
  *
  */

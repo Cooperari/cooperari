@@ -19,6 +19,6 @@ public  final class GetState {
    */
   public static Thread.State execute(CThread thisThread, Thread targetThread) {
     thisThread.cYield(CThread.NOP);
-    return  Feature.getCThread(targetThread).getVirtualState();
+    return  CThreadFeature.getCThread(targetThread).getVirtualState();
   }
 }

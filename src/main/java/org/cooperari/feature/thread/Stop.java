@@ -50,6 +50,6 @@ public  final class Stop extends ThreadOperation<Void> {
    * @param otherThread Thread to stop.
    */
   public static void execute(CThread thisThread, Thread otherThread) {
-    thisThread.cYield(new Stop(thisThread, Feature.getCThread(otherThread)));
+    thisThread.cYield(new Stop(thisThread, CThreadFeature.getCThread(otherThread)));
   }
 }

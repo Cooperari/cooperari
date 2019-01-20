@@ -103,13 +103,13 @@ public final class Join extends ThreadOperation<Boolean> {
    * Execute a thread join operation.
    * @param thisThread This thread.
    * @param joinThread Thread to join.
-   * @param timeout Join timeout in nanoseconds: <code>-1L</code> if invalid, <code>0L</code> for no timeout</code>, 
+   * @param timeout Join timeout in nanoseconds: <code>-1L</code> if invalid, <code>0L</code> for no timeout, 
    * a positive value for a timed join.
    * @throws IllegalArgumentException In accordance to {@link Thread#join(long)} and {@link Thread#join(long, int)}.
    * @throws InterruptedException In accordance to {@link Thread#join()}, {@link Thread#join(long)} and {@link Thread#join(long, int)}.
    */
   public static void execute(CThread thisThread, Thread joinThread, long timeout) throws InterruptedException {
-    if ( thisThread.cYield(new Join(thisThread, Feature.getCThread(joinThread), timeout)) ) {
+    if ( thisThread.cYield(new Join(thisThread, CThreadFeature.getCThread(joinThread), timeout)) ) {
       throw new InterruptedException();
     }
   }

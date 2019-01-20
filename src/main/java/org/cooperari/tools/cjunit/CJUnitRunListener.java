@@ -18,7 +18,7 @@ import org.junit.runner.notification.RunListener;
  * 
  * @since 0.2 
  */
-class CJUnitRunListener extends RunListener {
+public class CJUnitRunListener extends RunListener {
 
   /**
    * Output stream.

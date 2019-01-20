@@ -46,25 +46,17 @@ final class Memini extends CScheduler {
   public Memini() {
 
   }
-  /**
-   * @{inheritDoc}
-   */
+
   @Override
   public void onTestStarted() {
     _prevLogSize = _log.size();
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public void onTestFailure(Throwable failure) {
     assert CWorkspace.debug("history: %d -> %d", _prevLogSize, _log.size());
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public void onTestFinished() {
     assert CWorkspace.debug("history: %d -> %d", _prevLogSize, _log.size());

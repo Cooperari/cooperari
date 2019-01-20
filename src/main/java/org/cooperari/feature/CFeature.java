@@ -1,6 +1,9 @@
-package org.cooperari.core;
+package org.cooperari.feature;
 
 import java.util.List;
+
+import org.cooperari.core.CRuntime;
+import org.cooperari.core.CustomYieldPoint;
 
 /**
  * Feature handler interface.
@@ -11,10 +14,10 @@ import java.util.List;
  * </p>
  * 
  * @since 0.2
- * @see org.cooperari.core.Features
+ * @see org.cooperari.feature.CAllFeatures
  */
 
-public interface FeatureHandler {
+public interface CFeature {
   /**
    * Initialize the feature.
    * <p>

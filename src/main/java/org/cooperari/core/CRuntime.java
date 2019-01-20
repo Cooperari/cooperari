@@ -7,6 +7,8 @@ import java.util.IdentityHashMap;
 import org.cooperari.CSystem;
 import org.cooperari.core.util.CLog;
 import org.cooperari.errors.CConfigurationError;
+import org.cooperari.feature.CAllFeatures;
+import org.cooperari.feature.CFeature;
 
 /**
  * Cooperari runtime.
@@ -236,12 +238,12 @@ public class CRuntime {
   /**
    * Initialize features.
    * 
-   * @see FeatureHandler#init(CRuntime)
-   * @see FeatureHandler
+   * @see CFeature#init(CRuntime)
+   * @see CFeature
    */
   public void initFeatures() {
     boolean cMode = CSystem.inCooperativeMode();
-    for (FeatureHandler fh : Features.getFeatureHandlers()) {
+    for (CFeature fh : CAllFeatures.getFeatures()) {
       if (cMode || !fh.cooperativeSemanticsRequired()) {
         assert CWorkspace.debug("initializating feature handler " + fh.getClass());
         fh.init(this);
@@ -252,12 +254,12 @@ public class CRuntime {
   /**
    * Shutdown features.
    * 
-   * @see FeatureHandler#shutdown(CRuntime)
-   * @see FeatureHandler
+   * @see CFeature#shutdown(CRuntime)
+   * @see CFeature
    */
   public void shutdownFeatures() {
     boolean cMode = CSystem.inCooperativeMode();
-    for (FeatureHandler fh : Features.getFeatureHandlers()) {
+    for (CFeature fh : CAllFeatures.getFeatures()) {
       if (cMode || !fh.cooperativeSemanticsRequired()) {
         assert CWorkspace.debug("shuting down feature handler " + fh.getClass());
         fh.shutdown(this);

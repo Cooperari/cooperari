@@ -38,6 +38,6 @@ public  final class SpuriousWakeup extends ThreadOperation<Void> {
    * @param targetThread Target thread for spurious wakeup.
    */
   public static void execute(CThread thisThread, Thread targetThread) {
-    thisThread.cYield(new SpuriousWakeup(Feature.getCThread(targetThread)));
+    thisThread.cYield(new SpuriousWakeup(CThreadFeature.getCThread(targetThread)));
   }
 }

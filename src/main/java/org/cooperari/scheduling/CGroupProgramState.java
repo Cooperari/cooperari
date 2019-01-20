@@ -42,11 +42,7 @@ class CGroupProgramState implements CProgramState {
     }
 
   }
-
-
-
-
-
+  
   /**
    * Ready thread groups.
    */
@@ -90,37 +86,26 @@ class CGroupProgramState implements CProgramState {
     }
   }
 
-
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public int size() {
     return _rGroups.size() + _bGroups.size();
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public int threads() {
     return _threadCount;
   }
 
-  /**
-   * @{inheritDoc}
-   */
   @Override
   public List<? extends CElement> readyElements() {
     return _rGroups;
   }
-  /**
-   * @{inheritDoc}
-   */
+
   @Override
   public List<? extends CElement> blockedElements() {
     return _bGroups;
   }
+  
   /**
    * Select a random ready thread.
    * @return A thread from {@link #readyElements()}.
@@ -129,6 +114,7 @@ class CGroupProgramState implements CProgramState {
   public CThreadHandle select(Random rng) {
     return select(rng.nextInt(_rGroups.size()), rng);
   }
+  
   /**
    * Select specific thread from state.
    * @return The <code>index</code>-th thread from {@link #readyElements()}.
