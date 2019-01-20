@@ -1,0 +1,10 @@
+
+@InProceedings{pppj14,
+ author = {E. R. B. Marques and F. Martins and M. Sim\~{o}es},
+ title = {Cooperari: a tool for cooperative testing of multithreaded Java programs},
+ booktitle = {Proc. 2014 International Conference on Principles and Practices of Programming on the Java Platform: Virtual Machines, Languages, and Tools (PPPJ)},
+ year = {2014},
+ pages = {200--206},
+ doi = {10.1145/2647508.2647523},
+ publisher={ACM}
+} 
