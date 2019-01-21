@@ -14,7 +14,7 @@ public class CReport {
   /**
    * Output file.
    */
-  File _file;
+  private final File _file;
   
   /**
    * Output stream. 
@@ -45,8 +45,10 @@ public class CReport {
    * @param columnHeaders Column headers.
    */
   public void beginSection(String title, Object... columnHeaders) {
-    _out.println("--- " + title +  " ---") ;    
-    write(columnHeaders);
+    _out.printf("# %s%n", title);   
+    if (columnHeaders != null && columnHeaders.length != 0) {
+      write(columnHeaders);
+    }
   }
   
   /**
@@ -83,6 +85,14 @@ public class CReport {
       sb.append('\t').append(row[i]);
     }
     _out.println(sb.toString());
+  }
+
+  /**
+   * Dump stack trace of an exception to report.
+   * @param throwable The exception.
+   */
+  public void dumpStackTrace(Throwable throwable) {
+    throwable.printStackTrace(_out);    
   }
 
 }

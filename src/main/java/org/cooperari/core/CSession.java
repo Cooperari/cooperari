@@ -2,6 +2,7 @@ package org.cooperari.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import org.cooperari.CSystem;
 import org.cooperari.CTest;
@@ -53,7 +54,7 @@ public final class CSession {
    * Current test (workaround).
    */
   private static CTest _currentTest = null;
-  
+
   /**
    * Current runtime (workaround).
    */
@@ -118,7 +119,7 @@ public final class CSession {
   public static CTest getCurrentTest() {
     return _currentTest;
   }
-  
+
   /**
    * Get runtime environment for current test.
    * @return The current runtime environment.
@@ -126,7 +127,7 @@ public final class CSession {
   public static CRuntime getRuntime() {
     return _currentRuntime;
   }
-  
+
   /**
    * Execute a test with cooperative semantics.
    * @param test The test.
@@ -134,7 +135,7 @@ public final class CSession {
    */
   private static CTestResult executeTestCooperatively(CTest test) {
     assert CWorkspace.debug("== STARTED %s (cooperatively) ==", test.getName());
-  
+
     CScheduling schConfig = _currentRuntime.getConfiguration(CScheduling.class);
     CTraceOptions traceOptions = _currentRuntime.getConfiguration(CTraceOptions.class);
 
@@ -174,7 +175,6 @@ public final class CSession {
       } catch (InterruptedException e) {
         throw new CInternalError(e);
       }
-
       scheduler.onTestFinished();
       try {
         s.rethrowExceptionsIfAny();
@@ -191,7 +191,7 @@ public final class CSession {
         }
       }
       if (failure == null && traceOptions.logEveryTrace()) {
-        saveTrace(test, trials, trace);
+        saveTrace(test, trials, trace, Optional.empty());
       }
       done = failure != null
           || !scheduler.continueTrials()
@@ -199,18 +199,22 @@ public final class CSession {
           || (timeLimit > 0 && System.currentTimeMillis() - startTime >= timeLimit);
     } while (!done);
 
-    File traceFile = null;
-
     if (failure != null) {
-      traceFile = saveTrace(test, trials, trace);
+      if (failure instanceof CCheckedExceptionError) {
+        failure = failure.getCause();
+      } 
     } else {
       try {
         hHandler.endTestSession();
       } catch (CHotspotError e) {
         failure = e;
       }
+    } 
+    File traceFile = null;
+    
+    if (failure != null) {
+      traceFile = saveTrace(test, trials, trace, Optional.of(failure));
     }
-    trace.clear();
     long timeElapsed = System.currentTimeMillis() - startTime;
 
     assert CWorkspace.debug("== TERMINATED %s ==", test.getName());
@@ -218,10 +222,6 @@ public final class CSession {
     CWorkspace.log("%s: executed %d trials in %d ms [%s]", test.getName(),
         trials, timeElapsed, failure == null ? "passed" : "failed : "
             + failure.getClass().getCanonicalName());
-
-    if (failure instanceof CCheckedExceptionError) {
-      failure = failure.getCause();
-    }
 
     AgentFacade.INSTANCE.complementCoverageInfo(clog);
 
@@ -305,22 +305,23 @@ public final class CSession {
   }
 
   @SuppressWarnings("javadoc")
-  private static File saveTrace(CTest test, int trialNumber, CTrace trace) {
+  private static File saveTrace(CTest test, int trialNumber, CTrace trace, Optional<Throwable> failure) {
     try {
       CReport report = CWorkspace.INSTANCE.createReport(test.getSuiteName(), test.getName() + "_trial_" + trialNumber);
       try { 
-        trace.save(report);
+        trace.save(report, failure);
         CWorkspace.log("Trace for trial %d of %s written to '%s'", trialNumber, test.getName(),
             report.getFile().getAbsolutePath());
         return report.getFile();
       } finally {
+        trace.reset();
         report.close();
       }
     } catch (Throwable e) {
-      CWorkspace.log("Error trace file for %s: %s", 
+      CWorkspace.log("Error generating trace file for %s: %s", 
           test.getName(), e.getMessage());
       CWorkspace.log(e);
-      return null;
+      throw new CInternalError(e);
     } 
   }
 

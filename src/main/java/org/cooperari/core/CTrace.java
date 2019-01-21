@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.cooperari.config.CTraceOptions;
 import org.cooperari.core.scheduling.CThreadLocation;
@@ -74,12 +75,6 @@ public final class CTrace {
    * Coverage log to use.
    */
   private final CCoverageLog _clog;
-  
-
-  /**
-   * Step counter.
-   */
-  private int _stepCounter = 0;
 
   /**
    * Constructs a new trace.
@@ -123,15 +118,15 @@ public final class CTrace {
     if (_sizeLimit > 0 && _traceElements.size() == _sizeLimit) {
       _traceElements.removeFirst();
     }
-    _stepCounter++;
   }
 
   /**
    * Write trace to a output file.
    * @param report Output file.
+   * @param failure Optional failure that may have happened during execution.
    * @throws IOException If an I/O error occurs.
    */
-  public void save(CReport report) throws IOException {
+  public void save(CReport report, Optional<Throwable> failure) throws IOException {
     // Write thread info
     report.beginSection("THREADS", "TID", "NAME", "CLASS");
     for (Map.Entry<Integer, ThreadInfo> entry : _threadNames.entrySet()) {
@@ -139,8 +134,8 @@ public final class CTrace {
       report.writeEntry(entry.getKey(), ti.getName(), ti.getClassName());
     }
     // Write step info
-    int stepId = _stepCounter - _traceElements.size();  
-    report.beginSection("STEPS", 
+    int stepId = 0;  
+    report.beginSection("EXECUTION TRACE", 
                         "#", 
                         "TID", 
                         "STEP", 
@@ -149,7 +144,6 @@ public final class CTrace {
                         "LINE", 
                         "YIELD POINT", 
                         "STAGE"); 
-    
     for (TraceItem traceItem : _traceElements) {
       CThreadLocation location = traceItem.getLocation();
       CYieldPoint yp = location.getYieldPoint();
@@ -163,6 +157,11 @@ public final class CTrace {
                         location.getStage());
       stepId++;
     }
+    
+    if (failure.isPresent()) {
+      report.beginSection("STACK TRACE FOR FAILURE");
+      report.dumpStackTrace(failure.get());
+    }
   }
   
   /**
@@ -171,7 +170,6 @@ public final class CTrace {
   public void reset() {
     _traceElements.clear();
     _threadNames.clear();
-    _stepCounter = 0;
   }
 
   /**
