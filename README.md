@@ -1,4 +1,6 @@
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+
 # Cooperari
 
 *[Latin meaning: "to cooperate"](https://en.wiktionary.org/wiki/cooperari)*
