@@ -164,7 +164,7 @@ public final class CSession {
     do {
       failure = null;
       trials++;
-      trace.clear();
+      trace.reset();
       hHandler.startTestTrial();
       scheduler.onTestStarted();
       CEngine s = new CEngine(_currentRuntime, scheduler, test);

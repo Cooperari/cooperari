@@ -166,10 +166,12 @@ public final class CTrace {
   }
   
   /**
-   * Clear the trace.
+   * Reset.
    */
-  public void clear() {
+  public void reset() {
     _traceElements.clear();
+    _threadNames.clear();
+    _stepCounter = 0;
   }
 
   /**
