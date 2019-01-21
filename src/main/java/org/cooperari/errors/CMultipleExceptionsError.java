@@ -38,7 +38,7 @@ public class CMultipleExceptionsError extends Error {
   private static String formatMessage(List<Throwable> list) {
     StringBuilder sb = new StringBuilder();
     sb.append(list.size())
-      .append(" exceptions:%n");
+      .append(" exceptions:\n");
     for (Throwable t : list) {
       sb.append(' ')
         .append(t.toString())

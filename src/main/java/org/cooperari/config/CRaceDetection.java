@@ -22,7 +22,7 @@ public @interface CRaceDetection {
   
   /**
    * @return Boolean value indicating if {@link CRaceError} should be thrown when a race is detected.
-   * If disabled (the default) races are merely .
+   * If disabled (the default) races are merely reported.
    */
   boolean throwErrors() default false;
 }

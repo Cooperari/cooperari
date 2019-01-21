@@ -211,6 +211,29 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>setup-example-tests</id>
+						<phase>process-test-classes</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<classpathScope>test</classpathScope>
+							<workingDirectory>${project.build.directory}/examples-execution</workingDirectory>
+							<outputFile>${project.build.directory}/examples-execution/csetup-output.txt</outputFile>
+							<arguments>
+								<argument>-classpath</argument>
+								<classpath />
+								<argument>org.cooperari.tools.csetup.Main</argument>
+								<argument>-v</argument>
+								<argument>-d</argument>
+								<argument>.</argument>
+								<argument>-k</argument>
+								<argument>org.cooperari.examples.AllExamples</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
 						<id>cooperative-tests</id>
 						<phase>test</phase>
 						<goals>
@@ -221,6 +244,23 @@
 							<workingDirectory>${project.build.directory}/test-execution</workingDirectory>
 							<classpathScope>test</classpathScope>
 							<commandlineArgs>-classpath ${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.sanity.AllCooperativeTests</commandlineArgs>
+						</configuration>
+					</execution>
+					<execution>
+						<id>cooperative-examples</id>
+						<phase>test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>java</executable>
+							<workingDirectory>${project.build.directory}/examples-execution</workingDirectory>
+							<classpathScope>test</classpathScope>
+							<commandlineArgs>-classpath ${project.build.directory}/examples-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.examples.AllExamples</commandlineArgs>
+						    <successCodes>
+						      	<successCode>0</successCode>
+						      	<successCode>1</successCode>
+						    </successCodes>
 						</configuration>
 					</execution>
 				</executions>

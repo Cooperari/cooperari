@@ -3,7 +3,7 @@ package org.cooperari.sanity.feature;
 import org.cooperari.config.CInstrument;
 
 @SuppressWarnings("javadoc")
-@CInstrument(ltwDump=true)
+@CInstrument()
 public class TestSetup {
 
 }

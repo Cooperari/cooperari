@@ -7,10 +7,6 @@
  
     <dependencySets>
         <dependencySet>
-            <!--
-                Project artifact is not copied under library directory since
-                it is added to the root directory of the zip package.
-            -->
             <useProjectArtifact>false</useProjectArtifact>
             <outputDirectory>lib</outputDirectory>
             <unpack>false</unpack>
@@ -41,6 +37,10 @@
             <includes>
                 <include>*.jar</include>
             </includes>
+        </fileSet>
+        <fileSet>
+        	<directory>test/org/cooperari/examples</directory>
+        	<outputDirectory>tutorial/org/cooperari/examples</outputDirectory>
         </fileSet>
         <fileSet>
         	<directory>papers</directory>

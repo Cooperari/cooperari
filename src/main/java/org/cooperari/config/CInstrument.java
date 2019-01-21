@@ -45,7 +45,7 @@ public @interface CInstrument {
   /**
    * @return Whether to dump bytecode during load-time weaving (used for debugging).
    */
-  boolean ltwDump() default false;
+  boolean ltwDump() default true;
   
   /**
    * @return Extra load-time weaving options (used for debugging).
