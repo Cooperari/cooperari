@@ -1,18 +1,27 @@
-#! /bin/sh
+#! /bin/bash
 
-if [ "$CINSTR_HOME" = "" ] ; then CINSTR_HOME=$HOME/.cooperari
+if [ $# -ne 2 ]; then
+  echo "Usage: cjunit data_dir test_class"
+  exit 1
 fi
 
-COOPERARI_VERSION=$($(dirname $0)/cversion)
-COOPERARI_HOME=$(cd $(dirname $0)/.. && pwd)
-COOPERARI_JAR=$COOPERARI_HOME/lib/cooperari-$COOPERARI_VERSION.jar
+source $(dirname $0)/cclasspath
+data_dir=$1
+test_class=$2
 
-ASPECTPATH="$CINSTR_HOME/$1-cooperari.jar"
-AGENT_JAR=$(find "$COOPERARI_HOME/lib" -name 'aspectjweaver*.jar')
-CLASSPATH="$ASPECTPATH:$AGENT_JAR:$COOPERARI_JAR:$CLASSPATH"
+echo Configuring instrumentation ...
+$(dirname $0)/cinstr $data_dir $test_class
 
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+CONFIG_CLASSPATH="$data_dir/$test_class-cooperari.jar"
+CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$data_dir/classes"
+echo $CLASSPATH
+echo $ASPECTJ_AGENT_JAR
 java -classpath "$CLASSPATH" \
-   "-javaagent:$AGENT_JAR" \
+   "-javaagent:$ASPECTJ_AGENT_JAR" \
    "-Daj.class.path=$CLASSPATH" \
    org.cooperari.tools.cjunit.Main \
-   "$*"
+   $test_class
