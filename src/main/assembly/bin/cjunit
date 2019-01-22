@@ -1,27 +1,55 @@
 #! /bin/bash
 
-if [ $# -ne 2 ]; then
-  echo "Usage: cjunit data_dir test_class"
+
+### Validate arguments ###
+if [[ $# -eq 0  || $# -gt 2 ]] 
+then
+  cat << EOT
+Cooperari JUnit test executor (http://cooperari.org)
+      
+Usage: 
+   cjunit [root_dir] test_class
+EOT
   exit 1
 fi
 
-source $(dirname $0)/cclasspath
-data_dir=$1
-test_class=$2
+if [ $# -eq 0 ]
+then
+  root_dir="."
+  test_class=$1
+else
+  root_dir=$1
+  test_class=$2
+fi
 
+if [ ! -d $root_dir ]
+then
+   echo cjunit: $root_dir is not a directory!
+   exit 1
+fi
+
+### Setup global configuration ###
+source $(dirname $0)/cclasspath
+
+### Derive weaving configuration (for now this is done every time) ###
 echo Configuring instrumentation ...
-$(dirname $0)/cinstr $data_dir $test_class
+$(dirname $0)/cinstr $root_dir $test_class
 
 if [ $? -ne 0 ]; then
+  echo cjunit: LTW configuration error!
   exit 1
 fi
 
-CONFIG_CLASSPATH="$data_dir/$test_class-cooperari.jar"
-CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$data_dir/classes"
+### Finally proceed with actual execution ### 
+CONFIG_CLASSPATH="$root_dir/$test_class-cooperari.jar"
+CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$root_dir/classes"
 echo $CLASSPATH
 echo $ASPECTJ_AGENT_JAR
+
 java -classpath "$CLASSPATH" \
    "-javaagent:$ASPECTJ_AGENT_JAR" \
    "-Daj.class.path=$CLASSPATH" \
    org.cooperari.tools.cjunit.Main \
    $test_class
+
+exit $?
