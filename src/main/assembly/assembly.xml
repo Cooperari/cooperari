@@ -21,7 +21,7 @@
     </files>
     <fileSets>
         <fileSet>
-            <directory>${project.build.scriptSourceDirectory}</directory>
+            <directory>src/main/assembly/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <fileMode>754</fileMode>
             <includes>
@@ -39,8 +39,12 @@
             </includes>
         </fileSet>
         <fileSet>
-        	<directory>test/org/cooperari/examples</directory>
-        	<outputDirectory>tutorial/org/cooperari/examples</outputDirectory>
+        	<directory>src/test/java/org/cooperari/examples</directory>
+        	<outputDirectory>examples/src/org/cooperari/examples</outputDirectory>
+        </fileSet>
+        <fileSet>
+        	<directory>${project.build.directory}/test-classes/org/cooperari/examples</directory>
+        	<outputDirectory>examples/classes/org/cooperari/examples</outputDirectory>
         </fileSet>
         <fileSet>
         	<directory>papers</directory>

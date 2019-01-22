@@ -161,8 +161,8 @@
 						</goals>
 						<configuration>
 							<ignoreMissingFile>false</ignoreMissingFile>
-							<file>src/main/scripts/cversion.template</file>
-							<outputFile>src/main/scripts/cversion</outputFile>
+							<file>src/main/assembly/bin/cversion.template</file>
+							<outputFile>src/main/assembly/bin/cversion</outputFile>
 						</configuration>
 					</execution>
 				</executions>
