@@ -44,10 +44,12 @@ public class DiningPhilosophers {
 
     /**
      * Constructor.
+     * @param id Id for philosopher.
      * @param left Left fork.
      * @param right Right fork.
      */
-    public Philosopher(Fork left, Fork right) {
+    public Philosopher(int id, Fork left, Fork right) {
+      super("Philosopher-" + id);
       leftFork = left;
       rightFork = right;
       hasEaten = false;
@@ -69,17 +71,19 @@ public class DiningPhilosophers {
      * @return An array of inactive philosopher threads (must be started).
      */
     static Philosopher[] create(int n) {
-      Philosopher[] thePhilosophers = new Philosopher[n];
       Fork[] forks = new Fork[n];
       for (int i = 0; i < n; i++) {
         forks[i] = new Fork();
       }
+      
+      Philosopher[] philosophers = new Philosopher[n];
       for (int i = 0; i < n; i++) {
         Fork left = forks[i];
         Fork right = forks[(i+1) % n];
-        thePhilosophers[i] = new Philosopher(left, right);
+        philosophers[i] = new Philosopher(i, left, right);
       }
-      return thePhilosophers;
+      
+      return philosophers;
     }
   }
 
@@ -87,10 +91,9 @@ public class DiningPhilosophers {
    * Test with 4 philosophers, with explicit fork and joining 
    * of all philosopher threads.
    * 
-   * The <code>@CTraceOptions(logEveryTrace=true)</code>
-   * will cause every execution trace to be logged, 
-   * rather than just the trace for the first test failure (the default
-   * configuration).
+   * The <code>@CTraceOptions(logEveryTrace=true)</code> 
+   * annotation in this method will cause every execution trace to be logged, 
+   * rather than just (by default) the trace for the first test failure.
    * 
    * @throws InterruptedException (will never happen)
    */ 
@@ -133,8 +136,9 @@ public class DiningPhilosophers {
    * Test with 8 philosophers, using Cooperari's fork-and-join
    * API call. 
    * 
-   * The number of maximum test trials is insufficient to expose
-   * the bug, hence we increase it to 100 using <code>@CMaxTrials(100)</code>.
+   * The number of default maximum test trials, 20, is insufficient to expose
+   * the deadlock, hence we increase it to 100 using the
+   * <code>@CMaxTrials(100)</code> annotation for the test method.
    * 
    */ 
   @Test @CMaxTrials(100)
