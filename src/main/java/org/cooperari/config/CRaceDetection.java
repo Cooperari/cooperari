@@ -14,11 +14,11 @@ import org.cooperari.errors.CRaceError;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface CRaceDetection {
   /**
-   * @return Boolean value enabling race detection. Races will be logged
-   * to execution trace reports.
+   * @return Boolean value enabling race detection. If enabled (the default) 
+   * races will be logged to execution trace reports.
    *
    */
-  boolean value() default false;
+  boolean value() default true;
   
   /**
    * @return Boolean value indicating if {@link CRaceError} should be thrown when a race is detected.
