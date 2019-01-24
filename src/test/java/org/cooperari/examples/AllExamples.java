@@ -9,8 +9,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ 
   DiningPhilosophers.class,
   RaceDetection.class,
-  BadCounterUsingAtomicPrimitives.class,
   BuggySemaphore.class, 
+  AtomicPrimitives.class,
+  SunMiscUnsafe.class
 })
 public class AllExamples {
 
