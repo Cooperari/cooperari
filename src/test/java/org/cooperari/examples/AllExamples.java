@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
   DiningPhilosophers.class,
   SimpleRaceDetection.class,
   BadCounterUsingAtomicPrimitives.class,
-  BuggySemaphoreImplementation.class, 
+  BuggySemaphore.class, 
 })
 public class AllExamples {
 

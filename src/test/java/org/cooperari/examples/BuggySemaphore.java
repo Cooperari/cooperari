@@ -21,12 +21,12 @@ import org.junit.runners.MethodSorters;
 @CRaceDetection(value=true,throwErrors=false)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @SuppressWarnings({"javadoc"})
-public class BuggySemaphoreImplementation {
+public class BuggySemaphore {
 
   
-  static class BuggySemaphore {
+  static class Semaphore {
     int value;
-    BuggySemaphore(int n) {
+    Semaphore(int n) {
       value = n;
     }
     int value() {
@@ -50,6 +50,7 @@ public class BuggySemaphoreImplementation {
           }
         }
       }
+      // BUG: unsynchronized access.
       value--;
     }
   }
@@ -58,7 +59,7 @@ public class BuggySemaphoreImplementation {
   @CMaxTrials(1000)
   @CScheduling(schedulerFactory=CSchedulerFactory.OBLITUS, stateFactory=CProgramStateFactory.RAW)
   public void test1() {
-    BuggySemaphore s = new BuggySemaphore(0);
+    Semaphore s = new Semaphore(0);
     CSystem.forkAndJoin(
         () -> { s.up(); },
         () -> { s.up(); },
