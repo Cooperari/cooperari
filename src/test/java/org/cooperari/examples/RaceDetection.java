@@ -13,22 +13,30 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
 /**
- * Simple race detection examples.
+ * Race detection example.
  * 
  * @since 0.2
  */
 @RunWith(CJUnitRunner.class)
 @CRaceDetection(value=true,throwErrors=false)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({"javadoc"})
-public class SimpleRaceDetection {
+public class RaceDetection {
 
+  /**
+   * Simple class for shared data objects.
+   */
   static class SharedData { 
+    /** Integer value (initially 0). **/
     int value = 0;
   }
 
+  /** Shared data object. */
   SharedData data;
 
+  /**
+   * JUnit test fixture (executed before each test).
+   * It creates the shared data object.
+   */
   @Before 
   public void setup() {
     data = new SharedData();

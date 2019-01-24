@@ -8,7 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ 
   DiningPhilosophers.class,
-  SimpleRaceDetection.class,
+  RaceDetection.class,
   BadCounterUsingAtomicPrimitives.class,
   BuggySemaphore.class, 
 })
