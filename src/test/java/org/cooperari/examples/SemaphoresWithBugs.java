@@ -2,14 +2,7 @@ package org.cooperari.examples;
 
 import static org.junit.Assert.*;
 
-
-
 import org.cooperari.CSystem;
-import org.cooperari.config.CMaxTrials;
-import org.cooperari.config.CRaceDetection;
-import org.cooperari.config.CScheduling;
-import org.cooperari.core.scheduling.CProgramStateFactory;
-import org.cooperari.core.scheduling.CSchedulerFactory;
 import org.cooperari.junit.CJUnitRunner;
 
 import org.junit.FixMethodOrder;
@@ -17,22 +10,33 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
+/**
+ * Example involving  monitors & races combined.
+ *
+ */
 @RunWith(CJUnitRunner.class)
-@CRaceDetection(value=true,throwErrors=false)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-@SuppressWarnings({"javadoc"})
-public class BuggySemaphore {
+public class SemaphoresWithBugs {
 
-  
+  /** 
+   * A buggy semaphore. 
+   **/
   static class Semaphore {
+    /** Value. */
     int value;
-    Semaphore(int n) {
-      value = n;
+
+    /**
+     * Constructor.
+     * @param initialValue Initial value.
+     */
+    Semaphore(int initialValue) {
+      value = initialValue;
     }
-    int value() {
-      return value;
-    }
-    
+
+
+    /**
+     * "Up" the semaphore.
+     */
     public void up() {
       synchronized(this) {
         value++;
@@ -40,6 +44,9 @@ public class BuggySemaphore {
       }
     }
 
+    /**
+     * "Down" the semaphore.
+     */
     public void down() {
       synchronized(this) {
         while (value == 0) {
@@ -53,11 +60,22 @@ public class BuggySemaphore {
       // BUG: unsynchronized access.
       value--;
     }
+    /**
+     * Get value. 
+     * @return The value of the semaphore.
+     */
+    public final int getValue() {
+      synchronized(this) {
+        return value;
+      }
+    }
   }
-  
+
+
+  /**
+   * Test case: two threads "up" on the semaphore, two threads "down on it".
+   */
   @Test
-  @CMaxTrials(1000)
-  @CScheduling(schedulerFactory=CSchedulerFactory.OBLITUS, stateFactory=CProgramStateFactory.RAW)
   public void test1() {
     Semaphore s = new Semaphore(0);
     CSystem.forkAndJoin(
@@ -65,11 +83,9 @@ public class BuggySemaphore {
         () -> { s.up(); },
         () -> { s.down(); },
         () -> { s.down(); }
-    );
-    assertEquals(0, s.value);
+        );
+    assertEquals(0, s.getValue());
   }
-  
- 
 }
 
 
