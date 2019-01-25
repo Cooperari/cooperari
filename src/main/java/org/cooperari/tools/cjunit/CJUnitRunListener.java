@@ -56,19 +56,19 @@ public class CJUnitRunListener extends RunListener {
    */
   @Override
   public void testRunFinished(Result result) {
-    if (result.getFailureCount() > 0) {
-      _out.println("== Failure details ==");
-      int i = 0;
-      for (Failure f : result.getFailures()) {
-        _out.print(++i);
-        _out.print(") ");
-        _out.println(f.getTestHeader());
-        _out.print(f.getTrace());
-      }
-    }
+//    if (result.getFailureCount() > 0) {
+//      _out.println("== Failure details ==");
+//      int i = 0;
+//      for (Failure f : result.getFailures()) {
+//        _out.print(++i);
+//        _out.print(") ");
+//        _out.println(f.getTestHeader());
+//        _out.print(f.getTrace());
+//      }
+//    }
     _out.println("== Summary ==");
     _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms%n", 
-        result.getRunCount(), 
+        result.getRunCount() + result.getFailureCount(),
         result.getIgnoreCount(), 
         result.getFailureCount(),
         result.getRunTime());
