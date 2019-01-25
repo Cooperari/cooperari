@@ -29,7 +29,7 @@ The main differences to the original versions are as follows:
 
 - Yield point support improved and extended:
   - Monitor operations (acquisition and release, `wait`, `notify`, `nofityAll`, ...).
-  - `java.lang.Thread` life-cycle methods.
+  - `java.lang.Thread` life-cycle methods (`start`, `join`, `interrupt`, `stop`, ...).
   - Access to object data fields (and race detection). 
   - Calls to methods in `java.util.concurrent.AtomicXXX` classes. 
   - Calls to methods in the `sun.misc.Unsafe` class.
