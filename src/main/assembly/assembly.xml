@@ -1,5 +1,5 @@
 <assembly>
-    <id>dist</id>
+    <id>release</id>
     <formats>
         <format>zip</format>
         <format>tgz</format>
