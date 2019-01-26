@@ -5,10 +5,10 @@
 if [[ $# -eq 0  || $# -gt 2 ]] 
 then
   cat << EOT
-Cooperari JUnit test executor (http://cooperari.org)
+Cooperari preemptive JUnit test executor (http://cooperari.org) 
       
 Usage: 
-   cjunit [root_dir] test_class
+   cjunitp [root_dir] test_class
 EOT
   exit 1
 fi
@@ -31,24 +31,12 @@ fi
 ### Setup global configuration ###
 source $(dirname $0)/cclasspath
 
-### Derive weaving configuration (for now this is done every time) ###
-echo Configuring instrumentation ...
-$(dirname $0)/csetup $root_dir $test_class
-
-if [ $? -ne 0 ]; then
-  echo cjunit: LTW configuration error!
-  exit 1
-fi
-
 ### Finally proceed with actual execution ### 
-CONFIG_CLASSPATH="$root_dir/$test_class-cooperari.jar"
-CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$root_dir/classes"
+CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
 echo $CLASSPATH
 echo $ASPECTJ_AGENT_JAR
 
 java -classpath "$CLASSPATH" \
-   "-javaagent:$ASPECTJ_AGENT_JAR" \
-   "-Daj.class.path=$CLASSPATH" \
    org.cooperari.tools.cjunit.Main \
    $root_dir \
    $test_class
