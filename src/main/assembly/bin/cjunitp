@@ -13,7 +13,7 @@ EOT
   exit 1
 fi
 
-if [ $# -eq 0 ]
+if [ $# -eq 1 ]
 then
   root_dir="."
   test_class=$1
