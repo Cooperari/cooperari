@@ -183,7 +183,7 @@ public enum AgentFacade {
   /**
    * Coverage log id.
    */
-  private static final String COVERAGE_REPORT_ID = "coverage";
+  private static final String COVERAGE_REPORT_ID = "all_yield_points";
 
   /**
    * Generate global coverage report.
