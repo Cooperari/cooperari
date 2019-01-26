@@ -243,7 +243,7 @@
 							<executable>java</executable>
 							<workingDirectory>${project.build.directory}/test-execution</workingDirectory>
 							<classpathScope>test</classpathScope>
-							<commandlineArgs>-classpath ${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.sanity.AllCooperativeTests</commandlineArgs>
+							<commandlineArgs>-classpath ${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.sanity.feature.TestSetup-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main . org.cooperari.sanity.AllCooperativeTests</commandlineArgs>
 						</configuration>
 					</execution>
 					<execution>
@@ -256,7 +256,7 @@
 							<executable>java</executable>
 							<workingDirectory>${project.build.directory}/examples-execution</workingDirectory>
 							<classpathScope>test</classpathScope>
-							<commandlineArgs>-classpath ${project.build.directory}/examples-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main org.cooperari.examples.AllExamples</commandlineArgs>
+							<commandlineArgs>-classpath ${project.build.directory}/examples-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main . org.cooperari.examples.AllExamples</commandlineArgs>
 						    <successCodes>
 						      	<successCode>0</successCode>
 						      	<successCode>1</successCode>

@@ -57,14 +57,11 @@ public final class Main {
    */
   public static int execute(String[] args, PrintStream out) {
     try {    
-      if (args == null || args.length <= 2) {
+      if (args == null || args.length < 2) {
         out.println("Invalid arguments!");
         return INVALID_ARGUMENTS;
       }
-      if (! CSystem.inCooperativeMode()) {
-        out.println("Execution will be preemptive, AspectJ LTW is not active.");
-      }
-      
+     
       if (! CWorkspace.INSTANCE.isInitialized()) {
         File root_dir = new File(args[0]);
         if (!root_dir.isDirectory()) {
@@ -84,6 +81,11 @@ public final class Main {
           return INVALID_ARGUMENTS;
         }
       }
+      
+      if (! CSystem.inCooperativeMode()) {
+        out.println("Execution will be preemptive, AspectJ LTW is not active.");
+      }
+      
       
       JUnitCore juc = new JUnitCore();
       juc.addListener(new CJUnitRunListener(System.out));
