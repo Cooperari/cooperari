@@ -1,8 +1,11 @@
 package org.cooperari.core.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.cooperari.errors.CInternalError;
 /**
  * Class with utility I/O methods.
  *
@@ -50,6 +53,23 @@ public final class IO {
     return count;
   }
 
+  /**
+   * Get canonical path for file.
+   * 
+   * It masks a call to {@link java.io.File#getCanonicalPath()}
+   * and wraps any {@link java.io.IOException} with {@link org.cooperari.errors.CInternalError}.
+   
+   * @param file File.
+   * @return Canonical path for file.
+   * @throws CInternalError if a  {@link java.io.IOException} occurs.
+   */
+  public static String fullPath(File file) {
+    try {
+      return file.getCanonicalPath();
+    } catch (IOException e) {
+      throw new CInternalError(e);
+    }
+  }
   /**
    * Private constructor to avoid instantiation.
    */

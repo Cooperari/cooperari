@@ -1,12 +1,15 @@
 package org.cooperari.tools.cjunit;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import org.cooperari.CCoverage;
 import org.cooperari.CSystem;
 import org.cooperari.CTestResult;
 import org.cooperari.CVersion;
+import org.cooperari.core.util.IO;
+import org.cooperari.errors.CInternalError;
 import org.cooperari.junit.CTestResultPool;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -81,10 +84,10 @@ public class CJUnitRunListener extends RunListener {
         ci.getTotalYieldPoints());
     try {
       File report = CSystem.generateGlobalCoverageReport();
-      _out.printf("Global coverage report: '%s'%n", report.getAbsolutePath());
+      _out.printf("Global coverage report: '%s'%n", IO.fullPath(report));
     }
-    catch (Throwable e) {
-      e.printStackTrace(_out);
+    catch (IOException e) {
+      throw new CInternalError(e);
     }
   }
 
@@ -136,7 +139,11 @@ public class CJUnitRunListener extends RunListener {
 
     if (result.failed() && result.getFailureTrace() != null) {
       _out.println();
-      _out.printf("    > failure trace: '%s'", result.getFailureTrace().getAbsolutePath());
+      try {
+        _out.printf("    > failure trace: '%s'", result.getFailureTrace().getCanonicalPath());
+      } catch (IOException e) {
+        throw new CInternalError(e);
+      }
     }
     _out.println();
   }

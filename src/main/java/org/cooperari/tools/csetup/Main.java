@@ -9,6 +9,7 @@ import org.cooperari.config.CBaseConfiguration;
 import org.cooperari.config.CInstrument;
 import org.cooperari.core.aspectj.AspectCompiler;
 import org.cooperari.core.aspectj.WeavingConfiguration;
+import org.cooperari.core.util.IO;
 
 /**
  * Main class for the <code>csetup</code> utility program.
@@ -106,8 +107,7 @@ public final class Main {
       outDir.mkdirs();
     } catch (Throwable e) {
       e.printStackTrace(out);
-      out.printf("Error creating output directory '%s'.%n",
-          outDir.getAbsolutePath());
+      out.printf("Error creating output directory '%s'.%n", IO.fullPath(outDir));
       return 1;
     }
 
@@ -161,8 +161,8 @@ public final class Main {
             }
           
             if (verbose) {
-              out.printf("%s - %d bytes%n", ajcInpFile.getCanonicalPath(), ajcInpFile.length());
-              out.printf("%s - %d bytes%n", ajcOutFile.getCanonicalPath(), ajcOutFile.length());
+              out.printf("%s - %d bytes%n", IO.fullPath(ajcInpFile), ajcInpFile.length());
+              out.printf("%s - %d bytes%n", IO.fullPath(ajcOutFile), ajcOutFile.length());
               out.println("Saving to final JAR file ...");
             }
             
