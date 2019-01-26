@@ -22,9 +22,9 @@ import org.cooperari.core.util.CReport;
 public final class CCoverageLog implements CCoverage {
 
   /**
-   * The actual log.
+   * Yield point coverage info.
    */
-  private final TreeMap<CYieldPoint, Boolean> _log = new TreeMap<>();
+  private final TreeMap<CYieldPoint, Boolean> _allYieldPoints = new TreeMap<>();
 
   /**
    * Number of covered yield points  (attribute that avoids
@@ -50,7 +50,7 @@ public final class CCoverageLog implements CCoverage {
    */
   @Override
   public int getTotalYieldPoints() {
-    return _log.size();
+    return _allYieldPoints.size();
   }
 
   /**
@@ -70,9 +70,9 @@ public final class CCoverageLog implements CCoverage {
    * @param yp Yield point.
    */
   public void recordDefinition(CYieldPoint yp) {
-    if (!_log.containsKey(yp)) {
+    if (!_allYieldPoints.containsKey(yp)) {
       assert CWorkspace.debug("DEF %s", yp);
-      _log.put(yp, false);
+      _allYieldPoints.put(yp, false);
       _sourceFiles.add(yp.getSourceFile());
     }
   }
@@ -82,7 +82,7 @@ public final class CCoverageLog implements CCoverage {
    * @param yp Yield point.
    */
   public void markAsCovered(CYieldPoint yp) {
-    Boolean b = _log.put(yp, true);
+    Boolean b = _allYieldPoints.put(yp, true);
     if ( b == null) { 
       _coveredYieldPoints++;
       _sourceFiles.add(yp.getSourceFile());
@@ -122,7 +122,7 @@ public final class CCoverageLog implements CCoverage {
       CYieldPointImpl lowerBound = new CYieldPointImpl("", sf, -1);
       // Note: extra char so that view iterates until the last possible entry
       CYieldPointImpl upperBound = new CYieldPointImpl("", sf + '*', -1);
-      Map<CYieldPoint,Boolean> view = otherLog._log.subMap(lowerBound, upperBound);
+      Map<CYieldPoint,Boolean> view = otherLog._allYieldPoints.subMap(lowerBound, upperBound);
       for (Map.Entry<CYieldPoint,Boolean> entry : view.entrySet()) {
         CYieldPoint yp = entry.getKey();
         if (ignoreCoverageStatus || !entry.getValue()) {
@@ -144,12 +144,12 @@ public final class CCoverageLog implements CCoverage {
    * @return File object for the coverage report.
    */
   public File produceCoverageReport(String dirName, String reportId) throws IOException {
-    CReport r = CWorkspace.INSTANCE.createReport(dirName, reportId);
+    CReport r = CWorkspace.INSTANCE.createReport(dirName, reportId + ".coverage");
     r.beginSection("YIELD POINT COVERAGE", "TOTAL", "COVERED", "%");
     r.writeEntry(getTotalYieldPoints(), getCoveredYieldPoints(),
         getCoverageRate());
     r.beginSection("YIELD POINTS", "COVERED", "SOURCE FILE", "LINE", "SIGNATURE");
-    for (Entry<CYieldPoint, Boolean> e : _log.entrySet()) {
+    for (Entry<CYieldPoint, Boolean> e : _allYieldPoints.entrySet()) {
       r.writeEntry(e.getValue() ? 'Y' : 'N', 
                    e.getKey().getSourceFile(), 
                    e.getKey().getSourceLine(), 

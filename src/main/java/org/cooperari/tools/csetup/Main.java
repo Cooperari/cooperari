@@ -127,6 +127,7 @@ public final class Main {
         if (verbose) {
           out.println("Created weaving configuration ...");
         }
+        
         try {
           if (dryRun || verbose) {
             out.printf("== %s :: XML dump ==%n", className);

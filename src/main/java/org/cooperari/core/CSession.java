@@ -307,10 +307,10 @@ public final class CSession {
   @SuppressWarnings("javadoc")
   private static File saveTrace(CTest test, int trialNumber, CTrace trace, Optional<Throwable> failure) {
     try {
-      CReport report = CWorkspace.INSTANCE.createReport(test.getSuiteName(), test.getName() + "_trial_" + trialNumber);
+      CReport report = CWorkspace.INSTANCE.createReport(test.getSuiteName(), test.getName() + "." + trialNumber + ".trace");
       try { 
         trace.save(report, failure);
-        CWorkspace.log("Trace for trial %d of %s written to '%s'", trialNumber, test.getName(),
+        CWorkspace.log("Trace for trial %d of %s written to '%s'.", trialNumber, test.getName(),
             report.getFile().getAbsolutePath());
         return report.getFile();
       } finally {
