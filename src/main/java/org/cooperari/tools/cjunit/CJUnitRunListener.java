@@ -34,11 +34,16 @@ public class CJUnitRunListener extends RunListener {
   private String _currentClassName;
 
   /**
+   * Flag indicating cooperative mode execution.
+   */
+  private final boolean _cooperativeExec;
+  /**
    * Constructs a new listener.
    * @param out Output stream.
    */
   public CJUnitRunListener(PrintStream out) {
     _out = out;
+    _cooperativeExec = CSystem.inCooperativeMode();
   }
 
   /**
@@ -47,8 +52,8 @@ public class CJUnitRunListener extends RunListener {
    */
   @Override
   public void testRunStarted(Description description) throws Exception {
-    _out.printf("== Cooperari %s - JUnit test execution  ==", CVersion.ID);
-    _out.println();
+    _out.printf("== Cooperari %s - JUnit test execution - mode: %s ==%n", 
+        CVersion.ID, _cooperativeExec ? "cooperative" : "preemptive");
     _currentClassName = "";
   }
 
@@ -59,35 +64,37 @@ public class CJUnitRunListener extends RunListener {
    */
   @Override
   public void testRunFinished(Result result) {
-//    if (result.getFailureCount() > 0) {
-//      _out.println("== Failure details ==");
-//      int i = 0;
-//      for (Failure f : result.getFailures()) {
-//        _out.print(++i);
-//        _out.print(") ");
-//        _out.println(f.getTestHeader());
-//        _out.print(f.getTrace());
-//      }
-//    }
+    if (!_cooperativeExec && result.getFailureCount() > 0) {
+      _out.println("== Failure details ==");
+      int i = 0;
+      for (Failure f : result.getFailures()) {
+        _out.print(++i);
+        _out.print(") ");
+        _out.println(f.getTestHeader());
+        _out.print(f.getTrace());
+      }
+    }
     _out.println("== Summary ==");
     _out.printf("Executed: %d; Skipped: %d;  Failed: %d; Execution time: %d ms%n", 
         result.getRunCount() + result.getFailureCount(),
         result.getIgnoreCount(), 
         result.getFailureCount(),
         result.getRunTime());
-    _out.println("== Yield point coverage ==");
-    CCoverage ci = CSystem.getGlobalCoverageInfo();
+    if (_cooperativeExec) {
+      _out.println("== Yield point coverage ==");
+      CCoverage ci = CSystem.getGlobalCoverageInfo();
 
-    _out.printf("Coverage rate: %4.1f %% (%d / %d yp)%n", 
-        ci.getCoverageRate(),
-        ci.getCoveredYieldPoints(),
-        ci.getTotalYieldPoints());
-    try {
-      File report = CSystem.generateGlobalCoverageReport();
-      _out.printf("Global coverage report: '%s'%n", IO.fullPath(report));
-    }
-    catch (IOException e) {
-      throw new CInternalError(e);
+      _out.printf("Coverage rate: %4.1f %% (%d / %d yp)%n", 
+          ci.getCoverageRate(),
+          ci.getCoveredYieldPoints(),
+          ci.getTotalYieldPoints());
+      try {
+        File report = CSystem.generateGlobalCoverageReport();
+        _out.printf("Global coverage report: '%s'%n", IO.fullPath(report));
+      }
+      catch (IOException e) {
+        throw new CInternalError(e);
+      }
     }
   }
 
@@ -133,16 +140,21 @@ public class CJUnitRunListener extends RunListener {
     if (result == null) {
       return;
     }
-    _out.printf("    > trials: %d time: %d ms coverage: %4.1f %% (%d / %d yp)", 
-        result.trials(), result.getExecutionTime(),
-        result.getCoverageRate(), result.getCoveredYieldPoints(), result.getTotalYieldPoints());
+    if (! _cooperativeExec) {
+      _out.printf("    > trials: %d time: %d ms", 
+          result.trials(), result.getExecutionTime());
+    } else {
+      _out.printf("    > trials: %d time: %d ms coverage: %4.1f %% (%d / %d yp)", 
+          result.trials(), result.getExecutionTime(),
+          result.getCoverageRate(), result.getCoveredYieldPoints(), result.getTotalYieldPoints());
 
-    if (result.failed() && result.getFailureTrace() != null) {
-      _out.println();
-      try {
-        _out.printf("    > failure trace: '%s'", result.getFailureTrace().getCanonicalPath());
-      } catch (IOException e) {
-        throw new CInternalError(e);
+      if (result.failed() && result.getFailureTrace() != null) {
+        _out.println();
+        try {
+          _out.printf("    > failure trace: '%s'", result.getFailureTrace().getCanonicalPath());
+        } catch (IOException e) {
+          throw new CInternalError(e);
+        }
       }
     }
     _out.println();
@@ -154,6 +166,10 @@ public class CJUnitRunListener extends RunListener {
    */
   @Override
   public void testIgnored(Description description) {
+    if (!description.getClassName().equals(_currentClassName)) {
+      _currentClassName = description.getClassName();
+      _out.println(_currentClassName);
+    }
     _out.printf("  %-55s [skipped]", description.getMethodName());
     _out.println();
   }

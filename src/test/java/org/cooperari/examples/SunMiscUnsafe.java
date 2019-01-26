@@ -7,11 +7,11 @@ import java.lang.reflect.Field;
 import java.util.LinkedList;
 
 import org.cooperari.CSystem;
-import org.cooperari.junit.CCooperativeOnly;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -143,7 +143,7 @@ public class SunMiscUnsafe {
      * The bug is likely
      * to be exposed even with preemptive semantics.
      */
-    @Test @CCooperativeOnly
+    @Test
     public void test() {
       CSystem.forkAndJoin(
           () -> { theQueue.add(1); },

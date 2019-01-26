@@ -229,7 +229,7 @@
 								<argument>-d</argument>
 								<argument>.</argument>
 								<argument>-k</argument>
-								<argument>org.cooperari.examples.AllExamples</argument>
+								<argument>org.cooperari.examples.All</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -256,7 +256,7 @@
 							<executable>java</executable>
 							<workingDirectory>${project.build.directory}/examples-execution</workingDirectory>
 							<classpathScope>test</classpathScope>
-							<commandlineArgs>-classpath ${project.build.directory}/examples-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.examples.AllExamples-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main . org.cooperari.examples.AllExamples</commandlineArgs>
+							<commandlineArgs>-classpath ${project.build.directory}/examples-execution/org.cooperari.examples.All-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.examples.All-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main . org.cooperari.examples.All</commandlineArgs>
 						    <successCodes>
 						      	<successCode>0</successCode>
 						      	<successCode>1</successCode>

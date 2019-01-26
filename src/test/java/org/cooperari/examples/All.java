@@ -13,6 +13,6 @@ import org.junit.runners.Suite.SuiteClasses;
   AtomicPrimitives.class,
   SunMiscUnsafe.class
 })
-public class AllExamples {
+public class All {
 
 }

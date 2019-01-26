@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.cooperari.CSystem;
 import org.cooperari.config.CMaxTrials;
 import org.cooperari.config.CRaceDetection;
-import org.cooperari.junit.CCooperativeOnly;
 import org.cooperari.junit.CJUnitRunner;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -109,7 +108,7 @@ public class AtomicPrimitives {
      * The bug is likely
      * to be exposed even with preemptive semantics.
      */
-    @Test @CCooperativeOnly @CMaxTrials(100)
+    @Test @CMaxTrials(100)
     public void test() {
       CSystem.forkAndJoin(
           () -> { theQueue.add(1); },

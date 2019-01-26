@@ -61,14 +61,9 @@ public final class Main {
         out.println("Invalid arguments!");
         return INVALID_ARGUMENTS;
       }
-     
+      
       if (! CWorkspace.INSTANCE.isInitialized()) {
-        File root_dir = new File(args[0]);
-        if (!root_dir.isDirectory()) {
-          out.println(root_dir.getAbsolutePath() + " is not a directory!");
-          return INVALID_ARGUMENTS;
-        }
-        CWorkspace.INSTANCE.initialize(root_dir);
+        CWorkspace.INSTANCE.initialize(new File(args[0]));
       }
       
       Class<?>[] classes = new Class<?>[args.length-1];
@@ -85,7 +80,6 @@ public final class Main {
       if (! CSystem.inCooperativeMode()) {
         out.println("Execution will be preemptive, AspectJ LTW is not active.");
       }
-      
       
       JUnitCore juc = new JUnitCore();
       juc.addListener(new CJUnitRunListener(System.out));
