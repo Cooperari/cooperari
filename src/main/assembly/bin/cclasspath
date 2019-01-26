@@ -5,14 +5,14 @@ cd "$(dirname $0)/../lib"
 COOPERARI_LIB_DIR=$PWD
 COOPERARI_CLASSPATH=""
 for file in $(ls $COOPERARI_LIB_DIR); do
-  echo $file
+  # echo $file
   COOPERARI_CLASSPATH+="$COOPERARI_LIB_DIR/$file:"
 done
 export COOPERARI_CLASSPATH
 ASPECTJ_AGENT_JAR=`ls $COOPERARI_LIB_DIR/aspectjweaver*.jar`
 export ASPECTJ_AGENT_JAR
 
-echo $ASPECTJ_AGENT_JAR
+# echo $ASPECTJ_AGENT_JAR
 # clean up
 cd $CURRENT_DIR_SAVED
 unset CURRENT_DIR_SAVED

@@ -32,7 +32,7 @@ fi
 source $(dirname $0)/cclasspath
 
 ### Derive weaving configuration (for now this is done every time) ###
-echo Configuring instrumentation ...
+echo Configuring load-time weaving ...
 $(dirname $0)/csetup $root_dir $test_class
 
 if [ $? -ne 0 ]; then
@@ -43,8 +43,8 @@ fi
 ### Finally proceed with actual execution ### 
 CONFIG_CLASSPATH="$root_dir/$test_class-cooperari.jar"
 CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$root_dir/classes"
-echo $CLASSPATH
-echo $ASPECTJ_AGENT_JAR
+# echo $CLASSPATH
+# echo $ASPECTJ_AGENT_JAR
 
 java -classpath "$CLASSPATH" \
    "-javaagent:$ASPECTJ_AGENT_JAR" \
