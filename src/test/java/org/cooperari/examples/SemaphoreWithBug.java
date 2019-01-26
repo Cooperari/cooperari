@@ -16,7 +16,7 @@ import org.junit.runners.MethodSorters;
  */
 @RunWith(CJUnitRunner.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SemaphoresWithBugs {
+public class SemaphoreWithBug {
 
   /** 
    * A buggy semaphore. 
@@ -76,7 +76,7 @@ public class SemaphoresWithBugs {
    * Test case: two threads "up" on the semaphore, two threads "down on it".
    */
   @Test
-  public void test1() {
+  public void test() {
     Semaphore s = new Semaphore(0);
     CSystem.forkAndJoin(
         () -> { s.up(); },

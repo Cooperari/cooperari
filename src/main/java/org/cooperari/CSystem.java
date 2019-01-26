@@ -126,7 +126,10 @@ public final class CSystem {
     return AgentFacade.INSTANCE.isActive();
   }
   
-  @SuppressWarnings("javadoc")
+
+  /**
+   * Private constructor to prevent instantiation.
+   */
   private CSystem() {
 
   }

@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ 
   DiningPhilosophers.class,
   RaceDetection.class,
-  SemaphoresWithBugs.class, 
+  SemaphoreWithBug.class, 
   AtomicPrimitives.class,
   SunMiscUnsafe.class
 })
