@@ -5,7 +5,7 @@ package org.cooperari;
  *
  * @since 0.2
  */
-public final class CVersion {
+public class CVersion {
   
   /**
    * Cooperari version.
