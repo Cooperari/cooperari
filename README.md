@@ -23,7 +23,7 @@ The first implementation of Cooperari (archived [here](https://bitbucket.org/edr
 
 * E. R. B. Marques, F. Martins, and M. Simões, [**Cooperari: a tool for cooperative testing of multithreaded Java applications**](papers/pppj14.pdf), Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java platform: Virtual machines, Languages, and Tools (PPPJ'14), **DOI**: [10.1145/2647508.2647523](https://doi.org/10.1145/2647508.2647523)
 
-Cooperari is currently developed and maintained by [Eduardo R. B. Marques](http://www.dcc.fc.up.pt/~edrdo).  The original version and design incorporated contributions from Miguel Simões and [Francisco Martins](http://www.di.fc.ul.pt/~fmartins).  This repository contains a re-implementation of and evolution the original version, even if the general design principles are the same, along with important extensions and generally quite 
+Cooperari is currently developed and maintained by [Eduardo R. B. Marques](http://www.dcc.fc.up.pt/~edrdo).  The original version and design incorporated contributions from Miguel Simões and [Francisco Martins](http://www.di.fc.ul.pt/~fmartins).  This repository contains an almost complete re-implementation and evolution of the original version, even if the general design principles are the same, along with important extensions and generally quite 
 more robust operation.  The main technical improvements to the original version are as follows:
 
 - Yield point support improved and extended:
