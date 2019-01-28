@@ -1,5 +1,5 @@
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # Cooperari
 
@@ -23,10 +23,8 @@ The first implementation of Cooperari (archived [here](https://bitbucket.org/edr
 
 * E. R. B. Marques, F. Martins, and M. Simões, [**Cooperari: a tool for cooperative testing of multithreaded Java applications**](papers/pppj14.pdf), Proceedings of the 2014 International Conference on Principles and Practices of Programming on the Java platform: Virtual machines, Languages, and Tools (PPPJ'14), **DOI**: [10.1145/2647508.2647523](https://doi.org/10.1145/2647508.2647523)
 
-
-This repository contains a completely revamped/refactored version of the original Cooperari implementation, even if the general design principles are the same, along with important extensions and generally quite 
-more robust operation.
-The main improvements to the original version are as follows:
+Cooperari is currently developed and maintained by [Eduardo R. B. Marques](http://www.dcc.fc.up.pt/~edrdo).  The original version and design incorporated contributions from Miguel Simões and [Francisco Martins](http://www.di.fc.ul.pt/~fmartins).  This repository contains a re-implementation of and evolution the original version, even if the general design principles are the same, along with important extensions and generally quite 
+more robust operation.  The main technical improvements to the original version are as follows:
 
 - Yield point support improved and extended:
   - Monitor operations (acquisition and release, `wait`, `notify`, `nofityAll`, ...).
@@ -48,11 +46,16 @@ that certain "hotspots" are always, never, or only sometimes reached.
 
 # License
 
-Cooperari is open-source software under the terms of the [MIT License](LICENSE.md). 
+Copyright 2014-2019 Eduardo R. B. Marques
 
-Cooperari is developed and maintained by [Eduardo R. B. Marques](http://www.dcc.fc.up.pt/~edrdo).  The original version and design incorporated contributions from Miguel Simões and [Francisco Martins](http://www.di.fc.ul.pt/~fmartins).
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-# Getting started
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
 
 ## Requirements
 
