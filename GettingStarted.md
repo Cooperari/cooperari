@@ -2,6 +2,12 @@
 
 This short guide describes how to install and start making use of Cooperari.
 
+This is not a user guide (future work) though. As such, it does *NOT* explain:
+* how Coooperari works conceptually - check the [PPPPJ'14 paper](papers/pppj14.pdf)
+* any of the provided examples in detail - read the source code, they are relatively simple.
+* API details. For that read the provided Javadoc documentation, available in the release (`doc/javadoc`) or also [online](http://cooperari.org/javadoc). 
+
+
 ## Installation
 
 ### Pre-requisites
@@ -125,7 +131,8 @@ Executed: 3; Skipped: 0;  Failed: 0; Execution time: 364 ms
 The possible deadlock in the dining philosophers fails to "show up". 
 It could happen that it eventually "materializes", but very rarely so. It is 
 more frequent to observe failures in the other provided examples though,
-but in any case non-deterministically (sometimes bugs are revealed, sometimes not!).
+but in any case non-deterministically (sometimes bugs are revealed, sometimes not!),
+and you won't know what happened during execution precisely in any case.
 
 ### Trace files for cooperative execution
 
