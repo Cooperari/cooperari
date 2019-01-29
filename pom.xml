@@ -24,6 +24,24 @@
 			<email>edrdo@dcc.fc.up.pt</email>
 		</developer>
 	</developers>
+        <organization>
+                <name>Cooperari</name>
+                <url>http://cooperari.org</url>
+        </organization>
+        <scm>
+                <url>https://github.com/Cooperari/cooperari</url>
+                <connection>scm:git:git@github.com:Cooperari/cooperari.git</connection>
+                <developerConnection>scm:git:git@github.com:Cooperari/cooperari.git</developerConnection>
+                <tag>HEAD</tag>
+        </scm>
+        <issueManagement>
+                <system>github</system>
+                <url>https://github.com/Cooperari/cooperari/issues/</url>
+        </issueManagement>
+        <ciManagement>
+                <system>Travis</system>
+                <url>https://travis-ci.org/Cooperari/cooperari/</url>
+        </ciManagement>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
