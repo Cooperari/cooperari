@@ -131,7 +131,8 @@ Executed: 3; Skipped: 0;  Failed: 0; Execution time: 364 ms
 The possible deadlock in the dining philosophers fails to "show up". 
 It could happen that it eventually "materializes", but very rarely so. It is 
 more frequent to observe failures in the other provided examples though,
-but in any case non-deterministically (sometimes bugs are revealed, sometimes not!).
+but in any case non-deterministically (sometimes bugs are revealed, sometimes not!),
+and you won't know what happened during execution precisely in any case.
 
 ### Trace files for cooperative execution
 
