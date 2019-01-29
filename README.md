@@ -14,7 +14,7 @@ and in particular [**heinsenbugs**](https://en.wikipedia.org/wiki/Heisenbug) are
 Cooperari is a tool for deterministic testing of multithreaded Java applications. It is based on **cooperative semantics**: the code is instrumented on-the-fly (using [**AspectJ**](https://www.eclipse.org/aspectj/) load-time weaving) such that threads voluntarily suspend (yield) at interference points, called **yield points**, and code  between two consecutive yield points of each thread always executes serially as a transaction.  A cooperative scheduler takes over control at
 yield points and deterministically selects the next thread to run.
 
-Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each test case in a JUnit test suite runs multiple times, until it either fails or the state-space of schedules is deemed as covered by a configurable policy that is responsible for the scheduling decisions.  Beyond failed assertions in software tests, deadlocks and field access data races are also detected as soon as they are exposed in the cooperative execution.
+Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each test case in a JUnit test suite runs multiple times, until it either fails or the state-space of schedules is deemed as covered by a configurable policy that is responsible for the scheduling decisions. Fine-grained cooperative execution traces can then be inspected to understand test failures. Beyond failed assertions in software tests, deadlocks and field access data races are also detected as soon as they are exposed in the cooperative execution. 
 
 
 # Inception and evolution 
