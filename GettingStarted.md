@@ -12,11 +12,11 @@ This is not a user guide (future work) though. As such, it does *NOT* explain:
 
 ### Pre-requisites
 
-Cooperari requires [Oracle's Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html). It may also work with OpenJDK 8, but it has not been thoroughly tested in that environment.
+Cooperari requires [Oracle's Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](https://openjdk.java.net/install/).
 
 Configure your `PATH` as:
 
-	export PATH=<oracle jdk 8 installation path>/bin:$PATH
+	export PATH=<jdk 8 installation path>/bin:$PATH
 
 ### Download and install Cooperari
 

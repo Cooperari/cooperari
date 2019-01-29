@@ -44,7 +44,7 @@ that certain "hotspots" are always, never, or only sometimes reached.
   - The standard [AspectJ](https://www.eclipse.org/aspectj/) distribution is used, rather than the [AspectBench](http://www.sable.mcgill.ca/abc/) compiler.
   - Code does not need to weaved (instrumented) ahead-of-time any longer, 
 [load-time weaving](https://www.eclipse.org/aspectj/doc/released/devguide/ltw.html) is used instead. 
-- Cooperari now works with Java 8 rather than Java 7. Future support for Java &gt; 8 code will depend on the availability and backward compatibility of internal JRE features, e.g., classes like `sun.misc.Unsafe` (this issue has not been analyzed yet, use Oracle's JDK 8 in conjunction with Cooperari; see requirements section below).
+- Cooperari now works with Java 8 rather than Java 7. Future support for Java &gt; 8 code will depend on the availability and backward compatibility of internal JRE features, e.g., classes like `sun.misc.Unsafe` (this issue has not been analyzed yet).
 
 # License
 
@@ -61,9 +61,7 @@ See the License for the specific language governing permissions and limitations 
 
 ## Requirements
 
-Cooperari requires Oracle's [Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
-It may also work with OpenJDK 8, but it has not been fully tested in that
-environment.
+Cooperari requires [Oracle's Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](https://openjdk.java.net/install/).
 
 ## Installing and running Cooperari
 
@@ -72,7 +70,7 @@ Read the [Getting Started guide](GettingStarted.md).
 ## Compiling from scratch
 
 You may clone this repository to compile Cooperari from scratch. 
-In addition to Oracle's JDK 8, [Maven](https://maven.apache.org) 3.0 or higher will be required to compile Cooperari. After cloning, execute `mvn package` in the `cooperari` directory. This will compile all files, execute tests, and generate the Coooperari JAR and distribution files.
+In addition to a Java 8 JDK, [Maven](https://maven.apache.org) 3.0 or higher will be required to compile Cooperari. After cloning, execute `mvn package` in the `cooperari` directory. This will compile all files, execute tests, and generate the Coooperari JAR and distribution files.
 
 	git clone git@github.com:Cooperari/cooperari.git
 	cd cooperari
