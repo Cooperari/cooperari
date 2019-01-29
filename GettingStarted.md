@@ -1,6 +1,6 @@
 # Getting started
 
-This short guide describes how to install and make use of Cooperari.
+This short guide describes how to install and start making use of Cooperari.
 
 ## Installation
 
