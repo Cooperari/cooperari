@@ -63,12 +63,9 @@ Cooperari requires Oracle's [Java 8 JDK](https://www.oracle.com/technetwork/java
 It may also work with OpenJDK 8, but it has not been fully tested in that
 environment.
 
-## Binary distribution 
+## Installing and running Cooperari
 
-Download the latest binary release archive here at [GitHub](https://github.com/Cooperari/cooperari/releases). Extract the archive file, and then follow the instructions in the provided `README.txt`.
-
-	tar xzvf cooperari-VERSION-dist.tgz
-	cd cooperari-VERSION
+Read the [Getting Started guide](GettingStarted.md).
 	
 ## Compiling from scratch
 
@@ -79,6 +76,3 @@ In addition to Oracle's JDK 8, [Maven](https://maven.apache.org) 3.0 or higher w
 	cd cooperari
 	mvn package
 	
-## Maven Central
-
-Cooperari artifacts will be available at Maven Central in future releases.
