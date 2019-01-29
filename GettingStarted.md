@@ -46,7 +46,7 @@ Add Cooperari's `bin` directory to your `PATH`.
 
 ### Provided examples
 
-The source code of the examples can be found in `examples/src`. The current release includes the following `org.cooperari.examples.X` items
+The source code of the examples can be found in `examples/src`. The current release includes the following `org.cooperari.examples.X` items:
 
 * `DiningPhilosophers`: the classical dining philosophers scenario;
 * `RaceDetection`: illustrates race detection features;
