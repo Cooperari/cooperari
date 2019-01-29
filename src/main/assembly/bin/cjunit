@@ -30,6 +30,7 @@ fi
 
 ### Setup global configuration ###
 source $(dirname $0)/cclasspath
+cdata_dir=$root_dir/cdata
 
 ### Derive weaving configuration (for now this is done every time) ###
 echo Configuring load-time weaving ...
@@ -41,7 +42,7 @@ if [ $? -ne 0 ]; then
 fi
 
 ### Finally proceed with actual execution ### 
-CONFIG_CLASSPATH="$root_dir/$test_class-cooperari.jar"
+CONFIG_CLASSPATH="$cdata_dir/$test_class-cooperari.jar"
 CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$root_dir/classes"
 # echo $CLASSPATH
 # echo $ASPECTJ_AGENT_JAR
@@ -50,7 +51,7 @@ java -classpath "$CLASSPATH" \
    "-javaagent:$ASPECTJ_AGENT_JAR" \
    "-Daj.class.path=$CLASSPATH" \
    org.cooperari.tools.cjunit.Main \
-   $root_dir \
+   $cdata_dir \
    $test_class
 
 exit $?

@@ -30,6 +30,7 @@ fi
 
 ### Setup global configuration ###
 source $(dirname $0)/cclasspath
+cdata_dir=$root_dir/cdata
 
 ### Finally proceed with actual execution ### 
 CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
@@ -38,7 +39,7 @@ CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
 
 java -classpath "$CLASSPATH" \
    org.cooperari.tools.cjunit.Main \
-   $root_dir \
+   $cdata_dir \
    $test_class
 
 exit $?

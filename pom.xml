@@ -10,6 +10,20 @@
 	<name>Cooperari</name>
 	<description>Cooperari is a cooperative testing tool for multithreaded Java software.</description>
 	<url>http://cooperari.org</url>
+	<licenses>
+		<license>
+			<name>Apache 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>edrdo</id>
+			<name>Eduardo R. B. Marques</name>
+			<email>edrdo@dcc.fc.up.pt</email>
+		</developer>
+	</developers>
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
@@ -18,7 +32,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skip.mutation.testing>true</skip.mutation.testing>
 	</properties>
-
 	<dependencies>
 		<!-- Sun Tools -->
 		<dependency>
@@ -257,10 +270,10 @@
 							<workingDirectory>${project.build.directory}/examples-execution</workingDirectory>
 							<classpathScope>test</classpathScope>
 							<commandlineArgs>-classpath ${project.build.directory}/examples-execution/org.cooperari.examples.All-cooperari.jar:%classpath -javaagent:${org.aspectj:aspectjweaver:jar} -Daj.class.path=${project.build.directory}/test-execution/org.cooperari.examples.All-cooperari.jar:%classpath org.cooperari.tools.cjunit.Main . org.cooperari.examples.All</commandlineArgs>
-						    <successCodes>
-						      	<successCode>0</successCode>
-						      	<successCode>1</successCode>
-						    </successCodes>
+							<successCodes>
+								<successCode>0</successCode>
+								<successCode>1</successCode>
+							</successCodes>
 						</configuration>
 					</execution>
 				</executions>
@@ -353,14 +366,14 @@
 					<excludePackageNames>org.cooperari.app,org.cooperari.preemptive,org.cooperari.tools</excludePackageNames>
 				</configuration>
 				<executions>
-               		<execution>
-            			<phase>prepare-package</phase>
-                		<id>attach-javadocs</id>
-            			<goals>
-                			<goal>javadoc</goal>
-            			</goals>
-        			</execution>
-    			</executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>

@@ -1,0 +1,24 @@
+#! /bin/bash
+if [ $# -eq 0 ] 
+then
+  root_dir="."
+fi
+
+if [ ! -d $root_dir ]
+then
+   echo cjavac: $root_dir is not a directory!
+   exit 1
+fi
+
+### Setup global configuration ###
+source $(dirname $0)/cclasspath
+
+
+CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
+# echo $CLASSPATH
+# echo $ASPECTJ_AGENT_JAR
+
+echo Invoking javac 
+find $root_dir -name '*.java' | xargs javac -classpath "$CLASSPATH" -d classes
+
+exit $?
