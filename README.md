@@ -19,7 +19,7 @@ yield points and deterministically selects the next thread to run.
 Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each test case in a JUnit test suite runs multiple times, until it either fails or the state-space of schedules is deemed as covered by a configurable policy that is responsible for the scheduling decisions. Fine-grained cooperative execution traces can then be inspected to understand test failures. Beyond failed assertions in software tests, deadlocks and field access data races are also detected as soon as they are exposed in the cooperative execution. 
 
 
-# Inception and evolution 
+## Inception and evolution 
 
 The first implementation of Cooperari (archived [here](https://bitbucket.org/edrdo/cooperari/wiki/Home)) dates back to 2014 and is described by the following paper:
 
@@ -46,7 +46,7 @@ that certain "hotspots" are always, never, or only sometimes reached.
 [load-time weaving](https://www.eclipse.org/aspectj/doc/released/devguide/ltw.html) is used instead. 
 - Cooperari now works with Java 8 rather than Java 7. Future support for Java &gt; 8 code will depend on the availability and backward compatibility of internal JRE features, e.g., classes like `sun.misc.Unsafe` (this issue has not been analyzed yet).
 
-# License
+## License
 
 Copyright 2014-2019 Eduardo R. B. Marques
 
