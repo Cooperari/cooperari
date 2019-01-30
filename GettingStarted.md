@@ -48,7 +48,7 @@ Add Cooperari's `bin` directory to your `PATH`.
 * `doc`: documentation including the Cooperari API documentation in `doc/javadoc`;
 * `examples`: a few examples to help you get started.
 	
-## Running the examples
+## Examples
 
 ### Provided examples
 
@@ -61,7 +61,7 @@ The source code of the examples can be found in `examples/src`. The current rele
 * `BuggySemaphore`: additional example comprising a buggy semaphore implementation; 
 * `All`: a JUnit test suite that groups all tests, if you wish to execute them all at once.
 
-## (Re-)compiling the examples
+### Modifying and re-compiling 
 
 The examples are already initially compiled in the `classes` directory. If you change their source code and wish to recompile, then execute 
 
@@ -70,7 +70,7 @@ The examples are already initially compiled in the `classes` directory. If you c
 in the top-level `examples` directory.
  
 
-### Running an example
+### Running an example 
 
 Let's say you wish to run the `DiningPhilosophers` example. Then, in the top-level `examples` directory, you should execute: 
 
@@ -110,7 +110,7 @@ In any case, what happened? Every test in the example failed after a certain num
 * You may inspect the `cdata` directory to find coverage logs also, indicating
 which yield points have been reached in the execution of each test. The top level `all_yield_points.coverage.log` is an aggregate coverage log of all tests.
 
-### Running an example preemptively
+### Running an example with normal preemptive semantics
 
 Using the `cjunitp` script (instead of `cjunit`), you may also run an example with normal preemptive semantics and without any instrumentation. For instance:
 
@@ -180,7 +180,7 @@ org.cooperari.errors.CMultipleExceptionsError: 4 exceptions:
  org.cooperari.feature.monitor.CResourceDeadlockError: L3/Philosopher-0/DiningPhilosophers.java:61 > L2/Philosopher-2/DiningPhilosophers.java:61 > L1/Philosopher-3/DiningPhilosophers.java:61 > L0/Philosopher-0/DiningPhilosophers.java:61 > L3/Philosopher-1/DiningPhilosophers.java:61
 ```
 
-### Coverage log files
+### Coverage log files for cooperative execution
 
 Example that you may find in `cdata/org.cooperari.examples.DiningPhilosophers/test_4_Philosophers_V2.coverage.log`:
 
