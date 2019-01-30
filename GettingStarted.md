@@ -4,8 +4,8 @@ This short guide describes how to install and start making use of Cooperari.
 
 This is not a user guide (future work) though. As such, it does *NOT* explain:
 * how Coooperari works conceptually - check the [PPPPJ'14 paper](papers/pppj14.pdf)
-* any of the provided examples in detail - read the source code, they are relatively simple.
-* API details. For that read the provided Javadoc documentation, available in the release (`doc/javadoc`) or also [online](http://cooperari.org/javadoc). 
+* any of the provided examples in detail - read the source code, they are relatively simple!
+* API details - for that read the provided Javadoc documentation, available in the release (`doc/javadoc`) or also [online](http://cooperari.org/javadoc). 
 
 
 ## Installation
