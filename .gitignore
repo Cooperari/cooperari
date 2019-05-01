@@ -5,3 +5,4 @@ target
 *.swp
 cooperari.log
 /target/
+/bin/
