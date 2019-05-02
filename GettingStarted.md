@@ -58,7 +58,7 @@ The source code of the examples can be found in `examples/src`. The current rele
 * `RaceDetection`: illustrates race detection features;
 * `AtomicPrimitives`: simple example employing `java.util.concurrent.AtomicXXX` API;
 * `SunMiscUnsafe`: a variant of `AtomicPrimitives` that uses `sun.misc.Unsafe` insteaad;
-* `BuggySemaphore`: additional example comprising a buggy semaphore implementation; 
+* `SemaphoreWithBug`: additional example comprising a buggy semaphore implementation; 
 * `All`: a JUnit test suite that groups all tests, if you wish to execute them all at once.
 
 ### Modifying and re-compiling 

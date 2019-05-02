@@ -1,4 +1,4 @@
-# Coding style
+# Coding Style
 
 The source code of Cooperari closely follows the [Google Java Style](http://google-styleguide.googlecode.com/svn/trunk/javaguide.html) with the following variations:
 
