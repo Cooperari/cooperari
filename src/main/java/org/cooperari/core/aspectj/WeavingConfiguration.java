@@ -326,30 +326,28 @@ public final class WeavingConfiguration {
          wc.addInlineAspect(ACustomYieldPoint.class, cyp.getAspectName(), "yieldPoint", cyp.getPointcutExpression());
        }
     }
-    // Handle weaving configuration
+    // Handle weaving configuration in terms of code to instrument
     if (config.selfWholePackage() && clazz.getPackage() != null) {
       wc.weave(clazz.getPackage().getName() + "..*");
     }
-
     if (config.self()) {
       wc.weave(clazz); 
-    } 
-
+    }
     if (config.selfInnerClasses()) {
       wc.weave(clazz.getCanonicalName() + ".*");
     } 
-
     for (Class<?> c : config.classes()) {
       wc.weave(c);
     }
     for (String p : config.packages()) {
       wc.weave(p + ".*");
     }
+    
     // Handle dump option
     if (config.ltwDump()) {
       wc.enableDumpForAllClasses();
     }
-    // Handle options
+    // Handle weaver options
     wc.addWeaverOption("-Xjoinpoints:synchronization");
     wc.addWeaverOption("-XmessageHandlerClass:" + AgentMessageHandler.class.getCanonicalName());
 
