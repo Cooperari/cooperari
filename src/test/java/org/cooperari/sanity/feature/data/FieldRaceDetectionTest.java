@@ -66,6 +66,7 @@ public class FieldRaceDetectionTest {
     public void testNoRace() {
       CSystem.forkAndJoin(READER);
     }
+    
     @Test
     public void testNoRace2() {
       CSystem.forkAndJoin(READER, READER);
@@ -104,19 +105,6 @@ public class FieldRaceDetectionTest {
       CSystem.forkAndJoin(READER, READER, READER, WRITER, WRITER, WRITER);
     }
     
-    @Test(expected=NullPointerException.class)
-    @SuppressWarnings({ "unused", "null" })
-    public void testNullPointerRead() {
-      Data d = null;
-      int v = d.x;
-    }
-    
    
-    @Test(expected=NullPointerException.class)
-    @SuppressWarnings("null")
-    public void testNullPointerWrite() {
-      Data d = null;
-      d.x = 0;
-    }
     
   }

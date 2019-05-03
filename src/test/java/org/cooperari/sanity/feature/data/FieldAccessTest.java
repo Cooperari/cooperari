@@ -32,7 +32,7 @@ import org.junit.runners.MethodSorters;
 @SuppressWarnings("javadoc")
 @RunWith(CJUnitRunner.class)
 public class FieldAccessTest {
- 
+
   private static Data A;
   private static Data B;   
 
@@ -55,34 +55,34 @@ public class FieldAccessTest {
 
   private static final Runnable 
   rTestCoverage[] = {
-    new Runnable() {
-      public void run() {
-        if (A.x == 0) {
-          B.x = 1;
-          hotspot("B1");
-        } else if (A.x == 1) {
-          B.x = 2;
-          hotspot("B2");
-        } else {
-          B.x = 3;
-          hotspot("B3"); 
+      new Runnable() {
+        public void run() {
+          if (A.x == 0) {
+            B.x = 1;
+            hotspot("B1");
+          } else if (A.x == 1) {
+            B.x = 2;
+            hotspot("B2");
+          } else {
+            B.x = 3;
+            hotspot("B3"); 
+          }
+        }
+      },
+      new Runnable() {
+        public void run() {
+          if (B.x == 0) {
+            A.x = 1;
+            hotspot("A1");
+          } else if (B.x == 1){
+            A.x = 2;
+            hotspot("A2");
+          } else {
+            A.x = 3;
+            hotspot("A3");
+          }
         }
       }
-    },
-    new Runnable() {
-      public void run() {
-        if (B.x == 0) {
-          A.x = 1;
-          hotspot("A1");
-        } else if (B.x == 1){
-          A.x = 2;
-          hotspot("A2");
-        } else {
-          A.x = 3;
-          hotspot("A3");
-        }
-      }
-    }
   };
 
   @Test 
@@ -92,6 +92,25 @@ public class FieldAccessTest {
     A = new Data();
     B = new Data();
     CSystem.forkAndJoin(rTestCoverage);
+  }
+
+  @Test(expected=NullPointerException.class)
+  @SuppressWarnings({ "unused", "null" })
+  public void testNullPointerRead() {
+    CSystem.forkAndJoin(() -> {
+      Data d = null;
+      int v = d.x;
+    });
+  }
+
+
+  @Test(expected=NullPointerException.class)
+  @SuppressWarnings("null")
+  public void testNullPointerWrite() {
+    CSystem.forkAndJoin(() -> {
+      Data d = null;
+      d.x = 0;
+    });
   }
 
 
