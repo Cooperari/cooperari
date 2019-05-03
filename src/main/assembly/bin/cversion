@@ -1,2 +1,4 @@
 #! /bin/bash
-echo 0.3
+source $(dirname $0)/cclasspath
+java -classpath "$COOPERARI_CLASSPATH" org.cooperari.tools.cversion.Main $*
+exit $?
