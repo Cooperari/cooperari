@@ -1,0 +1,57 @@
+#! /bin/bash
+
+
+### Validate arguments ###
+if [[ $# -eq 0  || $# -gt 2 ]] 
+then
+  cat << EOT
+Cooperari application executor (http://cooperari.org)
+      
+Usage: 
+   capp [root_dir] java_application_class
+EOT
+  exit 1
+fi
+
+if [ $# -eq 1 ]
+then
+  root_dir="."
+  test_class=$1
+else
+  root_dir=$1
+  test_class=$2
+fi
+
+if [ ! -d $root_dir ]
+then
+   echo capp: $root_dir is not a directory!
+   exit 1
+fi
+
+### Setup global configuration ###
+source $(dirname $0)/cclasspath
+cdata_dir=$root_dir/cdata
+
+### Derive weaving configuration (for now this is done every time) ###
+echo Configuring load-time weaving ...
+$(dirname $0)/csetup $root_dir $test_class
+
+if [ $? -ne 0 ]; then
+  echo capp: LTW configuration error!
+  exit 1
+fi
+
+### Finally proceed with actual execution ### 
+CONFIG_CLASSPATH="$cdata_dir/$test_class-cooperari.jar"
+CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$root_dir/classes"
+# echo $CLASSPATH
+# echo $ASPECTJ_AGENT_JAR
+
+java -classpath "$CLASSPATH" \
+   "-javaagent:$ASPECTJ_AGENT_JAR" \
+   "-Daj.class.path=$CLASSPATH" \
+   org.cooperari.tools.capp.Main \
+   $cdata_dir \
+   $test_class
+
+exit $?
