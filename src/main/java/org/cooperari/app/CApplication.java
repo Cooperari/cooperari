@@ -31,7 +31,7 @@ import org.cooperari.errors.CInternalError;
  * @since 0.2
  *
  */
-public class CApplication implements CTest {
+public final class CApplication implements CTest {
 
   /**
    * Class for the Java program.
@@ -46,7 +46,7 @@ public class CApplication implements CTest {
   /**
    * Program arguments.
    */
-  private String[] _args;
+  private final String[] _args;
   
   /**
    * Constructor.
