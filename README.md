@@ -19,6 +19,23 @@ yield points and deterministically selects the next thread to run.
 Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each test case in a JUnit test suite runs multiple times, until it either fails or the state-space of schedules is deemed as covered by a configurable policy that is responsible for the scheduling decisions. Fine-grained cooperative execution traces can then be inspected to understand test failures. Beyond failed assertions in software tests, deadlocks and field access data races are also detected as soon as they are exposed in the cooperative execution. 
 
 
+## Requirements
+
+Cooperari requires [Oracle's Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](https://openjdk.java.net/install/).
+
+## Installing and running Cooperari
+
+Read the [Getting Started guide](GettingStarted.md).
+	
+## Compiling from scratch
+
+You may clone this repository to compile Cooperari from scratch. 
+In addition to a Java 8 JDK, [Maven](https://maven.apache.org) 3.0 or higher will be required to compile Cooperari. After cloning, execute `mvn package` in the `cooperari` directory. This will compile all files, execute tests, and generate the Coooperari JAR and distribution files.
+
+	git clone git@github.com:Cooperari/cooperari.git
+	cd cooperari
+	mvn package
+	
 ## Inception and evolution 
 
 The first implementation of Cooperari (archived [here](https://bitbucket.org/edrdo/cooperari/wiki/Home)) dates back to 2014 and is described by the following paper:
@@ -59,20 +76,3 @@ software distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and limitations under the License.
 
-## Requirements
-
-Cooperari requires [Oracle's Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](https://openjdk.java.net/install/).
-
-## Installing and running Cooperari
-
-Read the [Getting Started guide](GettingStarted.md).
-	
-## Compiling from scratch
-
-You may clone this repository to compile Cooperari from scratch. 
-In addition to a Java 8 JDK, [Maven](https://maven.apache.org) 3.0 or higher will be required to compile Cooperari. After cloning, execute `mvn package` in the `cooperari` directory. This will compile all files, execute tests, and generate the Coooperari JAR and distribution files.
-
-	git clone git@github.com:Cooperari/cooperari.git
-	cd cooperari
-	mvn package
-	
