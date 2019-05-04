@@ -19,10 +19,6 @@ yield points and deterministically selects the next thread to run.
 Cooperari integrates with [**JUnit 4**](http://junit.org/junit4) such that each test case in a JUnit test suite runs multiple times, until it either fails or the state-space of schedules is deemed as covered by a configurable policy that is responsible for the scheduling decisions. Fine-grained cooperative execution traces can then be inspected to understand test failures. Beyond failed assertions in software tests, deadlocks and field access data races are also detected as soon as they are exposed in the cooperative execution. 
 
 
-## Requirements
-
-Cooperari requires [Oracle's Java 8 JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](https://openjdk.java.net/install/).
-
 ## Installing and running Cooperari
 
 Read the [Getting Started guide](GettingStarted.md).
