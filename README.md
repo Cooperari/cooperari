@@ -8,7 +8,7 @@
 *[Latin meaning: "to cooperate"](https://en.wiktionary.org/wiki/cooperari)*
 
 Bugs in multithreaded applications are elusive
- to detected, trace and replicate, given the usual non-determinism and
+ to detect, trace, and replicate, given the usual non-determinism and
 non-reproducibility of preemptive, coarse-grained scheduling decisions.
 Simple bugs can easily be undetected under preemptive semantics,
 and in particular [**heinsenbugs**](https://en.wikipedia.org/wiki/Heisenbug) are  common in multithreaded applications.
