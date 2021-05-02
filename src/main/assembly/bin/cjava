@@ -8,7 +8,7 @@ then
 Cooperari application executor (http://cooperari.org)
       
 Usage: 
-   capp java_application_class arg1 ... argn 
+   cjava java_application_class arg1 ... argn 
 EOT
   exit 1
 fi
@@ -25,7 +25,7 @@ echo Configuring load-time weaving ...
 $(dirname $0)/csetup $root_dir $test_class
 
 if [ $? -ne 0 ]; then
-  echo capp: LTW configuration error!
+  echo cjava: LTW configuration error!
   exit 1
 fi
 
@@ -38,7 +38,7 @@ CLASSPATH="$CONFIG_CLASSPATH:$COOPERARI_CLASSPATH:$root_dir/classes"
 java -classpath "$CLASSPATH" \
    "-javaagent:$ASPECTJ_AGENT_JAR" \
    "-Daj.class.path=$CLASSPATH" \
-   org.cooperari.tools.capp.Main \
+   org.cooperari.tools.cjava.Main \
    $cdata_dir \
    $*
 

@@ -1,0 +1,33 @@
+#! /bin/bash
+
+
+### Validate arguments ###
+if [[ $# -eq 0  ]] 
+then
+  cat << EOT
+Cooperari application executor (http://cooperari.org)
+      
+Usage: 
+   cjava java_application_class arg1 ... argn 
+EOT
+  exit 1
+fi
+
+root_dir=.
+test_class=$1
+
+### Setup global configuration ###
+source $(dirname $0)/cclasspath
+cdata_dir=$root_dir/cdata
+
+### Finally proceed with actual execution ### 
+CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
+# echo $CLASSPATH
+# echo $ASPECTJ_AGENT_JAR
+
+java -classpath "$CLASSPATH" \
+   org.cooperari.tools.cjava.Main \
+   $cdata_dir \
+   $*
+
+exit $?
