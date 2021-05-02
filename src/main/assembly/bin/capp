@@ -2,31 +2,19 @@
 
 
 ### Validate arguments ###
-if [[ $# -eq 0  || $# -gt 2 ]] 
+if [[ $# -eq 0  ]] 
 then
   cat << EOT
 Cooperari application executor (http://cooperari.org)
       
 Usage: 
-   capp [root_dir] java_application_class
+   capp java_application_class arg1 ... argn 
 EOT
   exit 1
 fi
 
-if [ $# -eq 1 ]
-then
-  root_dir="."
-  test_class=$1
-else
-  root_dir=$1
-  test_class=$2
-fi
-
-if [ ! -d $root_dir ]
-then
-   echo capp: $root_dir is not a directory!
-   exit 1
-fi
+root_dir=.
+test_class=$1
 
 ### Setup global configuration ###
 source $(dirname $0)/cclasspath
@@ -52,6 +40,6 @@ java -classpath "$CLASSPATH" \
    "-Daj.class.path=$CLASSPATH" \
    org.cooperari.tools.capp.Main \
    $cdata_dir \
-   $test_class
+   $*
 
 exit $?

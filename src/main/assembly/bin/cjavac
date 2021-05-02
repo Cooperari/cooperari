@@ -19,8 +19,8 @@ CLASSPATH="$COOPERARI_CLASSPATH:$root_dir/classes"
 # echo $ASPECTJ_AGENT_JAR
 
 mkdir -p $root_dir/classes
-
-echo Invoking javac 
+echo Invoking javac
 find $root_dir -name '*.java' | xargs javac -classpath "$CLASSPATH" -d $root_dir/classes
+
 
 exit $?
