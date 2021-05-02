@@ -45,7 +45,7 @@ public class CVersion {
   /**
    * Operating system for building current version.
    */
-  public static final String OS_BUILD_VERSION = "Mac OS X 10.14.2 x86_64";
+  public static final String OS_BUILD_VERSION = "Mac OS X 10.15.3 x86_64";
   
   /**
    * Private constructor to avoid instantiation.
