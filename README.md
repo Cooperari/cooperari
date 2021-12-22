@@ -61,7 +61,7 @@ that certain "hotspots" are always, never, or only sometimes reached.
 
 ## License
 
-Copyright 2014-2019 Eduardo R. B. Marques
+Copyright 2014-2021 Eduardo R. B. Marques
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
