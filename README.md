@@ -1,7 +1,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub release](https://img.shields.io/github/release/Cooperari/cooperari.svg)](https://github.com/Cooperari/cooperari/releases)
-[![Travis build status](https://api.travis-ci.org/Cooperari/cooperari.png?branch=master)](https://travis-ci.org/Cooperari/cooperari)
+[![CI](https://github.com/cooperari/cooperari/actions/workflows/ci.yml/badge.svg)](https://github.com/cooperari/cooperari/actions/workflows/ci.yml)
 
 # Cooperari
 
