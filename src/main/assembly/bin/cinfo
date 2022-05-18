@@ -1,5 +1,4 @@
-#! /bin/sh
-
+#! /bin/bash
 
 source $(dirname $0)/cclasspath
 java -cp $COOPERARI_CLASSPATH org.cooperari.tools.cinfo.Main $*

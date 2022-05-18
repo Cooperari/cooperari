@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 CURRENT_DIR_SAVED=$PWD
 cd "$(dirname $0)/../lib"
