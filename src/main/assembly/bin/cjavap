@@ -1,6 +1,5 @@
 #! /bin/bash
 
-
 ### Validate arguments ###
 if [[ $# -eq 0  ]] 
 then

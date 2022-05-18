@@ -22,5 +22,4 @@ mkdir -p $root_dir/classes
 echo Invoking javac
 find $root_dir -name '*.java' | xargs javac -classpath "$CLASSPATH" -d $root_dir/classes
 
-
 exit $?

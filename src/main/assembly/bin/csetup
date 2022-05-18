@@ -1,7 +1,6 @@
 #! /bin/bash
 
 java -cp "$COOPERARI_CLASSPATH:$1/classes" org.cooperari.tools.csetup.Main -d $1/cdata $2
+
 exit $?
-
-
 
