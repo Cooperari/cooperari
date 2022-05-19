@@ -100,7 +100,7 @@ public final class Main {
       if (! CSystem.inCooperativeMode()) {
         out.println("Execution will be preemptive, AspectJ LTW is not active.");
       }
-
+      out.printf("  %-55s ", javaClassName + ".main");
       CTestResult result = CSession.executeTest(cap);
       displayTestResult(result, out);
       return result.failed() ? SOME_TESTS_FAILED : ALL_TESTS_PASSED;
@@ -114,6 +114,11 @@ public final class Main {
   
   @SuppressWarnings("javadoc")
   private static void displayTestResult(CTestResult result, PrintStream out) {
+    if (!result.failed()) {
+      out.println("[passed]");
+    } else {
+      out.printf("[failed: %s]%n", result.getFailure().getClass().getCanonicalName());
+    }
     if (! CSystem.inCooperativeMode()) {
       out.printf("    > trials: %d time: %d ms", 
           result.trials(), result.getExecutionTime());

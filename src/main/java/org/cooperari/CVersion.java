@@ -25,7 +25,7 @@ public class CVersion {
   /**
    * Cooperari version.
    */
-  public static final String ID = "0.4";
+  public static final String ID = "0.5-SNAPSHOT";
   
   /**
    * Java version used for building current version.
@@ -45,7 +45,7 @@ public class CVersion {
   /**
    * Operating system for building current version.
    */
-  public static final String OS_BUILD_VERSION = "Mac OS X 10.15.3 x86_64";
+  public static final String OS_BUILD_VERSION = "Mac OS X 10.16 x86_64";
   
   /**
    * Private constructor to avoid instantiation.
